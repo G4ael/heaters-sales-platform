@@ -7,7 +7,10 @@ gestão (o mesmo onde ficam vendas, estoque e clientes). Lá você pode, com
 login e senha:
 
 - ➕ Adicionar, ✏️ editar e ➖ remover produtos
-- 🖼️ Subir fotos (são comprimidas sozinhas para o site carregar rápido)
+- 🖼️ Subir **até 4 fotos por produto** (comprimidas sozinhas para o site
+  carregar rápido). A 1ª foto é a **capa** — aparece na lista da loja; as
+  outras viram o **carrossel** na página do produto, para o cliente ver
+  todos os ângulos. Use as setinhas embaixo de cada foto para mudar a ordem.
 - 🏷️ Colocar em **promoção** (preço antigo riscado) e dar selo **Destaque**
 - 👁️ **Ocultar/mostrar** um produto no site sem precisar apagar
 - Preço vazio = aparece "**Sob consulta**" com botão de orçamento

@@ -117,6 +117,7 @@ main{flex:1;min-width:0;padding:20px clamp(14px,3vw,32px) 60px}
 .badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px}
 .badge.promo{background:var(--danger);color:#fff}
 .badge.destaque{background:var(--accent);color:#fff}
+.foto-conta{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.55);color:#fff;font-size:11px;font-weight:600;padding:2px 7px;border-radius:999px;display:inline-flex;align-items:center;gap:4px;z-index:2}
 .card-body{padding:13px 14px 14px;display:flex;flex-direction:column;gap:5px;flex:1}
 .card .marca{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary)}
 .card .nome{font-size:14.5px;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
@@ -143,8 +144,23 @@ main{flex:1;min-width:0;padding:20px clamp(14px,3vw,32px) 60px}
 .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
 .modal-foto{background:var(--bg-subtle);aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;color:var(--text-tertiary);border-radius:18px 0 0 18px;overflow:hidden}
 .modal-foto img{width:100%;height:100%;object-fit:cover}
-.thumbs{display:flex;gap:8px;padding:10px}
-.thumbs img{width:56px;height:56px;border-radius:8px;object-fit:cover;border:2px solid var(--border);cursor:pointer}
+
+/* Carrossel de fotos do produto */
+.carousel{position:relative;background:var(--bg-subtle);border-radius:18px 0 0 18px;overflow:hidden}
+.car-viewport{aspect-ratio:1/1;overflow:hidden}
+.car-track{display:flex;height:100%;transition:transform .3s ease;touch-action:pan-y}
+.car-slide{min-width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text-tertiary)}
+.car-slide img{width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none}
+.car-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.92);color:#1a1614;border:none;width:38px;height:38px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,.18);transition:opacity .15s,transform .15s;z-index:2}
+.car-nav:hover{transform:translateY(-50%) scale(1.08)}
+.car-nav.prev{left:10px}
+.car-nav.next{right:10px}
+.car-dots{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;gap:6px;z-index:2}
+.car-dots i{width:7px;height:7px;border-radius:999px;background:rgba(255,255,255,.55);box-shadow:0 1px 3px rgba(0,0,0,.3);cursor:pointer;transition:all .2s}
+.car-dots i.on{background:var(--accent);width:20px}
+.car-conta{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.55);color:#fff;font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;z-index:2}
+.thumbs{display:flex;gap:8px;padding:10px;justify-content:center;flex-wrap:wrap}
+.thumbs img{width:56px;height:56px;border-radius:8px;object-fit:cover;border:2px solid var(--border);cursor:pointer;transition:border-color .15s}
 .thumbs img.sel{border-color:var(--accent)}
 .modal-info{padding:28px 26px 26px}
 .modal-info .marca{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--accent)}
@@ -213,6 +229,8 @@ footer a:hover{color:var(--accent)}
   .hero-art{display:none}
   .modal-grid{grid-template-columns:1fr}
   .modal-foto{border-radius:18px 18px 0 0;aspect-ratio:4/3}
+  .carousel{border-radius:18px 18px 0 0}
+  .car-viewport{aspect-ratio:4/3}
   .search-wrap{max-width:none}
   .logo .logo-text small{display:none}
   .logo .logo-text{font-size:17px}
@@ -247,6 +265,9 @@ footer a:hover{color:var(--accent)}
   .cat-btn{padding:12px}
   .modal{max-height:96vh;border-radius:16px}
   .modal-foto{border-radius:16px 16px 0 0}
+  .carousel{border-radius:16px 16px 0 0}
+  .car-nav{width:34px;height:34px}
+  .thumbs img{width:48px;height:48px}
   .modal-info{padding:20px 18px 22px}
   .modal-info h3{font-size:20px}
   .modal-actions{gap:8px}
@@ -353,7 +374,7 @@ footer a:hover{color:var(--accent)}
       <p>Combinado pelo WhatsApp.<br>Em breve: Pix e cartão direto no site.</p>
     </div>
   </div>
-  <div class="foot-bottom">© 2026 Servigás Aquecedores — Todos os direitos reservados · <a href="#" style="display:inline" onclick="alert('Área do lojista: em breve você vai gerenciar os produtos por aqui, com login e senha.');return false">Área do lojista</a></div>
+  <div class="foot-bottom">© 2026 Servigás Aquecedores — Todos os direitos reservados</div>
 </footer>
 
 <button class="zap-float" onclick="abrirWhats()" title="Falar no WhatsApp" aria-label="Falar no WhatsApp">
@@ -721,6 +742,9 @@ function render() {
           ${p.destaque ? '<span class="badge destaque">Destaque</span>' : ''}
         </div>
         ${fotoOuIcone(p, 74)}
+        ${(p.fotos || []).length > 1 ? `<span class="foto-conta">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M21 7v12a2 2 0 0 1-2 2H7"/></svg>
+          ${Math.min(p.fotos.length, MAX_FOTOS)}</span>` : ''}
       </div>
       <div class="card-body">
         <span class="marca">${p.marca}</span>
@@ -745,22 +769,82 @@ function render() {
     </article>`).join('');
 }
 
+// ────────────── Carrossel de fotos do produto ──────────────
+const MAX_FOTOS = 4;              // no máximo 4 fotos por produto
+let fotosModal = [], fotoAtual = 0;
+
+function montarCarrossel(p) {
+  fotosModal = (p.fotos || []).slice(0, MAX_FOTOS);
+  fotoAtual = 0;
+  // Sem foto: mostra o desenho da categoria, como antes
+  if (!fotosModal.length) return `<div class="modal-foto">${fotoOuIcone(p, 120)}</div>`;
+
+  const varias = fotosModal.length > 1;
+  return `
+    <div class="carousel">
+      ${varias ? `<span class="car-conta" id="carConta">1 / ${fotosModal.length}</span>` : ''}
+      <div class="car-viewport" id="carViewport">
+        <div class="car-track" id="carTrack">
+          ${fotosModal.map((f, i) => `<div class="car-slide"><img src="${f}" alt="${p.nome} — foto ${i + 1}" draggable="false"></div>`).join('')}
+        </div>
+      </div>
+      ${varias ? `
+        <button class="car-nav prev" onclick="passarFoto(-1)" aria-label="Foto anterior">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="car-nav next" onclick="passarFoto(1)" aria-label="Próxima foto">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+        <div class="car-dots" id="carDots">
+          ${fotosModal.map((_, i) => `<i class="${i === 0 ? 'on' : ''}" onclick="irParaFoto(${i})"></i>`).join('')}
+        </div>` : ''}
+    </div>
+    ${varias ? `<div class="thumbs" id="carThumbs">
+      ${fotosModal.map((f, i) => `<img src="${f}" class="${i === 0 ? 'sel' : ''}" onclick="irParaFoto(${i})" alt="Miniatura ${i + 1}">`).join('')}
+    </div>` : ''}`;
+}
+
+function irParaFoto(i) {
+  if (!fotosModal.length) return;
+  fotoAtual = (i + fotosModal.length) % fotosModal.length;   // volta ao início/fim
+  const track = $('carTrack');
+  if (track) track.style.transform = `translateX(-${fotoAtual * 100}%)`;
+  const conta = $('carConta');
+  if (conta) conta.textContent = `${fotoAtual + 1} / ${fotosModal.length}`;
+  const dots = $('carDots');
+  if (dots) [...dots.children].forEach((d, j) => d.classList.toggle('on', j === fotoAtual));
+  const thumbs = $('carThumbs');
+  if (thumbs) [...thumbs.children].forEach((t, j) => t.classList.toggle('sel', j === fotoAtual));
+}
+function passarFoto(d) { irParaFoto(fotoAtual + d); }
+
+// Arrastar com o dedo no celular
+function ligarGestos() {
+  const vp = $('carViewport');
+  if (!vp || fotosModal.length < 2) return;
+  let x0 = null;
+  vp.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  vp.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 40) passarFoto(dx < 0 ? 1 : -1);
+    x0 = null;
+  }, { passive: true });
+}
+
 // ────────────── Modal de produto ──────────────
 let qtdModal = 1;
 function abrirModal(id) {
   const p = PRODUTOS.find(x => x.id === id);
   if (!p) return;
   qtdModal = 1;
-  const temFotos = p.fotos && p.fotos.length;
   $('modalBox').innerHTML = `
     <button class="modal-close" onclick="fecharModal()" aria-label="Fechar">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
     </button>
     <div class="modal-grid">
       <div>
-        <div class="modal-foto" id="modalFoto">${temFotos ? `<img src="${p.fotos[0]}" alt="${p.nome}">` : fotoOuIcone(p, 120)}</div>
-        ${temFotos && p.fotos.length > 1 ? `<div class="thumbs">${p.fotos.map((f, i) =>
-          `<img src="${f}" class="${i === 0 ? 'sel' : ''}" onclick="trocarFoto(this,'${f}')" alt="Foto ${i + 1}">`).join('')}</div>` : ''}
+        ${montarCarrossel(p)}
       </div>
       <div class="modal-info">
         <span class="marca">${p.marca}</span>
@@ -794,16 +878,19 @@ function abrirModal(id) {
     </div>`;
   $('modalBackdrop').classList.add('show');
   document.body.style.overflow = 'hidden';
-}
-function trocarFoto(el, src) {
-  $('modalFoto').innerHTML = `<img src="${src}">`;
-  el.parentElement.querySelectorAll('img').forEach(i => i.classList.remove('sel'));
-  el.classList.add('sel');
+  ligarGestos();
 }
 function mudarQtd(d) { qtdModal = Math.max(1, qtdModal + d); $('qtdModal').textContent = qtdModal; }
-function fecharModal() { $('modalBackdrop').classList.remove('show'); document.body.style.overflow = ''; }
+function fecharModal() { $('modalBackdrop').classList.remove('show'); document.body.style.overflow = ''; fotosModal = []; }
 $('modalBackdrop').onclick = (e) => { if (e.target === $('modalBackdrop')) fecharModal(); };
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { fecharModal(); fecharCarrinho(); fecharSidebarMobile(); } });
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { fecharModal(); fecharCarrinho(); fecharSidebarMobile(); }
+  // Setas do teclado passam as fotos quando o modal está aberto
+  if (fotosModal.length > 1 && $('modalBackdrop').classList.contains('show')) {
+    if (e.key === 'ArrowLeft') passarFoto(-1);
+    if (e.key === 'ArrowRight') passarFoto(1);
+  }
+});
 
 // ────────────── Carrinho ──────────────
 function salvarCarrinho() { localStorage.setItem('servigas-carrinho', JSON.stringify(carrinho)); }
