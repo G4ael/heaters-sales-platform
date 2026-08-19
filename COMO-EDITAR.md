@@ -1,65 +1,44 @@
-# Como gerenciar a loja Servigás (index.html)
+# Como gerenciar a loja Servigás
 
-Todo o site fica em **um único arquivo**: `index.html`. Para editar, abra ele
-em qualquer editor de texto (Bloco de Notas, VS Code...) e procure a seção
-marcada assim:
+## 🏪 Produtos: agora é pelo sistema de gestão!
 
-```
-📦 PRODUTOS — para gerenciar a loja, edite SOMENTE esta lista!
-```
+O catálogo do site é gerenciado pela aba **Loja** do sistema interno de
+gestão (o mesmo onde ficam vendas, estoque e clientes). Lá você pode, com
+login e senha:
 
-## ➕ Adicionar um produto
+- ➕ Adicionar, ✏️ editar e ➖ remover produtos
+- 🖼️ Subir fotos (são comprimidas sozinhas para o site carregar rápido)
+- 🏷️ Colocar em **promoção** (preço antigo riscado) e dar selo **Destaque**
+- 👁️ **Ocultar/mostrar** um produto no site sem precisar apagar
+- Preço vazio = aparece "**Sob consulta**" com botão de orçamento
 
-1. Copie um bloco inteiro de `{` até `},` de um produto parecido.
-2. Cole logo abaixo, antes do `];` que fecha a lista.
-3. Troque os dados: `id` (invente um código novo, sem repetir), `nome`,
-   `marca`, `preco`, etc.
-4. Salve o arquivo e recarregue o site — pronto!
+Tudo o que você salva lá **aparece no site na hora** — sem commit, sem
+deploy, sem mexer em código.
 
-## ➖ Remover um produto
+> Primeira vez? É preciso rodar o script `supabase/loja.sql` (fica na pasta
+> do sistema de gestão) no SQL Editor do painel do Supabase — uma vez só.
 
-Apague o bloco `{ ... },` inteiro do produto. Salve e recarregue.
-
-## ✏️ Mudar preço ou colocar em promoção
-
-- `preco: 1990` → preço atual (use ponto para centavos: `1990.50`).
-- `precoAntigo: 2290` → aparece riscado com selo vermelho **Promoção**.
-  Sem promoção? Deixe `precoAntigo: null`.
-- `preco: null` → mostra **"Sob consulta"** com botão de orçamento.
-- `destaque: true` → selo laranja **Destaque** (aparece primeiro na loja).
-
-## 🖼️ Colocar fotos
-
-1. Salve as fotos na pasta `imagens` (fica ao lado do `index.html`).
-   Prefira fotos quadradas, até ~800×800 px, formato JPG ou WebP.
-2. No produto, escreva os nomes dos arquivos:
-
-```
-fotos: ['imagens/rinnai-15l.jpg', 'imagens/rinnai-15l-lado.jpg'],
-```
-
-A primeira foto é a principal; as outras viram miniaturas nos detalhes.
-Se deixar `fotos: []`, o site mostra um desenho automático da categoria.
+A lista de produtos que existe dentro do `index.html` é só uma **reserva de
+demonstração**: aparece apenas se o banco estiver fora do ar.
 
 ## 📱 Número do WhatsApp
 
-No topo da mesma seção, troque:
+No `index.html`, procure:
 
 ```
 const WHATSAPP = '5500000000000';
 ```
 
-pelo número real, só dígitos, com `55` na frente. Ex.: `5547999998888`.
+e troque pelo número real, só dígitos, com `55` na frente. Ex.: `5547999998888`.
 
-## 🚀 Publicar as mudanças
+## 🚀 Publicar mudanças no código (visual, textos fixos...)
 
 O site está conectado ao GitHub: depois de editar, basta fazer **commit**
 e **sincronizar (push)** — no VS Code, botão "Sync Changes". A Vercel
 percebe a mudança e atualiza o site sozinha em ~30 segundos.
+(Lembrando: mudanças de **produtos** não precisam disso — são pela aba Loja.)
 
-## 🔜 Próximos passos combinados
+## 🔜 Próximo passo combinado
 
-- **Área do lojista**: gerenciar produtos pelo próprio site com login e
-  senha (Firebase ou Supabase), sem mexer em código.
-- **Pagamento online**: Pix e cartão via Mercado Pago (ou similar) — o
+- **Pagamento online**: Pix e cartão via provedor (ex.: Mercado Pago) — o
   dinheiro cai direto na conta, sem o site guardar dados de cartão.

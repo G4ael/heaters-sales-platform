@@ -396,31 +396,22 @@ footer a:hover{color:var(--accent)}
 const WHATSAPP = '5500000000000';
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   📦 PRODUTOS — para gerenciar a loja, edite SOMENTE esta lista!
+   🗄️ BANCO DE DADOS DA LOJA (Supabase)
    ═══════════════════════════════════════════════════════════════════════════
-   ➕ ADICIONAR: copie um bloco { ... }, cole antes do ] final e mude os dados.
-   ➖ REMOVER: apague o bloco { ... } inteiro do produto (inclusive a vírgula).
-   ✏️ EDITAR: mude o texto/número desejado, mantendo as aspas e vírgulas.
+   Os produtos são gerenciados pela aba "Loja" do sistema interno de gestão.
+   O site lê o catálogo direto do banco: somente leitura e só produtos
+   ativos (essa chave "publishable" é feita para ficar pública — quem manda
+   são as regras de segurança do banco).                                     */
+const SUPABASE_URL = 'https://nwjyxpsbvcvaxfaoeedu.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_R_yCIszFgcdWSNjkOWuHZg_XsmDwX-S';
 
-   Campos de cada produto:
-   - id:        um código único qualquer (não repita!)
-   - nome:      nome que aparece na loja
-   - marca:     Rheem, Rinnai, Komeco, Lorenzetti... (aparece no cartão)
-   - categoria: 'aquecedores' | 'bombas' | 'mangueiras' | 'registros'
-                | 'acabamentos' | 'dutos'
-   - sub:       nas categorias com sub-lista: a marca (aquecedores/bombas)
-                ou o tipo 'Gás'/'Água' (mangueiras). Nas demais, deixe ''.
-   - preco:     preço em reais (use ponto p/ centavos: 1890.90).
-                Use null para mostrar "Sob consulta".
-   - precoAntigo: preço riscado da promoção — ou null se não tiver.
-   - destaque:  true = selo laranja "Destaque" | false = sem selo
-   - descricao: texto que aparece nos detalhes do produto
-   - specs:     lista de características, entre aspas e separadas por vírgula
-   - fotos:     lista de imagens do produto. Coloque os arquivos na pasta
-                "imagens" (ao lado deste index.html) e escreva assim:
-                fotos: ['imagens/aquecedor-rinnai.jpg', 'imagens/foto2.jpg']
-                Deixe [] para usar o desenho automático da categoria.       */
-const PRODUTOS = [
+/* ═══════════════════════════════════════════════════════════════════════════
+   📦 PRODUTOS DE DEMONSTRAÇÃO (reserva)
+   ═══════════════════════════════════════════════════════════════════════════
+   Esta lista só aparece se o banco estiver fora do ar. Para gerenciar a
+   loja de verdade (adicionar, editar, fotos...), use o sistema interno de
+   gestão → aba "Loja".                                                      */
+const PRODUTOS_EXEMPLO = [
 
   /* ──────────── AQUECEDORES A GÁS ──────────── */
   { id: 'aq-rheem-18', nome: 'Aquecedor a gás Rheem 18 litros digital', marca: 'Rheem',
@@ -565,6 +556,30 @@ const PRODUTOS = [
    A partir daqui é o funcionamento do site — não precisa mexer. 🙂
    ═══════════════════════════════════════════════════════════════════════════ */
 
+// Catálogo em uso (vem do banco; cai na lista de demonstração se ele falhar)
+let PRODUTOS = [];
+let catalogoCarregando = true;
+async function carregarCatalogo() {
+  try {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/loja_produtos?select=*&ativo=eq.true&order=criado_em.desc`, {
+      headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` }
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    PRODUTOS = (await r.json()).map(p => ({
+      id: p.id, nome: p.nome, marca: p.marca, categoria: p.categoria, sub: p.sub,
+      preco: p.preco == null ? null : Number(p.preco),
+      precoAntigo: p.preco_antigo == null ? null : Number(p.preco_antigo),
+      destaque: p.destaque, descricao: p.descricao, specs: p.specs || [], fotos: p.fotos || []
+    }));
+  } catch (e) {
+    console.warn('Banco indisponível, mostrando catálogo de demonstração:', e.message);
+    PRODUTOS = PRODUTOS_EXEMPLO;
+  }
+  catalogoCarregando = false;
+  render();
+  renderCarrinho();
+}
+
 const CATEGORIAS = [
   { id: 'aquecedores', nome: 'Aquecedores a gás', sub: ['Rheem', 'Rinnai', 'Komeco', 'Lorenzetti'] },
   { id: 'bombas',      nome: 'Bombas pressurizadoras', sub: ['Komeco', 'Rinnai'] },
@@ -695,6 +710,9 @@ function render() {
   $('hero').style.display = (filtro.cat || filtro.busca) ? 'none' : '';
 
   $('vazio').style.display = lista.length ? 'none' : '';
+  $('vazio').querySelector('p').innerHTML = catalogoCarregando
+    ? 'Carregando catálogo...'
+    : '<b>Nenhum produto encontrado.</b><br>Tente outra busca ou categoria.';
   $('grade').innerHTML = lista.map(p => `
     <article class="card" onclick="abrirModal('${p.id}')">
       <div class="card-img">
@@ -882,6 +900,7 @@ window.addEventListener('resize', ajustarAlturaHeader);
 render();
 renderCarrinho();
 ajustarAlturaHeader();
+carregarCatalogo();
 </script>
 </body>
 </html>
