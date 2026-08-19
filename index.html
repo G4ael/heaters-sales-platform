@@ -40,6 +40,8 @@ button{font-family:inherit;cursor:pointer;touch-action:manipulation}
 
 /* ══════════════════ FAIXA DE AVISO ══════════════════ */
 .topbar{background:var(--accent);color:#fff;text-align:center;font-size:13px;font-weight:500;padding:7px 16px}
+.topbar a{color:#fff;text-decoration:none;font-weight:700;border-bottom:1px solid rgba(255,255,255,.5);white-space:nowrap}
+.topbar a:hover{border-bottom-color:#fff}
 
 /* ══════════════════ CABEÇALHO ══════════════════ */
 header{position:sticky;top:0;z-index:40;height:var(--header-h);background:var(--bg-elevated);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;padding:0 16px}
@@ -83,11 +85,16 @@ body.sb-closed .sub-list{max-height:0!important}
 main{flex:1;min-width:0;padding:20px clamp(14px,3vw,32px) 60px}
 
 /* Herói */
-.hero{background:linear-gradient(120deg,var(--accent-subtle),var(--bg-elevated) 65%);border:1px solid var(--border);border-radius:18px;padding:clamp(24px,4vw,44px);display:flex;align-items:center;gap:24px;margin-bottom:18px;overflow:hidden;position:relative}
-.hero h1{font-family:var(--font-display);font-size:clamp(24px,3.6vw,38px);line-height:1.12;letter-spacing:-.02em;margin-bottom:10px}
+.hero{background:#0d0b0a url('imagens/banner-aquecedores-1440.webp') no-repeat right center;background-size:cover;border:1px solid var(--border);border-radius:18px;padding:clamp(26px,4.5vw,52px);display:flex;align-items:center;gap:24px;margin-bottom:18px;overflow:hidden;position:relative;min-height:clamp(230px,25vw,330px)}
+/* Véu escuro à esquerda: mantém o texto legível por cima da foto */
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,8,7,.95) 0%,rgba(10,8,7,.88) 34%,rgba(10,8,7,.5) 56%,rgba(10,8,7,0) 76%)}
+.hero > div{position:relative;z-index:1;max-width:560px}
+.hero h1{font-family:var(--font-display);font-size:clamp(24px,3.6vw,38px);line-height:1.12;letter-spacing:-.02em;margin-bottom:10px;color:#fff}
 .hero h1 span{color:var(--accent)}
-.hero p{color:var(--text-secondary);font-size:15px;max-width:520px;margin-bottom:18px}
-.hero-art{flex-shrink:0;color:var(--accent);opacity:.9;display:block}
+.hero p{color:rgba(255,255,255,.78);font-size:15px;max-width:520px;margin-bottom:18px}
+.hero .btn-ghost{color:#fff;border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.06)}
+.hero .btn-ghost:hover{background:rgba(255,255,255,.14)}
+@media(min-width:900px){.hero{background-image:url('imagens/banner-aquecedores.webp')}}
 .btn-primary{background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-weight:600;font-size:14.5px;display:inline-flex;align-items:center;gap:8px;transition:background .15s}
 .btn-primary:hover{background:var(--accent-hover)}
 .btn-ghost{background:transparent;color:var(--text-primary);border:1px solid var(--border-strong);padding:11px 20px;border-radius:10px;font-weight:600;font-size:14.5px;display:inline-flex;align-items:center;gap:8px;transition:all .15s}
@@ -226,7 +233,6 @@ footer a:hover{color:var(--accent)}
   body.sb-closed .sidebar .sub-list.open{max-height:300px!important}
   .sb-backdrop{display:block;position:fixed;inset:0;top:var(--header-h);background:rgba(0,0,0,.4);z-index:54;opacity:0;pointer-events:none;transition:opacity .2s}
   body.sb-open-mobile .sb-backdrop{opacity:1;pointer-events:auto}
-  .hero-art{display:none}
   .modal-grid{grid-template-columns:1fr}
   .modal-foto{border-radius:18px 18px 0 0;aspect-ratio:4/3}
   .carousel{border-radius:18px 18px 0 0}
@@ -246,7 +252,9 @@ footer a:hover{color:var(--accent)}
   .search-wrap{order:10;flex-basis:100%;max-width:none;margin:0}
   .search-wrap input{font-size:16px;padding:10px 16px 10px 40px} /* 16px evita o zoom automático do iPhone */
   .logo{margin-right:auto}
-  .hero{padding:20px 18px;margin-bottom:14px}
+  .hero{padding:150px 18px 20px;margin-bottom:14px;background-position:74% center;min-height:auto;align-items:flex-end}
+  .hero::before{background:linear-gradient(180deg,rgba(10,8,7,.2) 0%,rgba(10,8,7,.7) 40%,rgba(10,8,7,.96) 66%)}
+  .hero > div{max-width:none}
   .hero h1{font-size:23px}
   .hero p{font-size:13.5px;margin-bottom:14px}
   .hero .btn-primary,.hero .btn-ghost{flex:1;justify-content:center;padding:12px 10px;font-size:14px}
@@ -281,7 +289,8 @@ footer a:hover{color:var(--accent)}
 </head>
 <body>
 
-<div class="topbar">🔥 Venda e instalação profissional de aquecedores a gás &nbsp;•&nbsp; Peça pelo WhatsApp — Pix e cartão em breve no site</div>
+<div class="topbar">🔥 Venda e instalação profissional de aquecedores a gás &nbsp;•&nbsp;
+  <a href="#" onclick="abrirWhats();return false">WhatsApp (47) 9 9150-0164</a></div>
 
 <header>
   <button class="icon-btn" id="btnSidebar" title="Categorias" aria-label="Abrir categorias">
@@ -321,7 +330,6 @@ footer a:hover{color:var(--accent)}
           <button class="btn-ghost" onclick="abrirWhats()">Falar com especialista</button>
         </div>
       </div>
-      <svg class="hero-art" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1"><rect x="6" y="2.5" width="12" height="16" rx="2.5"/><path d="M12 6.5c.7 2.2-2.2 3.3-2.2 5.7a2.6 2.6 0 0 0 5.2 0c0-1.1-.5-1.9-1-2.7-.3.8-.8 1.1-1.3 1.1.4-1.3.2-2.7-.7-4.1z" fill="currentColor" stroke="none"/><path d="M9 18.5v3M15 18.5v3"/></svg>
     </section>
 
     <section class="perks">
@@ -359,7 +367,7 @@ footer a:hover{color:var(--accent)}
     </div>
     <div>
       <h4>Atendimento</h4>
-      <a href="#" onclick="abrirWhats();return false">WhatsApp: (00) 00000-0000</a>
+      <a href="#" onclick="abrirWhats();return false">WhatsApp: (47) 9 9150-0164</a>
       <p>Seg. a sex. — 8h às 18h<br>Sábado — 8h às 12h</p>
     </div>
     <div>
@@ -412,9 +420,9 @@ footer a:hover{color:var(--accent)}
 /* ═══════════════════════════════════════════════════════════════════════════
    ⚙️ CONFIGURAÇÃO DA LOJA — edite aqui!
    ═══════════════════════════════════════════════════════════════════════════
-   WHATSAPP: troque pelo número real da loja, só dígitos, com 55 na frente.
-   Exemplo: '5547999998888' para (47) 99999-8888.                            */
-const WHATSAPP = '5500000000000';
+   WHATSAPP: número da loja, só dígitos, com 55 na frente (55 + DDD + número).
+   Hoje: (47) 9 9150-0164.                                                    */
+const WHATSAPP = '5547991500164';
 
 /* ═══════════════════════════════════════════════════════════════════════════
    🗄️ BANCO DE DADOS DA LOJA (Supabase)

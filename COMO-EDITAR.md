@@ -26,13 +26,22 @@ demonstração**: aparece apenas se o banco estiver fora do ar.
 
 ## 📱 Número do WhatsApp
 
-No `index.html`, procure:
+Já está configurado: **(47) 9 9150-0164**. Para trocar, procure no
+`index.html`:
 
 ```
-const WHATSAPP = '5500000000000';
+const WHATSAPP = '5547991500164';
 ```
 
-e troque pelo número real, só dígitos, com `55` na frente. Ex.: `5547999998888`.
+e ponha o novo número só com dígitos e `55` na frente (55 + DDD + número).
+Troque também o texto que aparece na faixa do topo e no rodapé.
+
+## 🖼️ Banner da página inicial
+
+A foto dos aquecedores fica em `imagens/banner-aquecedores.webp` (telas
+grandes) e `imagens/banner-aquecedores-1440.webp` (celular). Para trocar,
+salve as novas imagens com os mesmos nomes — o texto continua aparecendo
+por cima, na área escura da esquerda.
 
 ## 🚀 Publicar mudanças no código (visual, textos fixos...)
 
