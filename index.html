@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Servigás Aquecedores — Loja</title>
+<meta name="description" content="Aquecedores a gás Rheem, Rinnai, Komeco e Lorenzetti, bombas pressurizadoras, mangueiras, registros e acessórios. Venda e instalação profissional.">
+<meta name="theme-color" content="#ea580c">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23ea580c' d='M12 2c1 4-4 6-4 11a5 5 0 0 0 10 0c0-2-1-3.5-2-5-.5 1.5-1.5 2-2.5 2C14.5 8 15 5 12 2z'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════ TEMA (mesma identidade do sistema interno) ══════════════════ */
+:root{
+  --font-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+  --header-h:64px;
+}
+html[data-theme="light"]{
+  --bg:#faf8f5; --bg-elevated:#fff; --bg-subtle:#f3efe9;
+  --text-primary:#1a1614; --text-secondary:#6b6661; --text-tertiary:#9a948c;
+  --border:#e8e4de; --border-strong:#d4ccc0;
+  --accent:#ea580c; --accent-hover:#c2410c; --accent-subtle:#fff0e6;
+  --success:#16a34a; --danger:#dc2626;
+  --shadow:0 4px 16px rgba(26,22,20,.08);
+}
+html[data-theme="dark"]{
+  --bg:#0f0e0d; --bg-elevated:#1a1816; --bg-subtle:#232020;
+  --text-primary:#f5f2ed; --text-secondary:#a8a39c; --text-tertiary:#6b6661;
+  --border:#2a2724; --border-strong:#3a3633;
+  --accent:#fb923c; --accent-hover:#f97316; --accent-subtle:#2a1810;
+  --success:#4ade80; --danger:#f87171;
+  --shadow:0 4px 16px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text-primary);transition:background .2s,color .2s}
+button{font-family:inherit;cursor:pointer;touch-action:manipulation}
+.font-display{font-family:var(--font-display);letter-spacing:-.02em}
+
+/* ══════════════════ FAIXA DE AVISO ══════════════════ */
+.topbar{background:var(--accent);color:#fff;text-align:center;font-size:13px;font-weight:500;padding:7px 16px}
+
+/* ══════════════════ CABEÇALHO ══════════════════ */
+header{position:sticky;top:0;z-index:40;height:var(--header-h);background:var(--bg-elevated);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;padding:0 16px}
+.logo{display:flex;align-items:center;gap:8px;font-family:var(--font-display);font-weight:700;font-size:20px;white-space:nowrap;text-decoration:none;color:var(--text-primary)}
+.logo svg{color:var(--accent)}
+.logo small{font-weight:500;color:var(--text-secondary);font-size:12px;display:block;line-height:1}
+.icon-btn{background:transparent;border:1px solid transparent;color:var(--text-secondary);padding:9px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;transition:all .15s;position:relative}
+.icon-btn:hover{background:var(--bg-subtle);color:var(--text-primary)}
+.search-wrap{flex:1;max-width:520px;margin:0 auto;position:relative}
+.search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-tertiary);pointer-events:none}
+.search-wrap input{width:100%;background:var(--bg-subtle);border:1px solid var(--border);border-radius:999px;padding:9px 16px 9px 40px;font-size:14px;color:var(--text-primary);transition:border-color .15s,box-shadow .15s}
+.search-wrap input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-subtle);background:var(--bg-elevated)}
+.cart-count{position:absolute;top:2px;right:2px;background:var(--accent);color:#fff;font-size:10px;font-weight:700;min-width:17px;height:17px;border-radius:999px;display:flex;align-items:center;justify-content:center;padding:0 4px}
+.cart-count.hidden{display:none}
+
+/* ══════════════════ LAYOUT ══════════════════ */
+.layout{display:flex;min-height:calc(100vh - var(--header-h))}
+
+/* ══════════════════ BARRA LATERAL EXPANSÍVEL ══════════════════ */
+.sidebar{width:262px;flex-shrink:0;background:var(--bg-elevated);border-right:1px solid var(--border);position:sticky;top:var(--header-h);height:calc(100vh - var(--header-h));overflow-y:auto;overflow-x:hidden;transition:width .25s ease;padding:12px 10px}
+body.sb-closed .sidebar{width:64px}
+.sb-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-tertiary);padding:6px 12px 8px;white-space:nowrap;transition:opacity .15s}
+body.sb-closed .sb-title{opacity:0}
+.cat-btn{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border:none;background:transparent;border-radius:10px;color:var(--text-secondary);font-size:14px;font-weight:500;transition:all .15s;white-space:nowrap;text-align:left}
+.cat-btn:hover{background:var(--bg-subtle);color:var(--text-primary)}
+.cat-btn.active{background:var(--accent-subtle);color:var(--accent);font-weight:600}
+.cat-btn svg{flex-shrink:0}
+.cat-btn .label{flex:1;overflow:hidden;text-overflow:ellipsis;transition:opacity .15s}
+.cat-btn .chev{transition:transform .2s,opacity .15s;flex-shrink:0}
+.cat-btn.open .chev{transform:rotate(90deg)}
+body.sb-closed .cat-btn .label,body.sb-closed .cat-btn .chev{opacity:0}
+.sub-list{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.sub-list.open{max-height:300px}
+body.sb-closed .sub-list{max-height:0!important}
+.sub-btn{display:block;width:100%;text-align:left;border:none;background:transparent;color:var(--text-secondary);font-size:13.5px;padding:7px 12px 7px 44px;border-radius:8px;transition:all .15s;white-space:nowrap}
+.sub-btn:hover{background:var(--bg-subtle);color:var(--text-primary)}
+.sub-btn.active{color:var(--accent);font-weight:600;background:var(--accent-subtle)}
+.sb-backdrop{display:none}
+
+/* ══════════════════ CONTEÚDO ══════════════════ */
+main{flex:1;min-width:0;padding:20px clamp(14px,3vw,32px) 60px}
+
+/* Herói */
+.hero{background:linear-gradient(120deg,var(--accent-subtle),var(--bg-elevated) 65%);border:1px solid var(--border);border-radius:18px;padding:clamp(24px,4vw,44px);display:flex;align-items:center;gap:24px;margin-bottom:18px;overflow:hidden;position:relative}
+.hero h1{font-family:var(--font-display);font-size:clamp(24px,3.6vw,38px);line-height:1.12;letter-spacing:-.02em;margin-bottom:10px}
+.hero h1 span{color:var(--accent)}
+.hero p{color:var(--text-secondary);font-size:15px;max-width:520px;margin-bottom:18px}
+.hero-art{flex-shrink:0;color:var(--accent);opacity:.9;display:block}
+.btn-primary{background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-weight:600;font-size:14.5px;display:inline-flex;align-items:center;gap:8px;transition:background .15s}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-ghost{background:transparent;color:var(--text-primary);border:1px solid var(--border-strong);padding:11px 20px;border-radius:10px;font-weight:600;font-size:14.5px;display:inline-flex;align-items:center;gap:8px;transition:all .15s}
+.btn-ghost:hover{background:var(--bg-subtle)}
+
+/* Vantagens */
+.perks{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-bottom:26px}
+.perk{background:var(--bg-elevated);border:1px solid var(--border);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-secondary)}
+.perk svg{color:var(--accent);flex-shrink:0}
+.perk b{color:var(--text-primary);display:block;font-size:13.5px}
+
+/* Barra de ferramentas do catálogo */
+.toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.toolbar h2{font-family:var(--font-display);font-size:22px;letter-spacing:-.02em}
+.toolbar .count{color:var(--text-tertiary);font-size:13px}
+.toolbar select{margin-left:auto;background:var(--bg-elevated);border:1px solid var(--border);color:var(--text-primary);border-radius:9px;padding:8px 12px;font-size:13.5px;font-family:inherit}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--accent-subtle);color:var(--accent);border:none;border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:600}
+.chip svg{cursor:pointer}
+
+/* Grade de produtos */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:16px}
+.card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s,border-color .15s;cursor:pointer;position:relative}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--border-strong)}
+.card-img{aspect-ratio:1/1;background:var(--bg-subtle);display:flex;align-items:center;justify-content:center;color:var(--text-tertiary);position:relative;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover}
+.badges{position:absolute;top:10px;left:10px;display:flex;flex-direction:column;gap:5px;z-index:2}
+.badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px}
+.badge.promo{background:var(--danger);color:#fff}
+.badge.destaque{background:var(--accent);color:#fff}
+.card-body{padding:13px 14px 14px;display:flex;flex-direction:column;gap:5px;flex:1}
+.card .marca{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary)}
+.card .nome{font-size:14.5px;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
+.preco-antigo{font-size:12.5px;color:var(--text-tertiary);text-decoration:line-through}
+.preco{font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--text-primary)}
+.parcela{font-size:12px;color:var(--success);font-weight:500}
+.consulta{font-size:15px;font-weight:700;color:var(--accent)}
+.card-actions{display:flex;gap:8px;margin-top:auto;padding-top:10px}
+.btn-add{flex:1;background:var(--accent);color:#fff;border:none;border-radius:9px;padding:9px 10px;font-weight:600;font-size:13.5px;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:background .15s}
+.btn-add:hover{background:var(--accent-hover)}
+.btn-zap{background:var(--success);color:#fff;border:none;border-radius:9px;padding:9px 12px;display:inline-flex;align-items:center;justify-content:center;transition:filter .15s}
+.btn-zap:hover{filter:brightness(1.1)}
+.empty{text-align:center;padding:60px 20px;color:var(--text-secondary)}
+.empty svg{color:var(--text-tertiary);margin-bottom:12px}
+
+/* ══════════════════ MODAL DE PRODUTO ══════════════════ */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:60;display:none;align-items:center;justify-content:center;padding:16px;animation:fadeIn .15s}
+.modal-backdrop.show{display:flex}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--bg-elevated);border-radius:18px;max-width:860px;width:100%;max-height:92vh;overflow-y:auto;position:relative;animation:slideUp .2s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.modal-close{position:absolute;top:14px;right:14px;z-index:2;background:var(--bg-subtle);border:none;border-radius:999px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:var(--text-secondary)}
+.modal-close:hover{color:var(--text-primary)}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.modal-foto{background:var(--bg-subtle);aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;color:var(--text-tertiary);border-radius:18px 0 0 18px;overflow:hidden}
+.modal-foto img{width:100%;height:100%;object-fit:cover}
+.thumbs{display:flex;gap:8px;padding:10px}
+.thumbs img{width:56px;height:56px;border-radius:8px;object-fit:cover;border:2px solid var(--border);cursor:pointer}
+.thumbs img.sel{border-color:var(--accent)}
+.modal-info{padding:28px 26px 26px}
+.modal-info .marca{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--accent)}
+.modal-info h3{font-family:var(--font-display);font-size:24px;line-height:1.2;margin:6px 0 10px}
+.modal-info .desc{color:var(--text-secondary);font-size:14.5px;line-height:1.55;margin-bottom:14px}
+.specs{list-style:none;margin-bottom:16px;display:flex;flex-direction:column;gap:6px}
+.specs li{font-size:13.5px;color:var(--text-secondary);display:flex;gap:8px;align-items:center}
+.specs svg{color:var(--success);flex-shrink:0}
+.modal-preco-box{background:var(--bg-subtle);border-radius:12px;padding:14px 16px;margin-bottom:16px}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--border-strong);border-radius:10px;overflow:hidden}
+.qty button{background:transparent;border:none;width:38px;height:40px;font-size:18px;color:var(--text-secondary)}
+.qty button:hover{background:var(--bg-subtle);color:var(--text-primary)}
+.qty span{min-width:36px;text-align:center;font-weight:600}
+.modal-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* ══════════════════ CARRINHO (gaveta) ══════════════════ */
+.drawer-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:70;opacity:0;pointer-events:none;transition:opacity .2s}
+.drawer-backdrop.show{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(400px,100vw);background:var(--bg-elevated);z-index:71;transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column;box-shadow:var(--shadow)}
+.drawer.show{transform:none}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--border)}
+.drawer-head h3{font-family:var(--font-display);font-size:19px}
+.drawer-items{flex:1;overflow-y:auto;padding:14px 20px;display:flex;flex-direction:column;gap:14px}
+.cart-item{display:flex;gap:12px;align-items:center}
+.cart-item .thumb{width:60px;height:60px;border-radius:10px;background:var(--bg-subtle);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--text-tertiary);overflow:hidden}
+.cart-item .thumb img{width:100%;height:100%;object-fit:cover}
+.cart-item .info{flex:1;min-width:0}
+.cart-item .info b{font-size:13.5px;display:block;line-height:1.3;margin-bottom:3px}
+.cart-item .info .p{font-size:13px;color:var(--accent);font-weight:700}
+.cart-item .qty{transform:scale(.85);transform-origin:left}
+.cart-item .rm{background:none;border:none;color:var(--text-tertiary);padding:6px}
+.cart-item .rm:hover{color:var(--danger)}
+.drawer-foot{border-top:1px solid var(--border);padding:16px 20px;display:flex;flex-direction:column;gap:10px}
+.total-row{display:flex;justify-content:space-between;align-items:center;font-size:15px}
+.total-row b{font-family:var(--font-display);font-size:22px}
+.pay-note{font-size:12px;color:var(--text-tertiary);text-align:center}
+.btn-checkout{background:var(--success);color:#fff;border:none;border-radius:11px;padding:13px;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;transition:filter .15s}
+.btn-checkout:hover{filter:brightness(1.08)}
+.btn-checkout:disabled{opacity:.5;cursor:not-allowed}
+
+/* ══════════════════ RODAPÉ ══════════════════ */
+footer{background:var(--bg-elevated);border-top:1px solid var(--border);padding:36px clamp(16px,4vw,48px) 24px;margin-top:auto}
+.foot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px;max-width:1100px;margin:0 auto}
+footer h4{font-family:var(--font-display);font-size:15px;margin-bottom:12px}
+footer p,footer a{font-size:13.5px;color:var(--text-secondary);text-decoration:none;line-height:1.9;display:block}
+footer a:hover{color:var(--accent)}
+.foot-bottom{text-align:center;color:var(--text-tertiary);font-size:12px;margin-top:28px;padding-top:16px;border-top:1px solid var(--border)}
+
+/* WhatsApp flutuante */
+.zap-float{position:fixed;bottom:22px;right:22px;z-index:50;background:#25d366;color:#fff;border:none;border-radius:999px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(0,0,0,.25);transition:transform .15s}
+.zap-float:hover{transform:scale(1.08)}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--text-primary);color:var(--bg);padding:11px 20px;border-radius:999px;font-size:14px;font-weight:600;z-index:90;transition:transform .25s ease;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast svg{color:var(--success)}
+
+/* ══════════════════ RESPONSIVO ══════════════════ */
+@media(max-width:900px){
+  .sidebar{position:fixed;left:0;top:var(--header-h);z-index:55;transform:translateX(-100%);transition:transform .25s ease;width:280px!important;box-shadow:var(--shadow)}
+  body.sb-open-mobile .sidebar{transform:none}
+  body.sb-closed .sidebar .label,body.sb-closed .sidebar .chev,body.sb-closed .sb-title{opacity:1}
+  body.sb-closed .sidebar .sub-list.open{max-height:300px!important}
+  .sb-backdrop{display:block;position:fixed;inset:0;top:var(--header-h);background:rgba(0,0,0,.4);z-index:54;opacity:0;pointer-events:none;transition:opacity .2s}
+  body.sb-open-mobile .sb-backdrop{opacity:1;pointer-events:auto}
+  .hero-art{display:none}
+  .modal-grid{grid-template-columns:1fr}
+  .modal-foto{border-radius:18px 18px 0 0;aspect-ratio:4/3}
+  .search-wrap{max-width:none}
+  .logo .logo-text small{display:none}
+  .logo .logo-text{font-size:17px}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px}
+  .card .nome{font-size:13.5px}
+  .preco{font-size:17px}
+}
+
+/* Celulares (a maioria dos acessos!) */
+@media(max-width:640px){
+  .topbar{font-size:11.5px;padding:6px 10px;line-height:1.35}
+  header{height:auto;flex-wrap:wrap;padding:8px 12px 10px;row-gap:8px}
+  .search-wrap{order:10;flex-basis:100%;max-width:none;margin:0}
+  .search-wrap input{font-size:16px;padding:10px 16px 10px 40px} /* 16px evita o zoom automático do iPhone */
+  .logo{margin-right:auto}
+  .hero{padding:20px 18px;margin-bottom:14px}
+  .hero h1{font-size:23px}
+  .hero p{font-size:13.5px;margin-bottom:14px}
+  .hero .btn-primary,.hero .btn-ghost{flex:1;justify-content:center;padding:12px 10px;font-size:14px}
+  .perks{grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+  .perk{padding:10px;font-size:11.5px;gap:8px}
+  .perk b{font-size:12.5px}
+  .perk svg{width:22px;height:22px}
+  .toolbar{gap:8px;margin-bottom:12px}
+  .toolbar h2{font-size:19px}
+  .grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .card-body{padding:11px 11px 12px}
+  .btn-add{font-size:12.5px;padding:9px 6px}
+  .btn-zap{padding:9px 10px}
+  .parcela{font-size:11px}
+  .sub-btn{padding:10px 12px 10px 44px} /* alvo de toque maior */
+  .cat-btn{padding:12px}
+  .modal{max-height:96vh;border-radius:16px}
+  .modal-foto{border-radius:16px 16px 0 0}
+  .modal-info{padding:20px 18px 22px}
+  .modal-info h3{font-size:20px}
+  .modal-actions{gap:8px}
+  .modal-actions .btn-add{flex:1 1 100%!important;order:5}
+  .drawer-foot{padding-bottom:max(16px,env(safe-area-inset-bottom))}
+  .zap-float{width:52px;height:52px;bottom:16px;right:16px}
+  footer{padding:26px 20px 18px}
+  .foot-grid{gap:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">🔥 Venda e instalação profissional de aquecedores a gás &nbsp;•&nbsp; Peça pelo WhatsApp — Pix e cartão em breve no site</div>
+
+<header>
+  <button class="icon-btn" id="btnSidebar" title="Categorias" aria-label="Abrir categorias">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+  </button>
+  <a class="logo" href="#" onclick="irInicio(event)">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1 4-4 6-4 11a5 5 0 0 0 10 0c0-2-1-3.5-2-5-.5 1.5-1.5 2-2.5 2C14.5 8 15 5 12 2z"/></svg>
+    <span class="logo-text">Servigás<small>Aquecedores</small></span>
+  </a>
+  <div class="search-wrap">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+    <input type="search" id="busca" placeholder="Buscar aquecedor, bomba, mangueira..." autocomplete="off">
+  </div>
+  <button class="icon-btn" id="btnTema" title="Alternar tema" aria-label="Alternar tema claro/escuro">
+    <svg id="iconeLua" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    <svg id="iconeSol" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+  </button>
+  <button class="icon-btn" id="btnCarrinho" title="Carrinho" aria-label="Abrir carrinho">
+    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    <span class="cart-count hidden" id="cartCount">0</span>
+  </button>
+</header>
+
+<div class="layout">
+  <div class="sb-backdrop" id="sbBackdrop"></div>
+  <aside class="sidebar" id="sidebar"><nav id="navCategorias"></nav></aside>
+
+  <main>
+    <section class="hero" id="hero">
+      <div>
+        <h1>Água quente na hora,<br>com <span>instalação profissional</span></h1>
+        <p>Aquecedores a gás das melhores marcas — Rheem, Rinnai, Komeco e Lorenzetti — além de bombas pressurizadoras e todos os acessórios para a sua instalação.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn-primary" onclick="verCategoria('aquecedores')">Ver aquecedores
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <button class="btn-ghost" onclick="abrirWhats()">Falar com especialista</button>
+        </div>
+      </div>
+      <svg class="hero-art" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1"><rect x="6" y="2.5" width="12" height="16" rx="2.5"/><path d="M12 6.5c.7 2.2-2.2 3.3-2.2 5.7a2.6 2.6 0 0 0 5.2 0c0-1.1-.5-1.9-1-2.7-.3.8-.8 1.1-1.3 1.1.4-1.3.2-2.7-.7-4.1z" fill="currentColor" stroke="none"/><path d="M9 18.5v3M15 18.5v3"/></svg>
+    </section>
+
+    <section class="perks">
+      <div class="perk"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 8h4l3 4v5a1 1 0 0 1-1 1h-2"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><div><b>Entrega rápida</b>na sua região</div></div>
+      <div class="perk"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg><div><b>Instalação inclusa</b>equipe especializada</div></div>
+      <div class="perk"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg><div><b>Garantia de fábrica</b>e suporte pós-venda</div></div>
+      <div class="perk"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><div><b>Pix e cartão</b>em breve no site</div></div>
+    </section>
+
+    <div class="toolbar">
+      <h2 id="tituloCat">Todos os produtos</h2>
+      <span class="count" id="contagem"></span>
+      <span id="chipFiltro"></span>
+      <select id="ordenar" title="Ordenar">
+        <option value="relevancia">Mais relevantes</option>
+        <option value="menor">Menor preço</option>
+        <option value="maior">Maior preço</option>
+        <option value="nome">Nome (A–Z)</option>
+      </select>
+    </div>
+
+    <div class="grid" id="grade"></div>
+    <div class="empty" id="vazio" style="display:none">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/><line x1="8.5" y1="8.5" x2="13.5" y2="13.5"/><line x1="13.5" y1="8.5" x2="8.5" y2="13.5"/></svg>
+      <p><b>Nenhum produto encontrado.</b><br>Tente outra busca ou categoria.</p>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <h4>🔥 Servigás Aquecedores</h4>
+      <p>Especialistas em aquecimento a gás: venda, instalação e manutenção de aquecedores das melhores marcas.</p>
+    </div>
+    <div>
+      <h4>Atendimento</h4>
+      <a href="#" onclick="abrirWhats();return false">WhatsApp: (00) 00000-0000</a>
+      <p>Seg. a sex. — 8h às 18h<br>Sábado — 8h às 12h</p>
+    </div>
+    <div>
+      <h4>Categorias</h4>
+      <a href="#" onclick="verCategoria('aquecedores');return false">Aquecedores a gás</a>
+      <a href="#" onclick="verCategoria('bombas');return false">Bombas pressurizadoras</a>
+      <a href="#" onclick="verCategoria('mangueiras');return false">Mangueiras</a>
+      <a href="#" onclick="verCategoria('registros');return false">Registros de gás</a>
+    </div>
+    <div>
+      <h4>Formas de pagamento</h4>
+      <p>Combinado pelo WhatsApp.<br>Em breve: Pix e cartão direto no site.</p>
+    </div>
+  </div>
+  <div class="foot-bottom">© 2026 Servigás Aquecedores — Todos os direitos reservados · <a href="#" style="display:inline" onclick="alert('Área do lojista: em breve você vai gerenciar os produtos por aqui, com login e senha.');return false">Área do lojista</a></div>
+</footer>
+
+<button class="zap-float" onclick="abrirWhats()" title="Falar no WhatsApp" aria-label="Falar no WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.89 1.22 3.09.15.2 2.11 3.22 5.1 4.51.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.58-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 1 1 8.38 4.63zM12.05 2A11.86 11.86 0 0 0 1.87 19.86L.19 24l4.24-1.11A11.82 11.82 0 0 0 12.05 24 11.86 11.86 0 0 0 24 12.07 11.86 11.86 0 0 0 12.05 2z"/></svg>
+</button>
+
+<!-- Modal de detalhes do produto -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" id="modalBox" role="dialog" aria-modal="true"></div>
+</div>
+
+<!-- Gaveta do carrinho -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h3>🛒 Seu carrinho</h3>
+    <button class="icon-btn" onclick="fecharCarrinho()" aria-label="Fechar carrinho">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="drawer-items" id="drawerItems"></div>
+  <div class="drawer-foot">
+    <div class="total-row"><span>Total</span><b id="cartTotal">R$ 0,00</b></div>
+    <button class="btn-checkout" id="btnCheckout" onclick="finalizarPedido()">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.89 1.22 3.09.15.2 2.11 3.22 5.1 4.51.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.58-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35z"/></svg>
+      Finalizar pedido no WhatsApp
+    </button>
+    <div class="pay-note">Você combina o pagamento e a entrega direto com a loja.<br>💳 Pix e cartão em breve, direto no site.</div>
+  </div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════════
+   ⚙️ CONFIGURAÇÃO DA LOJA — edite aqui!
+   ═══════════════════════════════════════════════════════════════════════════
+   WHATSAPP: troque pelo número real da loja, só dígitos, com 55 na frente.
+   Exemplo: '5547999998888' para (47) 99999-8888.                            */
+const WHATSAPP = '5500000000000';
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   📦 PRODUTOS — para gerenciar a loja, edite SOMENTE esta lista!
+   ═══════════════════════════════════════════════════════════════════════════
+   ➕ ADICIONAR: copie um bloco { ... }, cole antes do ] final e mude os dados.
+   ➖ REMOVER: apague o bloco { ... } inteiro do produto (inclusive a vírgula).
+   ✏️ EDITAR: mude o texto/número desejado, mantendo as aspas e vírgulas.
+
+   Campos de cada produto:
+   - id:        um código único qualquer (não repita!)
+   - nome:      nome que aparece na loja
+   - marca:     Rheem, Rinnai, Komeco, Lorenzetti... (aparece no cartão)
+   - categoria: 'aquecedores' | 'bombas' | 'mangueiras' | 'registros'
+                | 'acabamentos' | 'dutos'
+   - sub:       nas categorias com sub-lista: a marca (aquecedores/bombas)
+                ou o tipo 'Gás'/'Água' (mangueiras). Nas demais, deixe ''.
+   - preco:     preço em reais (use ponto p/ centavos: 1890.90).
+                Use null para mostrar "Sob consulta".
+   - precoAntigo: preço riscado da promoção — ou null se não tiver.
+   - destaque:  true = selo laranja "Destaque" | false = sem selo
+   - descricao: texto que aparece nos detalhes do produto
+   - specs:     lista de características, entre aspas e separadas por vírgula
+   - fotos:     lista de imagens do produto. Coloque os arquivos na pasta
+                "imagens" (ao lado deste index.html) e escreva assim:
+                fotos: ['imagens/aquecedor-rinnai.jpg', 'imagens/foto2.jpg']
+                Deixe [] para usar o desenho automático da categoria.       */
+const PRODUTOS = [
+
+  /* ──────────── AQUECEDORES A GÁS ──────────── */
+  { id: 'aq-rheem-18', nome: 'Aquecedor a gás Rheem 18 litros digital', marca: 'Rheem',
+    categoria: 'aquecedores', sub: 'Rheem', preco: 2590, precoAntigo: 2890, destaque: false,
+    descricao: 'Aquecedor de passagem digital com exaustão forçada, ideal para atender 2 pontos de água quente simultâneos com conforto.',
+    specs: ['Vazão: 18 L/min', 'Gás: GN ou GLP', 'Exaustão forçada', 'Painel digital', 'Garantia de 5 anos'],
+    fotos: [] },
+
+  { id: 'aq-rheem-26', nome: 'Aquecedor a gás Rheem 26 litros digital', marca: 'Rheem',
+    categoria: 'aquecedores', sub: 'Rheem', preco: 3790, precoAntigo: null, destaque: false,
+    descricao: 'Alta vazão para residências com 3 ou mais pontos de água quente. Controle preciso de temperatura.',
+    specs: ['Vazão: 26 L/min', 'Gás: GN ou GLP', 'Exaustão forçada', 'Painel digital', 'Garantia de 5 anos'],
+    fotos: [] },
+
+  { id: 'aq-rinnai-15', nome: 'Aquecedor a gás Rinnai REU-E15 15 litros', marca: 'Rinnai',
+    categoria: 'aquecedores', sub: 'Rinnai', preco: 1990, precoAntigo: null, destaque: true,
+    descricao: 'O queridinho das instalações residenciais: compacto, silencioso e muito econômico. Atende banho + pia com folga.',
+    specs: ['Vazão: 15 L/min', 'Gás: GN ou GLP', 'Exaustão forçada', 'Bivolt', 'Garantia de 5 anos'],
+    fotos: [] },
+
+  { id: 'aq-rinnai-21', nome: 'Aquecedor a gás Rinnai REU-E21 21 litros', marca: 'Rinnai',
+    categoria: 'aquecedores', sub: 'Rinnai', preco: 2890, precoAntigo: null, destaque: true,
+    descricao: 'Equilíbrio perfeito entre vazão e economia. Atende 2 chuveiros simultâneos mantendo a temperatura estável.',
+    specs: ['Vazão: 21 L/min', 'Gás: GN ou GLP', 'Exaustão forçada', 'Controle digital de temperatura', 'Garantia de 5 anos'],
+    fotos: [] },
+
+  { id: 'aq-rinnai-27', nome: 'Aquecedor a gás Rinnai REU-E27 27 litros', marca: 'Rinnai',
+    categoria: 'aquecedores', sub: 'Rinnai', preco: 3990, precoAntigo: null, destaque: false,
+    descricao: 'Para casas grandes e alto consumo: vazão de sobra para vários pontos ao mesmo tempo, com tecnologia japonesa.',
+    specs: ['Vazão: 27 L/min', 'Gás: GN ou GLP', 'Exaustão forçada', 'Controle digital de temperatura', 'Garantia de 5 anos'],
+    fotos: [] },
+
+  { id: 'aq-komeco-16', nome: 'Aquecedor a gás Komeco KO 16D 16 litros', marca: 'Komeco',
+    categoria: 'aquecedores', sub: 'Komeco', preco: 1690, precoAntigo: 1890, destaque: false,
+    descricao: 'Ótimo custo-benefício com display digital e chama modulante. Ideal para apartamentos e casas menores.',
+    specs: ['Vazão: 16 L/min', 'Gás: GN ou GLP', 'Exaustão forçada', 'Display digital', 'Garantia de 3 anos'],
+    fotos: [] },
+
+  { id: 'aq-komeco-22', nome: 'Aquecedor a gás Komeco KO 22D 22 litros', marca: 'Komeco',
+    categoria: 'aquecedores', sub: 'Komeco', preco: 2490, precoAntigo: null, destaque: false,
+    descricao: 'Vazão generosa por um preço acessível. Atende banheira e chuveiros com estabilidade de temperatura.',
+    specs: ['Vazão: 22 L/min', 'Gás: GN ou GLP', 'Exaustão forçada', 'Display digital', 'Garantia de 3 anos'],
+    fotos: [] },
+
+  { id: 'aq-lorenz-15', nome: 'Aquecedor a gás Lorenzetti LZ 1600DE 15 litros', marca: 'Lorenzetti',
+    categoria: 'aquecedores', sub: 'Lorenzetti', preco: 1590, precoAntigo: null, destaque: false,
+    descricao: 'Marca brasileira consagrada, fácil manutenção e peças sempre disponíveis. Excelente primeira instalação.',
+    specs: ['Vazão: 15 L/min', 'Gás: GN ou GLP', 'Exaustão forçada', 'Acendimento eletrônico', 'Garantia de 3 anos'],
+    fotos: [] },
+
+  { id: 'aq-lorenz-25', nome: 'Aquecedor a gás Lorenzetti LZ 2500DE 25 litros', marca: 'Lorenzetti',
+    categoria: 'aquecedores', sub: 'Lorenzetti', preco: 2790, precoAntigo: null, destaque: false,
+    descricao: 'Alta vazão nacional com comando digital de temperatura e proteção contra superaquecimento.',
+    specs: ['Vazão: 25 L/min', 'Gás: GN ou GLP', 'Exaustão forçada', 'Comando digital', 'Garantia de 3 anos'],
+    fotos: [] },
+
+  /* ──────────── BOMBAS PRESSURIZADORAS ──────────── */
+  { id: 'bb-komeco-120', nome: 'Bomba pressurizadora Komeco TP 820 G2 120W', marca: 'Komeco',
+    categoria: 'bombas', sub: 'Komeco', preco: 890, precoAntigo: 990, destaque: false,
+    descricao: 'Acaba com o banho fraco: pressuriza chuveiro e aquecedor com acionamento automático e operação silenciosa.',
+    specs: ['Potência: 120 W', 'Vazão máx.: 30 L/min', 'Acionamento automático por fluxo', 'Silenciosa', 'Garantia de 2 anos'],
+    fotos: [] },
+
+  { id: 'bb-komeco-245', nome: 'Bomba pressurizadora Komeco TP 825 G4 245W', marca: 'Komeco',
+    categoria: 'bombas', sub: 'Komeco', preco: 1190, precoAntigo: null, destaque: false,
+    descricao: 'Mais potência para casas com 2 banheiros ou tubulação longa. Pressão constante em todos os pontos.',
+    specs: ['Potência: 245 W', 'Vazão máx.: 40 L/min', 'Acionamento automático por fluxo', 'Corpo em latão', 'Garantia de 2 anos'],
+    fotos: [] },
+
+  { id: 'bb-rinnai-250', nome: 'Bomba pressurizadora Rinnai RB 250W', marca: 'Rinnai',
+    categoria: 'bombas', sub: 'Rinnai', preco: 1290, precoAntigo: null, destaque: true,
+    descricao: 'Qualidade Rinnai também na pressurização: robusta, estável e perfeita para trabalhar junto com o aquecedor.',
+    specs: ['Potência: 250 W', 'Vazão máx.: 42 L/min', 'Acionamento automático', 'Baixo ruído', 'Garantia de 2 anos'],
+    fotos: [] },
+
+  /* ──────────── MANGUEIRAS ──────────── */
+  { id: 'mg-gas-120', nome: 'Mangueira de gás flexível inox 1,20 m', marca: 'Universal',
+    categoria: 'mangueiras', sub: 'Gás', preco: 89, precoAntigo: null, destaque: false,
+    descricao: 'Mangueira em aço inox trançado com certificação, conexões 1/2" — segurança total na ligação do gás.',
+    specs: ['Comprimento: 1,20 m', 'Conexão: 1/2 pol.', 'Aço inox trançado', 'Certificada NBR 14177'],
+    fotos: [] },
+
+  { id: 'mg-gas-200', nome: 'Mangueira de gás flexível inox 2,00 m', marca: 'Universal',
+    categoria: 'mangueiras', sub: 'Gás', preco: 129, precoAntigo: null, destaque: false,
+    descricao: 'Versão mais longa para instalações onde o ponto de gás fica distante do aquecedor.',
+    specs: ['Comprimento: 2,00 m', 'Conexão: 1/2 pol.', 'Aço inox trançado', 'Certificada NBR 14177'],
+    fotos: [] },
+
+  { id: 'mg-agua-40', nome: 'Ligação flexível de água quente 40 cm', marca: 'Universal',
+    categoria: 'mangueiras', sub: 'Água', preco: 45, precoAntigo: null, destaque: false,
+    descricao: 'Flexível trançado em inox próprio para água quente, faz a ligação limpa entre o aquecedor e a tubulação.',
+    specs: ['Comprimento: 40 cm', 'Conexão: 1/2 pol.', 'Suporta água quente', 'Inox trançado'],
+    fotos: [] },
+
+  /* ──────────── REGISTROS DE GÁS ──────────── */
+  { id: 'rg-esfera-12', nome: 'Registro de gás esfera 1/2"', marca: 'Universal',
+    categoria: 'registros', sub: '', preco: 55, precoAntigo: null, destaque: false,
+    descricao: 'Registro tipo esfera com corpo em latão, fechamento rápido a 90° — item obrigatório de segurança.',
+    specs: ['Bitola: 1/2 pol.', 'Corpo em latão', 'Fechamento 1/4 de volta', 'Certificado'],
+    fotos: [] },
+
+  { id: 'rg-esfera-34', nome: 'Registro de gás esfera 3/4"', marca: 'Universal',
+    categoria: 'registros', sub: '', preco: 75, precoAntigo: null, destaque: false,
+    descricao: 'Para tubulações de maior bitola, mesma segurança e qualidade do modelo 1/2".',
+    specs: ['Bitola: 3/4 pol.', 'Corpo em latão', 'Fechamento 1/4 de volta', 'Certificado'],
+    fotos: [] },
+
+  /* ──────────── ACABAMENTOS ──────────── */
+  { id: 'ac-canopla-inox', nome: 'Kit canopla de acabamento inox', marca: 'Universal',
+    categoria: 'acabamentos', sub: '', preco: 69, precoAntigo: null, destaque: false,
+    descricao: 'Acabamento em inox escovado para a passagem do duto na parede — instalação com cara de obra terminada.',
+    specs: ['Material: inox escovado', 'Diâmetro: 60 mm', 'Fixação por encaixe'],
+    fotos: [] },
+
+  { id: 'ac-canopla-branca', nome: 'Canopla decorativa branca 60 mm', marca: 'Universal',
+    categoria: 'acabamentos', sub: '', preco: 39, precoAntigo: null, destaque: false,
+    descricao: 'Opção discreta em ABS branco para acabamento da exaustão em áreas internas.',
+    specs: ['Material: ABS', 'Cor: branca', 'Diâmetro: 60 mm'],
+    fotos: [] },
+
+  /* ──────────── DUTO DE EXAUSTÃO ──────────── */
+  { id: 'dt-aluminio-15', nome: 'Duto de exaustão alumínio Ø60 mm × 1,5 m', marca: 'Universal',
+    categoria: 'dutos', sub: '', preco: 119, precoAntigo: null, destaque: false,
+    descricao: 'Duto flexível em alumínio para conduzir os gases da combustão com total segurança até a área externa.',
+    specs: ['Diâmetro: 60 mm', 'Comprimento: 1,5 m (extensível)', 'Alumínio', 'Compatível com exaustão forçada'],
+    fotos: [] },
+
+  { id: 'dt-terminal', nome: 'Terminal de exaustão inox Ø60 mm', marca: 'Universal',
+    categoria: 'dutos', sub: '', preco: 149, precoAntigo: null, destaque: false,
+    descricao: 'Terminal externo em inox com proteção contra chuva e entrada de pássaros. Acabamento profissional.',
+    specs: ['Diâmetro: 60 mm', 'Inox 430', 'Proteção contra chuva e vento'],
+    fotos: [] },
+
+  { id: 'dt-sob-medida', nome: 'Kit de exaustão sob medida (projeto)', marca: 'Servigás',
+    categoria: 'dutos', sub: '', preco: null, precoAntigo: null, destaque: false,
+    descricao: 'Instalações especiais (prumadas longas, shafts, coletivos): nossa equipe dimensiona e monta o kit ideal.',
+    specs: ['Projeto personalizado', 'Visita técnica', 'Materiais certificados'],
+    fotos: [] },
+];
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   A partir daqui é o funcionamento do site — não precisa mexer. 🙂
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+const CATEGORIAS = [
+  { id: 'aquecedores', nome: 'Aquecedores a gás', sub: ['Rheem', 'Rinnai', 'Komeco', 'Lorenzetti'] },
+  { id: 'bombas',      nome: 'Bombas pressurizadoras', sub: ['Komeco', 'Rinnai'] },
+  { id: 'mangueiras',  nome: 'Mangueiras', sub: ['Gás', 'Água'] },
+  { id: 'registros',   nome: 'Registros de gás', sub: [] },
+  { id: 'acabamentos', nome: 'Acabamentos', sub: [] },
+  { id: 'dutos',       nome: 'Duto de exaustão', sub: [] },
+];
+
+// Ícones da barra lateral e desenhos-placeholder dos produtos (por categoria)
+const ICONES = {
+  todos: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
+  aquecedores: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="16" rx="2.5"/><path d="M12 6.5c.7 2.2-2.2 3.3-2.2 5.7a2.6 2.6 0 0 0 5.2 0c0-1.1-.5-1.9-1-2.7-.3.8-.8 1.1-1.3 1.1.4-1.3.2-2.7-.7-4.1z" fill="currentColor" stroke="none"/><path d="M9 18.5v3M15 18.5v3"/></svg>',
+  bombas: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="13" r="6"/><circle cx="11" cy="13" r="2"/><path d="M11 7V4h6v4M17 4h3"/><path d="M17 13h4"/></svg>',
+  mangueiras: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 8a4 4 0 0 1 8 0v8a4 4 0 0 0 8 0V8"/><path d="M2 8h4M18 14h4"/></svg>',
+  registros: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 14h20M4 14v4M20 14v4"/><path d="M12 14v-4"/><circle cx="12" cy="7" r="3"/></svg>',
+  acabamentos: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>',
+  dutos: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 8h10a4 4 0 0 1 4 4v8"/><path d="M3 14h8a2 2 0 0 1 2 2v4"/><path d="M3 8V4M21 20h-8"/></svg>',
+};
+
+const $ = (id) => document.getElementById(id);
+const fmtBRL = (n) => Number(n).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+// ────────────── Estado ──────────────
+let filtro = { cat: null, sub: null, busca: '', ordem: 'relevancia' };
+let carrinho = JSON.parse(localStorage.getItem('servigas-carrinho') || '[]');
+
+// ────────────── Tema claro/escuro ──────────────
+const temaSalvo = localStorage.getItem('servigas-tema') || 'light';
+document.documentElement.dataset.theme = temaSalvo;
+atualizarIconeTema();
+$('btnTema').onclick = () => {
+  const novo = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+  document.documentElement.dataset.theme = novo;
+  localStorage.setItem('servigas-tema', novo);
+  atualizarIconeTema();
+};
+function atualizarIconeTema() {
+  const escuro = document.documentElement.dataset.theme === 'dark';
+  $('iconeLua').style.display = escuro ? 'none' : '';
+  $('iconeSol').style.display = escuro ? '' : 'none';
+}
+
+// ────────────── Barra lateral ──────────────
+function montarSidebar() {
+  const nav = $('navCategorias');
+  let html = '<div class="sb-title">Categorias</div>';
+  html += `<button class="cat-btn ${!filtro.cat ? 'active' : ''}" onclick="verCategoria(null)">${ICONES.todos}<span class="label">Todos os produtos</span></button>`;
+  for (const c of CATEGORIAS) {
+    const temSub = c.sub.length > 0;
+    const aberta = filtro.cat === c.id && temSub;
+    const ativa = filtro.cat === c.id;
+    html += `<button class="cat-btn ${ativa ? 'active' : ''} ${aberta ? 'open' : ''}" onclick="verCategoria('${c.id}')">
+      ${ICONES[c.id]}<span class="label">${c.nome}</span>
+      ${temSub ? '<svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>' : ''}
+    </button>`;
+    if (temSub) {
+      html += `<div class="sub-list ${aberta ? 'open' : ''}">`;
+      html += `<button class="sub-btn ${ativa && !filtro.sub ? 'active' : ''}" onclick="verSub('${c.id}', null)">Ver tudo</button>`;
+      for (const s of c.sub) {
+        html += `<button class="sub-btn ${ativa && filtro.sub === s ? 'active' : ''}" onclick="verSub('${c.id}', '${s}')">${s}</button>`;
+      }
+      html += '</div>';
+    }
+  }
+  nav.innerHTML = html;
+}
+
+function verCategoria(id) {
+  filtro.cat = id; filtro.sub = null;
+  if (window.innerWidth > 900) document.body.classList.remove('sb-closed');
+  const c = CATEGORIAS.find(x => x.id === id);
+  if (!c || !c.sub.length) fecharSidebarMobile(); // sem sub-lista: já fecha o menu no celular
+  render();
+  if (id) $('tituloCat').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function verSub(cat, sub) {
+  filtro.cat = cat; filtro.sub = sub;
+  render();
+  fecharSidebarMobile();
+}
+function irInicio(e) {
+  e && e.preventDefault();
+  filtro = { ...filtro, cat: null, sub: null, busca: '' };
+  $('busca').value = '';
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+$('btnSidebar').onclick = () => {
+  if (window.innerWidth <= 900) document.body.classList.toggle('sb-open-mobile');
+  else document.body.classList.toggle('sb-closed');
+};
+$('sbBackdrop').onclick = fecharSidebarMobile;
+function fecharSidebarMobile() { document.body.classList.remove('sb-open-mobile'); }
+
+// ────────────── Busca e ordenação ──────────────
+$('busca').oninput = (e) => { filtro.busca = e.target.value.trim().toLowerCase(); render(); };
+$('ordenar').onchange = (e) => { filtro.ordem = e.target.value; render(); };
+
+// ────────────── Catálogo ──────────────
+function produtosFiltrados() {
+  let lista = PRODUTOS.filter(p =>
+    (!filtro.cat || p.categoria === filtro.cat) &&
+    (!filtro.sub || p.sub === filtro.sub) &&
+    (!filtro.busca || (p.nome + ' ' + p.marca + ' ' + p.descricao).toLowerCase().includes(filtro.busca))
+  );
+  if (filtro.ordem === 'menor') lista = lista.slice().sort((a, b) => (a.preco ?? 1e9) - (b.preco ?? 1e9));
+  if (filtro.ordem === 'maior') lista = lista.slice().sort((a, b) => (b.preco ?? 0) - (a.preco ?? 0));
+  if (filtro.ordem === 'nome')  lista = lista.slice().sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+  if (filtro.ordem === 'relevancia') lista = lista.slice().sort((a, b) => (b.destaque - a.destaque) || ((b.precoAntigo ? 1 : 0) - (a.precoAntigo ? 1 : 0)));
+  return lista;
+}
+
+function fotoOuIcone(p, tamanho) {
+  if (p.fotos && p.fotos.length) return `<img src="${p.fotos[0]}" alt="${p.nome}" loading="lazy">`;
+  return ICONES[p.categoria].replace('width="20" height="20"', `width="${tamanho}" height="${tamanho}" opacity="0.45"`);
+}
+
+function render() {
+  montarSidebar();
+  const lista = produtosFiltrados();
+  const cat = CATEGORIAS.find(c => c.id === filtro.cat);
+  $('tituloCat').textContent = filtro.busca ? `Resultados para "${filtro.busca}"` : (cat ? cat.nome : 'Todos os produtos');
+  $('contagem').textContent = `${lista.length} ${lista.length === 1 ? 'produto' : 'produtos'}`;
+  $('chipFiltro').innerHTML = filtro.sub
+    ? `<span class="chip">${filtro.sub} <svg onclick="verSub('${filtro.cat}', null)" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span>` : '';
+  $('hero').style.display = (filtro.cat || filtro.busca) ? 'none' : '';
+
+  $('vazio').style.display = lista.length ? 'none' : '';
+  $('grade').innerHTML = lista.map(p => `
+    <article class="card" onclick="abrirModal('${p.id}')">
+      <div class="card-img">
+        <div class="badges">
+          ${p.precoAntigo ? '<span class="badge promo">Promoção</span>' : ''}
+          ${p.destaque ? '<span class="badge destaque">Destaque</span>' : ''}
+        </div>
+        ${fotoOuIcone(p, 74)}
+      </div>
+      <div class="card-body">
+        <span class="marca">${p.marca}</span>
+        <span class="nome">${p.nome}</span>
+        ${p.preco != null ? `
+          ${p.precoAntigo ? `<span class="preco-antigo">${fmtBRL(p.precoAntigo)}</span>` : ''}
+          <span class="preco">${fmtBRL(p.preco)}</span>
+          <span class="parcela">em até 10x de ${fmtBRL(p.preco / 10)}</span>
+        ` : '<span class="consulta">Sob consulta</span>'}
+        <div class="card-actions">
+          ${p.preco != null ? `
+            <button class="btn-add" onclick="event.stopPropagation();addCarrinho('${p.id}', 1)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Adicionar
+            </button>` : `
+            <button class="btn-add" onclick="event.stopPropagation();consultarProduto('${p.id}')">Consultar</button>`}
+          <button class="btn-zap" title="Perguntar no WhatsApp" onclick="event.stopPropagation();consultarProduto('${p.id}')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.89 1.22 3.09.15.2 2.11 3.22 5.1 4.51.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.58-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35z"/></svg>
+          </button>
+        </div>
+      </div>
+    </article>`).join('');
+}
+
+// ────────────── Modal de produto ──────────────
+let qtdModal = 1;
+function abrirModal(id) {
+  const p = PRODUTOS.find(x => x.id === id);
+  if (!p) return;
+  qtdModal = 1;
+  const temFotos = p.fotos && p.fotos.length;
+  $('modalBox').innerHTML = `
+    <button class="modal-close" onclick="fecharModal()" aria-label="Fechar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+    </button>
+    <div class="modal-grid">
+      <div>
+        <div class="modal-foto" id="modalFoto">${temFotos ? `<img src="${p.fotos[0]}" alt="${p.nome}">` : fotoOuIcone(p, 120)}</div>
+        ${temFotos && p.fotos.length > 1 ? `<div class="thumbs">${p.fotos.map((f, i) =>
+          `<img src="${f}" class="${i === 0 ? 'sel' : ''}" onclick="trocarFoto(this,'${f}')" alt="Foto ${i + 1}">`).join('')}</div>` : ''}
+      </div>
+      <div class="modal-info">
+        <span class="marca">${p.marca}</span>
+        <h3>${p.nome}</h3>
+        <p class="desc">${p.descricao}</p>
+        <ul class="specs">${p.specs.map(s => `<li>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>${s}</li>`).join('')}
+        </ul>
+        <div class="modal-preco-box">
+          ${p.preco != null ? `
+            ${p.precoAntigo ? `<span class="preco-antigo">${fmtBRL(p.precoAntigo)}</span>` : ''}
+            <div class="preco" style="font-size:26px">${fmtBRL(p.preco)}</div>
+            <span class="parcela">em até 10x de ${fmtBRL(p.preco / 10)} sem juros</span>
+          ` : '<div class="consulta" style="font-size:20px">Sob consulta</div><span style="font-size:13px;color:var(--text-secondary)">Fale com a gente para um orçamento personalizado.</span>'}
+        </div>
+        <div class="modal-actions">
+          ${p.preco != null ? `
+            <div class="qty">
+              <button onclick="mudarQtd(-1)">−</button><span id="qtdModal">1</span><button onclick="mudarQtd(1)">+</button>
+            </div>
+            <button class="btn-add" style="flex:1;padding:12px" onclick="addCarrinho('${p.id}', qtdModal);fecharModal()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              Adicionar ao carrinho
+            </button>` : ''}
+          <button class="btn-zap" style="padding:12px 16px;${p.preco == null ? 'flex:1' : ''}" onclick="consultarProduto('${p.id}')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.89 1.22 3.09.15.2 2.11 3.22 5.1 4.51.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.58-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35z"/></svg>
+            ${p.preco == null ? 'Pedir orçamento' : ''}
+          </button>
+        </div>
+      </div>
+    </div>`;
+  $('modalBackdrop').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function trocarFoto(el, src) {
+  $('modalFoto').innerHTML = `<img src="${src}">`;
+  el.parentElement.querySelectorAll('img').forEach(i => i.classList.remove('sel'));
+  el.classList.add('sel');
+}
+function mudarQtd(d) { qtdModal = Math.max(1, qtdModal + d); $('qtdModal').textContent = qtdModal; }
+function fecharModal() { $('modalBackdrop').classList.remove('show'); document.body.style.overflow = ''; }
+$('modalBackdrop').onclick = (e) => { if (e.target === $('modalBackdrop')) fecharModal(); };
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { fecharModal(); fecharCarrinho(); fecharSidebarMobile(); } });
+
+// ────────────── Carrinho ──────────────
+function salvarCarrinho() { localStorage.setItem('servigas-carrinho', JSON.stringify(carrinho)); }
+
+function addCarrinho(id, qtd) {
+  const item = carrinho.find(i => i.id === id);
+  if (item) item.qtd += qtd; else carrinho.push({ id, qtd });
+  salvarCarrinho(); renderCarrinho();
+  toast('Adicionado ao carrinho!');
+}
+function mudarQtdCarrinho(id, d) {
+  const item = carrinho.find(i => i.id === id);
+  if (!item) return;
+  item.qtd += d;
+  if (item.qtd <= 0) carrinho = carrinho.filter(i => i.id !== id);
+  salvarCarrinho(); renderCarrinho();
+}
+function removerCarrinho(id) {
+  carrinho = carrinho.filter(i => i.id !== id);
+  salvarCarrinho(); renderCarrinho();
+}
+
+function renderCarrinho() {
+  const n = carrinho.reduce((s, i) => s + i.qtd, 0);
+  $('cartCount').textContent = n;
+  $('cartCount').classList.toggle('hidden', n === 0);
+
+  let total = 0;
+  if (!carrinho.length) {
+    $('drawerItems').innerHTML = '<div class="empty" style="padding:40px 10px"><p>Seu carrinho está vazio.<br>Explore o catálogo e adicione produtos! 🔥</p></div>';
+  } else {
+    $('drawerItems').innerHTML = carrinho.map(i => {
+      const p = PRODUTOS.find(x => x.id === i.id);
+      if (!p) return '';
+      total += (p.preco || 0) * i.qtd;
+      return `<div class="cart-item">
+        <div class="thumb">${fotoOuIcone(p, 30)}</div>
+        <div class="info">
+          <b>${p.nome}</b>
+          <span class="p">${fmtBRL(p.preco || 0)}</span>
+          <div class="qty"><button onclick="mudarQtdCarrinho('${i.id}',-1)">−</button><span>${i.qtd}</span><button onclick="mudarQtdCarrinho('${i.id}',1)">+</button></div>
+        </div>
+        <button class="rm" onclick="removerCarrinho('${i.id}')" title="Remover" aria-label="Remover item">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+        </button>
+      </div>`;
+    }).join('');
+  }
+  $('cartTotal').textContent = fmtBRL(total);
+  $('btnCheckout').disabled = !carrinho.length;
+}
+
+$('btnCarrinho').onclick = () => { $('drawer').classList.add('show'); $('drawerBackdrop').classList.add('show'); };
+function fecharCarrinho() { $('drawer').classList.remove('show'); $('drawerBackdrop').classList.remove('show'); }
+$('drawerBackdrop').onclick = fecharCarrinho;
+
+// ────────────── WhatsApp ──────────────
+function abrirWhats(msg) {
+  const texto = msg || 'Olá! Vim pelo site da Servigás e gostaria de mais informações. 🙂';
+  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(texto)}`, '_blank');
+}
+function consultarProduto(id) {
+  const p = PRODUTOS.find(x => x.id === id);
+  abrirWhats(`Olá! Tenho interesse no produto: *${p.nome}*${p.preco != null ? ` (${fmtBRL(p.preco)})` : ''}. Pode me passar mais informações?`);
+}
+function finalizarPedido() {
+  if (!carrinho.length) return;
+  let total = 0;
+  const linhas = carrinho.map(i => {
+    const p = PRODUTOS.find(x => x.id === i.id);
+    total += (p.preco || 0) * i.qtd;
+    return `• ${i.qtd}x ${p.nome} — ${fmtBRL((p.preco || 0) * i.qtd)}`;
+  });
+  abrirWhats(`Olá! Gostaria de fazer um pedido pelo site: 🛒\n\n${linhas.join('\n')}\n\n*Total: ${fmtBRL(total)}*\n\nComo faço para combinar pagamento e entrega?`);
+}
+
+// ────────────── Toast ──────────────
+let toastTimer;
+function toast(msg) {
+  const t = $('toast');
+  t.innerHTML = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>${msg}`;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ────────────── Altura real do cabeçalho (no celular ele tem 2 linhas) ──────────────
+function ajustarAlturaHeader() {
+  document.documentElement.style.setProperty('--header-h', document.querySelector('header').offsetHeight + 'px');
+}
+window.addEventListener('resize', ajustarAlturaHeader);
+
+// ────────────── Início ──────────────
+render();
+renderCarrinho();
+ajustarAlturaHeader();
+</script>
+</body>
+</html>

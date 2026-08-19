@@ -1,0 +1,3 @@
+Coloque aqui as fotos dos produtos (JPG, PNG ou WebP).
+Depois, no index.html, escreva no produto:  fotos: ['imagens/nome-do-arquivo.jpg']
+Dica: fotos quadradas de até 800x800 pixels carregam mais rapido.
