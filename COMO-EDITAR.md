@@ -53,8 +53,9 @@ pelo número real, só dígitos, com `55` na frente. Ex.: `5547999998888`.
 
 ## 🚀 Publicar as mudanças
 
-Enquanto o site estiver na Vercel, é preciso fazer um novo deploy após
-editar o `index.html` (o Claude faz isso para você — é só pedir).
+O site está conectado ao GitHub: depois de editar, basta fazer **commit**
+e **sincronizar (push)** — no VS Code, botão "Sync Changes". A Vercel
+percebe a mudança e atualiza o site sozinha em ~30 segundos.
 
 ## 🔜 Próximos passos combinados
 
