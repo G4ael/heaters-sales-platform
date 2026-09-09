@@ -160,6 +160,27 @@ header.rolou{border-bottom-color:var(--border);box-shadow:var(--shadow-sm)}
 .marca-trilho.visto span{width:100%}
 @keyframes preencher{from{width:0}to{width:100%}}
 
+/* card do produto em destaque, gira junto com a marca */
+.destaque-card{
+  width:224px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+  border-radius:var(--r);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  overflow:hidden;text-align:left;padding:0;cursor:pointer;
+  transition:transform .25s var(--ease),border-color .25s,background .25s;
+}
+.destaque-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.32);background:rgba(255,255,255,.12)}
+.destaque-foto{
+  height:132px;background:rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.28);overflow:hidden;
+}
+.destaque-foto img{width:100%;height:100%;object-fit:cover}
+.destaque-txt{padding:12px 14px 14px}
+.destaque-txt .n{
+  font-size:12.5px;font-weight:600;color:#fff;line-height:1.35;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.destaque-txt .v{font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--accent);margin-top:6px;letter-spacing:-.02em}
+.destaque-card.entrando{animation:slideUpFade .55s var(--ease)}
+
 /* rolagem indicada */
 .hero-scroll{
   position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:2;
@@ -433,6 +454,12 @@ footer a:hover{color:var(--accent)}
   .marcas-rot{align-items:flex-start}
   .marca-slide{text-align:left;min-height:82px;width:100%}
   .marca-trilhos{width:min(260px,100%)}
+  .marcas-rot{flex-direction:row;align-items:flex-end;gap:var(--s3);flex-wrap:wrap}
+  .destaque-card{width:190px;display:flex;align-items:center}
+  .destaque-foto{height:64px;width:64px;flex-shrink:0}
+  .destaque-txt{padding:10px 12px}
+  .destaque-txt .n{-webkit-line-clamp:2;font-size:12px}
+  .destaque-txt .v{font-size:15px}
 }
 @media(max-width:900px){
   .sidebar{position:fixed;left:0;top:var(--header-h);z-index:55;transform:translateX(-100%);transition:transform .3s var(--ease);width:280px!important;height:calc(100vh - var(--header-h));max-height:none;background:var(--bg-elevated);border-right:1px solid var(--border);box-shadow:var(--shadow-lg);padding:var(--s3) 12px}
@@ -537,6 +564,7 @@ footer a:hover{color:var(--accent)}
 
     <!-- marcas em rotação automática -->
     <div class="marcas-rot" id="marcasRot">
+      <button class="destaque-card" id="destaqueCard" hidden></button>
       <div class="marca-slide" id="marcaSlide"></div>
       <div class="marca-trilhos" id="marcaTrilhos"></div>
     </div>
@@ -1247,6 +1275,36 @@ function contarDaMarca(m) {
     && (p.marca || '').toLowerCase() === m.toLowerCase()).length;
 }
 
+// Produto que representa a marca no herói: prioriza quem tem foto,
+// depois o marcado como destaque, depois o mais caro (o carro-chefe).
+function produtoDaMarca(nome) {
+  const lista = PRODUTOS.filter(p => p.categoria === 'aquecedores'
+    && (p.marca || '').toLowerCase() === nome.toLowerCase());
+  if (!lista.length) return null;
+  return lista.slice().sort((a, b) =>
+    ((b.fotos || []).length ? 1 : 0) - ((a.fotos || []).length ? 1 : 0) ||
+    (b.destaque - a.destaque) ||
+    ((b.preco || 0) - (a.preco || 0)))[0];
+}
+
+function pintarDestaque(prod, animar) {
+  const card = $('destaqueCard');
+  if (!card) return;
+  if (!prod) { card.hidden = true; return; }
+  card.hidden = false;
+  const foto = (prod.fotos || [])[0];
+  card.innerHTML = `
+    <div class="destaque-foto">${foto
+      ? `<img src="${foto}" alt="${prod.nome}" fetchpriority="high" decoding="async">`
+      : fotoOuIcone(prod, 52)}</div>
+    <div class="destaque-txt">
+      <div class="n">${prod.nome}</div>
+      ${prod.preco != null ? `<div class="v">${fmtBRL(prod.preco)}</div>` : '<div class="v">Sob consulta</div>'}
+    </div>`;
+  card.onclick = () => abrirModal(prod.id);
+  if (animar) { card.classList.remove('entrando'); void card.offsetWidth; card.classList.add('entrando'); }
+}
+
 function pintarMarca(i, animar = true) {
   marcaAtual = (i + MARCAS_HERO.length) % MARCAS_HERO.length;
   const m = MARCAS_HERO[marcaAtual];
@@ -1258,6 +1316,7 @@ function pintarMarca(i, animar = true) {
     <div class="marca-desc">${m.desc}</div>
     ${n ? `<div class="marca-qtd">${n} ${n === 1 ? 'modelo disponível' : 'modelos disponíveis'}</div>` : ''}`;
   if (animar) { slide.classList.remove('entrando'); void slide.offsetWidth; slide.classList.add('entrando'); }
+  pintarDestaque(produtoDaMarca(m.nome), animar);
 
   // barrinhas de progresso
   const trilhos = $('marcaTrilhos');
