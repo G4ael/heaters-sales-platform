@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-24T20:27:38Z",
+  "title": "Design System: Servigás Aquecedores",
+  "extensions": {
+    "colorMeta": {
+      "laranja-marca": {
+        "role": "primary",
+        "displayName": "Laranja da Marca",
+        "canonical": "#EA580C",
+        "tonalRamp": [
+          "#FDBA74",
+          "#EA580C",
+          "#C2410C",
+          "#3B1606"
+        ]
+      },
+      "azul-agua": {
+        "role": "secondary",
+        "displayName": "Azul-Água",
+        "canonical": "#0B4FB3",
+        "tonalRamp": [
+          "#E8F0FB",
+          "#7FB0F5",
+          "#0B4FB3"
+        ]
+      },
+      "tinta": {
+        "role": "neutral",
+        "displayName": "Tinta",
+        "canonical": "#111111",
+        "tonalRamp": [
+          "#111111",
+          "#55575F",
+          "#6A6C74",
+          "#D2D2D8",
+          "#E6E6EA",
+          "#E8E8EC",
+          "#F2F2F4",
+          "#FFFFFF"
+        ]
+      },
+      "verde-whatsapp": {
+        "role": "semantic",
+        "displayName": "Verde WhatsApp",
+        "canonical": "#15803D"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Só o título do herói."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Títulos de seção e do rodapé."
+      },
+      "body": {
+        "displayName": "Corpo",
+        "purpose": "Texto corrido, nomes de produto e interface."
+      },
+      "price": {
+        "displayName": "Preço",
+        "purpose": "Preços com números tabulares."
+      }
+    },
+    "shadows": [
+      {
+        "name": "pilula-flutuante",
+        "value": "0 10px 24px -10px rgba(0,0,0,.4)",
+        "purpose": "Pílula de preço e botão branco sobre o laranja."
+      },
+      {
+        "name": "bolha",
+        "value": "0 18px 30px -18px rgba(0,0,0,.45)",
+        "purpose": "Bolha azul sobre a imagem do herói."
+      },
+      {
+        "name": "cartao-hover",
+        "value": "0 0 0 1px #E6E6EA, 0 18px 40px -24px rgba(0,0,0,.35)",
+        "purpose": "Cartão de produto em hover."
+      },
+      {
+        "name": "recorte-produto",
+        "value": "drop-shadow(0 28px 24px rgba(59,22,6,.35))",
+        "purpose": "Aquecedores recortados sobre o laranja (filter)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-saida",
+        "value": "cubic-bezier(.16,1,.3,1)",
+        "purpose": "Todas as transições e a entrada do herói."
+      },
+      {
+        "name": "entrada-heroi",
+        "value": "1.1s",
+        "purpose": "O bloco laranja acende uma vez ao carregar; nada mais anima na entrada."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "480px"
+      },
+      {
+        "name": "md",
+        "value": "760px"
+      },
+      {
+        "name": "hero",
+        "value": "900px"
+      },
+      {
+        "name": "loja",
+        "value": "1000px"
+      },
+      {
+        "name": "lg",
+        "value": "1100px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botão preto",
+      "kind": "button",
+      "refersTo": "button-preto",
+      "description": "Ação principal sobre fundo claro.",
+      "html": "<button class=\"ds-btn-preto\">Adicionar ao pedido</button>",
+      "css": ".ds-btn-preto{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;border:0;border-radius:999px;background:#111;color:#fff;font:600 15.5px Onest,system-ui,sans-serif;transition:transform .25s cubic-bezier(.16,1,.3,1)}.ds-btn-preto:hover{transform:translateY(-2px)}"
+    },
+    {
+      "name": "Carrinho redondo",
+      "kind": "button",
+      "refersTo": "button-carrinho-redondo",
+      "description": "Adicionar direto do cartão de produto.",
+      "html": "<button class=\"ds-carrinho\" aria-label=\"Adicionar ao pedido\">+</button>",
+      "css": ".ds-carrinho{width:44px;height:44px;border-radius:50%;border:0;background:#111;color:#fff;font:700 20px Onest,system-ui,sans-serif;transition:transform .25s,background .2s}.ds-carrinho:hover{transform:scale(1.08);background:#EA580C;color:#111}"
+    },
+    {
+      "name": "Selo de desconto",
+      "kind": "chip",
+      "refersTo": "selo-desconto",
+      "description": "Percentual calculado do preço antigo.",
+      "html": "<span class=\"ds-selo\">-10%</span>",
+      "css": ".ds-selo{display:inline-block;background:#EA580C;color:#111;border-radius:999px;padding:4px 10px;font:700 12.5px Onest,system-ui,sans-serif}"
+    }
+  ],
+  "narrative": {
+    "northStar": "O Misturador",
+    "overview": "Quente (laranja da marca) e fria (azul-água) como sistema de cor, cada um no seu bloco, com branco, cinza-claro e preto em volta. Forma macia (28px e pílulas) e densidade de loja.",
+    "keyCharacteristics": [
+      "Herói em bloco laranja com aquecedores recortados",
+      "Bloco azul com o controle de chuveiros e preço por faixa",
+      "Faixa preta com os quatro diferenciais",
+      "Cartões sem borda sobre tile cinza"
+    ],
+    "rules": [
+      {
+        "name": "A Regra do Misturador",
+        "body": "Laranja e azul nunca dividem a mesma superfície; só se encontram no trilho do controle de chuveiros.",
+        "section": "colors"
+      },
+      {
+        "name": "A Regra do Verde Único",
+        "body": "Verde é só o WhatsApp.",
+        "section": "colors"
+      },
+      {
+        "name": "A Regra do Título Curto",
+        "body": "Unbounded só em frases de até seis palavras.",
+        "section": "typography"
+      },
+      {
+        "name": "A Regra do Plano em Repouso",
+        "body": "Nenhum cartão tem sombra parado.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do mostrar banhos e vazão em todo aquecedor",
+      "Do terminar todo fluxo no WhatsApp"
+    ],
+    "donts": [
+      "Don't anunciar parcelamento",
+      "Don't inventar mais vendidos, avaliações ou prazos",
+      "Don't usar eyebrow acima de título"
+    ]
+  }
+}

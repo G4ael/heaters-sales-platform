@@ -36,6 +36,7 @@ A Servigás não é só revenda: é assistência técnica autorizada e a instala
 - Banner real: `imagens/banner-aquecedores.webp` e `imagens/banner-aquecedores-1440.webp`.
 - Fotos de produto vêm do Supabase; os produtos de demonstração não têm foto.
 - Não existem: depoimentos, número de clientes, avaliações, ranking de mais vendidos, prazo de promoção. Nada disso pode ser inventado.
+- Parcelamento não é anunciado (confirmado pelo dono): o pagamento é combinado pelo WhatsApp.
 
 ## Product Principles
 - Falar em chuveiros e banhos, não em especificação técnica, e traduzir a especificação quando ela aparecer.
