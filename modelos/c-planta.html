@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Servigás Aquecedores · Modelo C · Planta</title>
+<meta name="description" content="Marque os pontos de água quente da sua casa e veja o aquecedor a gás indicado. Instalação inclusa e assistência técnica autorizada.">
+<meta name="theme-color" content="#F7F8F9">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════ MODELO C — PLANTA HIDRÁULICA ═══════════
+   A casa desenhada como planta: traço fino, tubo quente em laranja,
+   tubo frio em azul-aço, carimbo de projeto. Uma família só: Archivo,
+   larga nos títulos e estreita nos rótulos e cotas.                     */
+:root{
+  --papel:#F7F8F9; --folha:#FFFFFF; --tinta:#1B1F24; --tinta-2:#565D66; --tinta-3:#646A73;
+  --quente:#EA580C; --quente-escuro:#C2410C; --frio:#5B7C99; --gas:#C99A06;
+  --linha:#D9DDE2; --linha-forte:#1B1F24; --grade:rgba(27,31,36,.07);
+  --f:'Archivo',system-ui,sans-serif;
+  --s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:64px;--s7:96px;
+  --larg:1320px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --lj-superficie:var(--folha);--lj-texto:var(--tinta);--lj-texto-2:var(--tinta-2);--lj-linha:var(--linha);--lj-linha-forte:var(--tinta);
+  --lj-acento:var(--quente);--lj-acento-texto:#111;--lj-acento-escuro:var(--quente-escuro);--lj-palco:var(--papel);
+  --lj-raio:2px;--lj-raio-btn:2px;--lj-fonte-titulo:var(--f);
+  --ilu-corpo:#FFFFFF;--ilu-linha:#1B1F24;--ilu-metal:#D4D8DD;--ilu-escuro:#1B1F24;--ilu-quente:#EA580C;--ilu-frio:#5B7C99;--ilu-gas:#E0A80D;
+}
+:root[data-theme="dark"]{
+  --papel:#101316; --folha:#161A1E; --tinta:#E4E7EB; --tinta-2:#A2A9B2; --tinta-3:#8C939C;
+  --frio:#86A6C2; --quente-escuro:#FB923C;
+  --linha:#2A3036; --linha-forte:#E4E7EB; --grade:rgba(228,231,235,.06);
+  --ilu-corpo:#E4E7EB;--ilu-linha:#101316;--ilu-metal:#9AA3AD;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:88px;-webkit-text-size-adjust:100%;scrollbar-color:var(--tinta-3) var(--papel)}
+body{margin:0;font-family:var(--f);font-size:16px;line-height:1.55;background:var(--papel);color:var(--tinta);overflow-x:hidden;caret-color:var(--quente);font-variant-numeric:tabular-nums}
+::selection{background:var(--quente);color:#111}
+img{max-width:100%;display:block}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;touch-action:manipulation}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--quente);outline-offset:3px}
+.lj-ic{flex:none}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.envelope{max-width:var(--larg);margin:0 auto;padding:0 var(--s2)}
+@media (min-width:760px){.envelope{padding:0 var(--s4)}}
+.estreito{font-stretch:72%;letter-spacing:.02em;text-transform:uppercase;font-weight:600}
+.papel-grade{background-color:var(--papel);background-image:radial-gradient(var(--grade) 1.2px,transparent 1.3px);background-size:16px 16px}
+
+/* ─── cabeçalho ─── */
+.cab{position:sticky;top:0;z-index:40;background:var(--papel);border-bottom:1px solid var(--linha-forte)}
+.cab .envelope{display:flex;align-items:center;gap:var(--s3);min-height:64px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none}
+.logo svg{color:var(--quente)}
+.logo b{font-stretch:125%;font-weight:800;font-size:19px;letter-spacing:-.02em}
+.logo small{font-stretch:72%;text-transform:uppercase;letter-spacing:.08em;font-size:12px;color:var(--tinta-2);font-weight:600;border-left:1px solid var(--linha);padding-left:10px}
+.cab-nav{display:none;gap:var(--s3);margin-left:var(--s3)}
+.cab-nav a{text-decoration:none;font-size:15px;font-weight:500;color:var(--tinta-2);padding:8px 0}
+.cab-nav a:hover{color:var(--tinta);text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px;text-decoration-color:var(--quente)}
+@media (min-width:980px){.cab-nav{display:flex}}
+.cab-acoes{margin-left:auto;display:flex;align-items:center;gap:4px}
+.icone-btn{width:44px;height:44px;border:0;background:none;display:grid;place-items:center;color:var(--tinta)}
+.icone-btn:hover{color:var(--quente-escuro)}
+.btn-pedido{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 16px;border:1px solid var(--linha-forte);background:var(--folha);font-weight:600;font-size:14.5px}
+.btn-pedido:hover{background:var(--tinta);color:var(--papel)}
+.btn-pedido output{min-width:22px;height:22px;display:grid;place-items:center;background:var(--quente);color:#111;font-size:12px;font-weight:700;padding:0 5px}
+@media (max-width:520px){.logo small{display:none}.btn-pedido span.txt{display:none}.btn-pedido{padding:0 12px}}
+
+/* ─── herói: a planta ─── */
+.heroi{border-bottom:1px solid var(--linha-forte)}
+.heroi .envelope{display:grid;gap:var(--s4);padding-top:var(--s5);padding-bottom:var(--s5)}
+.heroi .envelope>*{min-width:0}
+.heroi h1{font-stretch:125%;font-weight:800;font-size:clamp(34px,4.6vw,64px);line-height:.98;letter-spacing:-.035em;margin:0 0 var(--s3);text-wrap:balance}
+.heroi h1 em{font-style:normal;color:var(--quente-escuro)}
+.heroi-texto p{font-size:clamp(16px,1.3vw,18px);color:var(--tinta-2);max-width:44ch;margin:0 0 var(--s4)}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 22px;border:1px solid var(--linha-forte);font-weight:600;font-size:15px;text-decoration:none;background:var(--folha);transition:background .2s,color .2s}
+.btn:hover{background:var(--tinta);color:var(--papel)}
+.btn-quente{background:var(--quente);border-color:var(--quente);color:#111}
+.btn-quente:hover{background:var(--tinta);border-color:var(--tinta);color:var(--papel)}
+@media (min-width:1040px){.heroi .envelope{grid-template-columns:minmax(340px,.8fr) 1.2fr;align-items:center;padding-top:var(--s6);padding-bottom:var(--s6)}}
+
+/* prancha com a planta */
+.prancha-planta{position:relative;border:1px solid var(--linha-forte);background:var(--folha)}
+.planta{position:relative}
+.planta svg{display:block;width:100%;height:auto}
+.parede{fill:none;stroke:var(--tinta);stroke-width:5;stroke-linecap:square}
+.parede-fina{fill:none;stroke:var(--tinta);stroke-width:1.2}
+.porta{fill:none;stroke:var(--tinta-3);stroke-width:1;stroke-dasharray:3 3}
+.movel{fill:none;stroke:var(--tinta-2);stroke-width:1.2}
+.comodo{font-stretch:72%;font-size:11px;font-weight:600;letter-spacing:.08em;fill:var(--tinta-3);text-transform:uppercase}
+.cota{font-stretch:72%;font-size:10px;fill:var(--tinta-3)}
+.tubo{fill:none;stroke:var(--linha);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;transition:stroke .35s}
+.tubo.on{stroke:var(--quente);stroke-dasharray:7 7;animation:fluxo 1s linear infinite}
+@keyframes fluxo{to{stroke-dashoffset:-14}}
+.tubo-frio{fill:none;stroke:var(--frio);stroke-width:2;stroke-dasharray:2 4}
+.tubo-gas{fill:none;stroke:var(--gas);stroke-width:2.5}
+.aquecedor-planta rect{fill:var(--tinta)}
+.aquecedor-planta text{fill:var(--papel);font-size:10px;font-weight:700;font-stretch:72%}
+@media (prefers-reduced-motion:reduce){.tubo.on{animation:none;stroke-dasharray:none}}
+.ponto{position:absolute;translate:-50% -50%;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--tinta);background:var(--folha);display:grid;place-items:center;color:var(--tinta);transition:background .25s,color .25s,box-shadow .3s var(--ease),border-color .25s;z-index:2}
+.ponto .lj-ic{width:20px;height:20px}
+.ponto:hover{box-shadow:0 0 0 6px color-mix(in srgb,var(--quente) 18%,transparent)}
+.ponto[aria-pressed="true"]{background:var(--quente);border-color:var(--quente);color:#111;box-shadow:0 0 0 6px color-mix(in srgb,var(--quente) 22%,transparent)}
+.ponto-rot{position:absolute;left:50%;top:calc(100% + 4px);translate:-50% 0;white-space:nowrap;font-stretch:72%;font-size:11.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;background:var(--folha);padding:1px 5px;color:var(--tinta-2);pointer-events:none}
+.ponto[aria-pressed="true"] .ponto-rot{color:var(--quente-escuro)}
+@media (max-width:700px){.ponto-rot{display:none}.ponto{width:40px;height:40px}}
+
+/* carimbo (bloco de título da prancha) = resultado */
+.carimbo{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--linha-forte)}
+.carimbo>div{padding:12px 16px;border-right:1px solid var(--linha);min-width:0}
+.carimbo>div:nth-child(2n){border-right:0}
+.carimbo dt{font-stretch:72%;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-3);font-weight:600}
+.carimbo dd{margin:2px 0 0;font-weight:700;font-size:18px}
+.carimbo .grande{grid-column:1/-1;border-top:1px solid var(--linha);border-right:0}
+.carimbo .grande dd{font-stretch:125%;font-weight:800;font-size:30px;line-height:1.05;letter-spacing:-.02em}
+.carimbo .indicado{grid-column:1/-1;border-top:1px solid var(--linha);border-right:0;display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:center}
+.carimbo .indicado .mini{width:64px;height:64px;background:var(--papel);padding:4px}
+.carimbo .indicado dd{font-size:16px;line-height:1.3}
+.carimbo .indicado dd small{display:block;font-weight:500;color:var(--tinta-2);font-size:14px;margin-top:2px}
+.carimbo .indicado .acoes{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+.carimbo .indicado .btn{min-height:44px;flex:1}
+@media (min-width:640px){
+  .carimbo{grid-template-columns:repeat(3,1fr)}
+  .carimbo>div:nth-child(2n){border-right:1px solid var(--linha)}
+  .carimbo>div:nth-child(3){border-right:0}
+  .carimbo .grande{grid-column:auto;border-top:0}
+  .carimbo .indicado{grid-template-columns:64px 1fr auto}
+  .carimbo .indicado .acoes{grid-column:auto}
+  .carimbo .indicado .btn{flex:none}
+}
+.lista-pontos{display:flex;flex-wrap:wrap;gap:6px;padding:12px 16px;border-top:1px solid var(--linha)}
+.lista-pontos button{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 10px;border:1px solid var(--linha);background:var(--folha);font-size:13px;font-weight:600}
+.lista-pontos button[aria-pressed="true"]{border-color:var(--quente);background:color-mix(in srgb,var(--quente) 12%,var(--folha));color:var(--tinta)}
+.lista-pontos .lj-ic{width:16px;height:16px}
+@media (min-width:701px){.lista-pontos{display:none}}
+.aviso-planta{padding:10px 16px;border-top:1px solid var(--linha);font-size:13px;color:var(--tinta-2);display:flex;gap:8px;align-items:center}
+.aviso-planta .lj-ic{width:16px;height:16px;color:var(--frio)}
+
+/* ─── seções ─── */
+.secao{padding:var(--s7) 0 0}
+.secao h2{font-stretch:125%;font-weight:800;font-size:clamp(28px,3.4vw,44px);line-height:1;letter-spacing:-.03em;margin:0;text-wrap:balance}
+.secao-cab{display:flex;flex-wrap:wrap;gap:var(--s2);align-items:end;justify-content:space-between;margin-bottom:var(--s4);padding-bottom:var(--s2);border-bottom:1px solid var(--linha-forte)}
+.secao-cab p{margin:0;color:var(--tinta-2);max-width:48ch}
+
+/* processo (sequência real) */
+.processo{display:grid;grid-template-columns:1fr;border-top:1px solid var(--linha-forte);border-left:1px solid var(--linha-forte)}
+.etapa{padding:var(--s3);border-right:1px solid var(--linha-forte);border-bottom:1px solid var(--linha-forte);background:var(--folha);display:grid;gap:10px;align-content:start}
+.etapa-num{font-stretch:72%;font-weight:600;font-size:13px;letter-spacing:.08em;color:var(--quente-escuro)}
+.etapa b{font-stretch:112%;font-weight:700;font-size:20px;line-height:1.15;letter-spacing:-.01em}
+.etapa span{color:var(--tinta-2);font-size:15px}
+.etapa .lj-ic{width:28px;height:28px;color:var(--tinta)}
+@media (min-width:700px){.processo{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1100px){.processo{grid-template-columns:repeat(4,1fr)}}
+.processo-nota{margin:var(--s2) 0 0;color:var(--tinta-2);font-size:15px;display:flex;gap:10px;align-items:center}
+.processo-nota .lj-ic{color:var(--quente-escuro)}
+
+/* índice de categorias */
+.indice{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;border:1px solid var(--linha-forte);background:var(--folha)}
+.indice::-webkit-scrollbar{display:none}
+.indice button{flex:1 0 auto;border:0;border-right:1px solid var(--linha);background:none;padding:12px 18px;text-align:left;display:grid;gap:2px;min-width:132px}
+.indice button:last-child{border-right:0}
+.indice button b{font-weight:700;font-size:15px}
+.indice button span{font-stretch:72%;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tinta-3);font-weight:600}
+.indice button:hover{background:var(--papel)}
+.indice button[aria-pressed="true"]{background:var(--tinta);color:var(--papel)}
+.indice button[aria-pressed="true"] span{color:color-mix(in srgb,var(--papel) 70%,transparent)}
+.barra{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:var(--s2) 0 var(--s3)}
+.busca{position:relative;flex:1 1 260px}
+.busca input{width:100%;height:48px;border:1px solid var(--linha-forte);background:var(--folha);padding:0 14px 0 44px;font-size:15px;border-radius:0}
+.busca input:focus{outline:none;box-shadow:inset 0 0 0 1px var(--quente);border-color:var(--quente)}
+.busca .lj-ic{position:absolute;left:14px;top:14px;color:var(--tinta-3)}
+.barra select{height:48px;border:1px solid var(--linha-forte);background:var(--folha);padding:0 12px;font-size:14.5px;border-radius:0}
+.conta{font-stretch:72%;text-transform:uppercase;letter-spacing:.06em;font-weight:600;font-size:13px;color:var(--tinta-3)}
+.chip-x{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;border:1px solid var(--quente);background:color-mix(in srgb,var(--quente) 10%,var(--folha));font-size:13.5px;font-weight:600}
+.chip-x .lj-ic{width:14px;height:14px}
+
+/* pranchas (cartões) */
+.grade{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--linha-forte);border-left:1px solid var(--linha-forte)}
+@media (min-width:760px){.grade{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:1150px){.grade{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.prancha{position:relative;display:flex;flex-direction:column;border-right:1px solid var(--linha-forte);border-bottom:1px solid var(--linha-forte);background:var(--folha);transition:background .2s}
+.prancha:hover{background:color-mix(in srgb,var(--quente) 4%,var(--folha))}
+.prancha-img{aspect-ratio:1/1;padding:16%;display:grid;place-items:center;border-bottom:1px solid var(--linha);position:relative}
+.prancha-img .lj-ilu,.prancha-img img{transition:transform .5s var(--ease)}
+.prancha:hover .prancha-img .lj-ilu,.prancha:hover .prancha-img img{transform:translateY(-4px)}
+.selo{position:absolute;top:0;left:0;background:var(--quente);color:#111;font-stretch:72%;font-weight:700;font-size:13px;letter-spacing:.04em;padding:5px 9px;text-transform:uppercase}
+.selo.dest{background:var(--tinta);color:var(--papel)}
+.selo+.selo{left:auto;right:0}
+.prancha-corpo{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px;flex:1}
+.prancha h3{margin:0;font-size:15.5px;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
+.prancha h3 button{all:unset;cursor:pointer}
+.prancha h3 button::after{content:"";position:absolute;inset:0;z-index:1}
+.prancha h3 button:focus-visible::after{outline:2px solid var(--quente);outline-offset:-3px}
+.ficha{display:grid;grid-template-columns:1fr 1fr;margin:0;border-top:1px solid var(--linha)}
+.ficha div{padding:6px 0;border-bottom:1px solid var(--linha)}
+.ficha div:nth-child(odd){padding-right:8px;border-right:1px solid var(--linha)}
+.ficha div:nth-child(even){padding-left:10px}
+.ficha dt{font-stretch:72%;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-3);font-weight:600}
+.ficha dd{margin:0;font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prancha-rodape{display:flex;align-items:end;justify-content:space-between;gap:8px;margin-top:auto}
+.prancha-preco s{display:block;font-size:12.5px;color:var(--tinta-3)}
+.prancha-preco strong{font-stretch:112%;font-weight:800;font-size:22px;letter-spacing:-.02em;line-height:1.1}
+.prancha-preco .consulta{font-weight:700;font-size:16px}
+.add{position:relative;z-index:2;width:44px;height:44px;border:1px solid var(--linha-forte);background:var(--folha);display:grid;place-items:center;flex:none;transition:background .2s,color .2s}
+.add:hover{background:var(--quente);border-color:var(--quente);color:#111}
+@media (max-width:480px){.prancha-corpo{padding:12px}.prancha h3{font-size:14px}.prancha-preco strong{font-size:18px}.ficha dd{font-size:12.5px}}
+.esqueleto{aspect-ratio:3/4;border-right:1px solid var(--linha-forte);border-bottom:1px solid var(--linha-forte);background:linear-gradient(90deg,var(--folha) 0,var(--papel) 50%,var(--folha) 100%);background-size:200% 100%;animation:brilho 1.2s linear infinite}
+@keyframes brilho{to{background-position:-200% 0}}
+.vazio{grid-column:1/-1;padding:var(--s5) var(--s3);border-right:1px solid var(--linha-forte);border-bottom:1px solid var(--linha-forte);background:var(--folha);text-align:center;color:var(--tinta-2)}
+.vazio b{display:block;font-stretch:112%;font-size:20px;color:var(--tinta);margin-bottom:6px}
+.vazio .btn{margin-top:var(--s2)}
+
+/* rodapé = carimbo grande */
+.rodape{margin-top:var(--s7);border-top:1px solid var(--linha-forte);background:var(--folha)}
+.rodape-grade{display:grid;grid-template-columns:1fr;border-left:1px solid var(--linha-forte);border-right:1px solid var(--linha-forte)}
+.rodape-grade>div{padding:var(--s3);border-bottom:1px solid var(--linha)}
+.rodape dt{font-stretch:72%;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-3);font-weight:600;margin-bottom:6px}
+.rodape dd{margin:0;font-size:15px;line-height:1.6}
+.rodape dd a,.rodape dd button{display:block;background:none;border:0;padding:2px 0;text-decoration:none;text-align:left;font-size:15px}
+.rodape dd a:hover,.rodape dd button:hover{color:var(--quente-escuro);text-decoration:underline}
+.rodape .marca-grande{font-stretch:125%;font-weight:800;font-size:clamp(40px,7vw,96px);letter-spacing:-.04em;line-height:.9}
+.rodape-base{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:var(--s2) 0 var(--s3);font-size:12.5px;color:var(--tinta-3)}
+@media (min-width:900px){.rodape-grade{grid-template-columns:1.6fr 1fr 1fr 1fr}.rodape-grade>div{border-bottom:0;border-right:1px solid var(--linha)}.rodape-grade>div:last-child{border-right:0}}
+
+/* único momento de movimento: a planta se desenha */
+@media (prefers-reduced-motion:no-preference){
+  .desenho .parede{stroke-dasharray:1400;stroke-dashoffset:1400;animation:traco 1.6s .1s var(--ease) forwards}
+  .primeira .ponto{animation:aparece .5s var(--ease) both;animation-delay:calc(1s + var(--i,0) * 80ms)}
+  @keyframes traco{to{stroke-dashoffset:0}}
+  @keyframes aparece{from{opacity:0;scale:.6}}
+}
+</style>
+</head>
+<body>
+
+<header class="cab">
+  <div class="envelope">
+    <a class="logo" href="#topo" aria-label="Servigás Aquecedores, início">
+      <span data-ic="chama"></span><b>Servigás</b><small>Aquecedores a gás</small>
+    </a>
+    <nav class="cab-nav" aria-label="Principal">
+      <a href="#planta">Dimensionar</a>
+      <a href="#loja">Loja</a>
+      <a href="#processo">Instalação</a>
+      <a href="#" data-whats>Contato</a>
+    </nav>
+    <div class="cab-acoes">
+      <button class="icone-btn" type="button" id="btnBusca" aria-label="Buscar produtos"><span data-ic="busca"></span></button>
+      <button class="icone-btn" type="button" data-tema></button>
+      <button class="btn-pedido" type="button" data-carrinho aria-label="Abrir pedido"><span data-ic="carrinho"></span><span class="txt">Pedido</span><output id="contador">0</output></button>
+    </div>
+  </div>
+</header>
+
+<main id="topo">
+  <section class="heroi papel-grade" id="planta" aria-labelledby="tituloHeroi">
+    <div class="envelope">
+      <div class="heroi-texto">
+        <h1 id="tituloHeroi">Marque a sua casa. A gente indica o <em>aquecedor</em>.</h1>
+        <p>Toque nos chuveiros e torneiras que você usa ao mesmo tempo. Somamos a vazão e mostramos o aquecedor a gás certo. Depois, a equipe da Servigás instala.</p>
+        <div class="cta">
+          <button class="btn btn-quente" type="button" id="ctaIndicado">Ver o aquecedor indicado</button>
+          <a class="btn" href="#loja">Ver a loja</a>
+        </div>
+      </div>
+
+      <figure class="prancha-planta" style="margin:0" aria-labelledby="legendaPlanta">
+        <figcaption id="legendaPlanta" class="visually-hidden">Planta de uma casa com os pontos de água quente. Ligue ou desligue cada ponto para recalcular a vazão.</figcaption>
+        <div class="planta">
+          <svg viewBox="0 0 600 400" aria-hidden="true">
+            <g class="desenho">
+              <!-- paredes externas e internas -->
+              <path class="parede" d="M20 20H580V380H20Z"/>
+              <path class="parede" d="M20 180H150M186 180H330M366 180H420M456 180H580"/>
+              <path class="parede" d="M190 20V120M190 150V180M330 20V180M400 180V260M400 300V380"/>
+            </g>
+            <!-- portas -->
+            <path class="porta" d="M150 180a36 36 0 0 1 36-36M330 180a36 36 0 0 0 36-36M420 180a36 36 0 0 1 36-36M190 120a30 30 0 0 1 30 30M400 260a40 40 0 0 1 40 40"/>
+            <!-- móveis e peças sanitárias -->
+            <rect class="movel" x="28" y="28" width="60" height="60"/><path class="movel" d="M28 28l60 60M88 28l-60 60"/>
+            <rect class="movel" x="100" y="28" width="80" height="44" rx="14"/>
+            <rect class="movel" x="270" y="28" width="52" height="52"/><path class="movel" d="M270 28l52 52M322 28l-52 52"/>
+            <ellipse class="movel" cx="220" cy="42" rx="18" ry="12"/>
+            <rect class="movel" x="200" y="120" width="28" height="36" rx="10"/>
+            <rect class="movel" x="340" y="28" width="230" height="36"/><rect class="movel" x="440" y="32" width="46" height="28" rx="4"/>
+            <rect class="movel" x="80" y="250" width="170" height="70" rx="6"/><rect class="movel" x="90" y="330" width="150" height="30" rx="4"/>
+            <rect class="movel" x="500" y="330" width="70" height="40" rx="4"/>
+            <text class="comodo" x="68" y="140">Suíte</text>
+            <text class="comodo" x="200" y="100">Social</text>
+            <text class="comodo" x="342" y="170">Cozinha</text>
+            <text class="comodo" x="34" y="232">Sala</text>
+            <text class="comodo" x="412" y="232">Área de serviço</text>
+            <!-- cotas -->
+            <path class="parede-fina" d="M20 392H580M20 388v8M580 388v8" opacity=".35"/>
+            <text class="cota" x="290" y="399" text-anchor="middle" opacity=".7">vazão somada em L/min</text>
+            <!-- gás e água fria chegando ao aquecedor -->
+            <path class="tubo-gas" d="M583 214H566"/>
+            <path class="tubo-frio" d="M583 236H566"/>
+            <text class="cota" x="548" y="268" text-anchor="middle">GÁS · ÁGUA FRIA →</text>
+            <!-- tubos de água quente (um caminho por ponto) -->
+            <g id="tubos"></g>
+            <!-- aquecedor na parede da área de serviço -->
+            <g class="aquecedor-planta"><rect x="530" y="196" width="36" height="56" rx="3"/><text x="548" y="228" text-anchor="middle">AQ</text></g>
+          </svg>
+          <div id="pontos" class="primeira"></div>
+        </div>
+        <div class="lista-pontos" id="listaPontos"></div>
+        <dl class="carimbo" id="carimbo"></dl>
+        <div class="aviso-planta"><span data-ic="prancheta"></span><span>Estimativa. Na visita técnica medimos a pressão, o gás e a exaustão antes de fechar.</span></div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="secao" id="processo" aria-labelledby="tituloProcesso">
+    <div class="envelope">
+      <div class="secao-cab"><h2 id="tituloProcesso">Da planta ao banho quente</h2><p>Quem vende é quem instala. É assim que a Servigás trabalha, do orçamento à manutenção.</p></div>
+      <div class="processo">
+        <div class="etapa"><span class="etapa-num">Etapa 1</span><span data-ic="prancheta"></span><b>Visita técnica</b><span>Vamos até a sua casa, medimos o local e conferimos gás e exaustão.</span></div>
+        <div class="etapa"><span class="etapa-num">Etapa 2</span><span data-ic="gota"></span><b>Aquecedor na medida</b><span>Indicamos a vazão certa para os pontos que você usa ao mesmo tempo.</span></div>
+        <div class="etapa"><span class="etapa-num">Etapa 3</span><span data-ic="ferramenta"></span><b>Instalação inclusa</b><span>Nossa equipe instala o aparelho com duto, registro e acabamento.</span></div>
+        <div class="etapa"><span class="etapa-num">Etapa 4</span><span data-ic="escudo"></span><b>Assistência autorizada</b><span>Garantia de fábrica e manutenção com quem conhece o aparelho.</span></div>
+      </div>
+      <p class="processo-nota"><span data-ic="loja"></span>Prefere buscar? Retire na loja: combine o horário pelo WhatsApp.</p>
+    </div>
+  </section>
+
+  <section class="secao" id="loja" aria-labelledby="tituloLoja">
+    <div class="envelope">
+      <div class="secao-cab"><h2 id="tituloLoja">Loja</h2><span class="conta" id="conta" aria-live="polite"></span></div>
+      <div class="indice" id="indice" role="group" aria-label="Categorias"></div>
+      <div class="barra">
+        <label class="busca"><span class="visually-hidden">Buscar produtos</span><span data-ic="busca"></span>
+          <input type="search" id="busca" placeholder="Buscar aquecedor, bomba, mangueira…" autocomplete="off"></label>
+        <label><span class="visually-hidden">Ordenar</span>
+          <select id="ordem">
+            <option value="relevancia">Mais relevantes</option>
+            <option value="menor">Menor preço</option>
+            <option value="maior">Maior preço</option>
+            <option value="nome">Nome (A–Z)</option>
+          </select></label>
+        <span id="ativos" style="display:contents"></span>
+      </div>
+      <div class="grade" id="grade"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="envelope">
+    <dl class="rodape-grade">
+      <div><dt>Projeto e instalação</dt><dd class="marca-grande">Servigás</dd><dd style="margin-top:8px;color:var(--tinta-2)">Venda, instalação e manutenção de aquecedores a gás. Assistência técnica autorizada.</dd></div>
+      <div><dt>Atendimento</dt><dd><a href="#" data-whats>WhatsApp (47) 9 9150-0164</a>Seg a sex, 8h às 18h<br>Sábado, 8h às 12h</dd></div>
+      <div><dt>Loja</dt><dd id="rodapeCats"></dd></div>
+      <div><dt>Pagamento</dt><dd>Combinado pelo WhatsApp. Pix e cartão no site em breve.</dd></div>
+    </dl>
+    <div class="rodape-base"><span>© 2026 Servigás Aquecedores</span><span>Vazões por ponto são estimativas de referência.</span></div>
+  </div>
+</footer>
+
+<script src="nucleo.js"></script>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const { esc, brl, icone } = Loja;
+  document.querySelectorAll('[data-ic]').forEach(el => { if (el.classList.length) el.innerHTML = icone(el.dataset.ic); else el.outerHTML = icone(el.dataset.ic); });
+
+  /* ─── pontos de água quente (vazão de referência em L/min) ───
+     x/y na planta (viewBox 600×400); rota = caminho do tubo desde o aquecedor */
+  const TRONCO = 'M530 224H500V196';
+  const PONTOS = [
+    { id: 'ch-suite',  nome: 'Chuveiro da suíte', curto: 'Chuveiro suíte', ic: 'chuveiro', litros: 9,  x: 58,  y: 58,  on: true,  rota: `${TRONCO}H58V58` },
+    { id: 'banheira',  nome: 'Banheira',          curto: 'Banheira',       ic: 'gota',     litros: 12, x: 140, y: 50,  on: false, rota: `${TRONCO}H140V50` },
+    { id: 'ch-social', nome: 'Chuveiro social',   curto: 'Chuveiro social', ic: 'chuveiro', litros: 9, x: 296, y: 54,  on: true,  rota: `${TRONCO}H296V54` },
+    { id: 'lavatorio', nome: 'Lavatório',         curto: 'Lavatório',      ic: 'gota',     litros: 3,  x: 214, y: 138, on: false, rota: `${TRONCO}H214V138` },
+    { id: 'pia',       nome: 'Pia da cozinha',    curto: 'Pia cozinha',    ic: 'gota',     litros: 4,  x: 463, y: 46,  on: true,  rota: `${TRONCO}H463V46` },
+  ];
+  let indicado = null;
+
+  function renderPlanta() {
+    $('tubos').innerHTML = PONTOS.map(p => `<path class="tubo ${p.on ? 'on' : ''}" d="${p.rota}"/>`).join('');
+    // tubos ligados por cima dos desligados
+    [...$('tubos').querySelectorAll('.tubo.on')].forEach(t => $('tubos').appendChild(t));
+    $('pontos').innerHTML = PONTOS.map((p, i) => `
+      <button class="ponto" type="button" style="left:${p.x / 6}%;top:${p.y / 4}%;--i:${i}" data-ponto="${p.id}" aria-pressed="${p.on}" aria-label="${p.nome}, ${p.litros} litros por minuto">
+        ${icone(p.ic)}<span class="ponto-rot">${p.curto} · ${p.litros}</span></button>`).join('');
+    $('listaPontos').innerHTML = PONTOS.map(p => `<button type="button" data-ponto="${p.id}" aria-pressed="${p.on}">${icone(p.ic)}${p.curto} · ${p.litros} L</button>`).join('');
+    renderCarimbo();
+  }
+
+  function renderCarimbo() {
+    const ativos = PONTOS.filter(p => p.on);
+    const soma = ativos.reduce((s, p) => s + p.litros, 0);
+    const chuveiros = ativos.filter(p => p.ic === 'chuveiro' || p.id === 'banheira').length;
+    indicado = soma ? Loja.recomendar(soma) : null;
+    const acima = indicado && Loja.vazao(indicado) < soma;
+    let bloco;
+    if (Loja.carregando) bloco = `<div class="indicado"><span class="mini"></span><div><dt>Aquecedor indicado</dt><dd>Carregando catálogo…</dd></div></div>`;
+    else if (!soma) bloco = `<div class="indicado"><span class="mini"></span><div><dt>Aquecedor indicado</dt><dd>Ligue pelo menos um ponto na planta.</dd></div></div>`;
+    else if (!indicado) bloco = `<div class="indicado"><span class="mini"></span><div><dt>Aquecedor indicado</dt><dd>Fale com a gente<small>Indicamos o modelo pelo WhatsApp.</small></dd></div><div class="acoes"><button class="btn btn-quente" type="button" data-whats>${icone('whats')} Pedir indicação</button></div></div>`;
+    else bloco = `<div class="indicado">
+        <span class="mini">${Loja.foto(indicado)}</span>
+        <div><dt>${acima ? 'Nosso maior modelo · confirme na visita' : 'Aquecedor indicado'}</dt><dd>${esc(indicado.nome)}<small>${Loja.vazao(indicado)} L/min · ${brl(indicado.preco)}</small></dd></div>
+        <div class="acoes">
+          <button class="btn btn-quente" type="button" data-add="${esc(indicado.id)}">${icone('carrinho')} Adicionar</button>
+          <button class="btn" type="button" data-produto="${esc(indicado.id)}">Detalhes</button>
+        </div></div>`;
+    $('carimbo').innerHTML = `
+      <div><dt>Pontos ligados</dt><dd>${ativos.length} de ${PONTOS.length}</dd></div>
+      <div><dt>Banhos juntos</dt><dd>${chuveiros}</dd></div>
+      <div class="grande"><dt>Vazão somada</dt><dd>${soma} L/min</dd></div>
+      ${bloco}`;
+  }
+
+  /* ─── loja ─── */
+  const filtro = { cat: null, busca: '', ordem: 'relevancia' };
+  const nomeCat = (id) => (Loja.categorias.find(c => c.id === id) || {}).curto || id;
+  function prancha(p) {
+    const d = Loja.desconto(p), v = Loja.vazao(p), nb = Loja.banhos(p);
+    const ficha = v
+      ? [['Marca', p.marca], ['Vazão', `${v} L/min`], ['Atende', nb === 3 ? '3+ banhos' : nb === 1 ? '1 banho' : '2 banhos'], ['Gás', (p.specs.find(s => /g[aá]s:/i.test(s)) || 'GN ou GLP').replace(/^g[aá]s:\s*/i, '')]]
+      : [['Marca', p.marca], ['Tipo', nomeCat(p.categoria)]];
+    return `<article class="prancha">
+      <div class="prancha-img">${d ? `<span class="selo">-${d}%</span>` : ''}${p.destaque ? '<span class="selo dest">Destaque</span>' : ''}${Loja.foto(p)}</div>
+      <div class="prancha-corpo">
+        <h3><button type="button" data-produto="${esc(p.id)}">${esc(p.nome)}</button></h3>
+        <dl class="ficha">${ficha.map(([t, v]) => `<div><dt>${t}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
+        <div class="prancha-rodape">
+          <div class="prancha-preco">${p.preco != null ? `${p.precoAntigo ? `<s>${brl(p.precoAntigo)}</s>` : ''}<strong>${brl(p.preco)}</strong>` : '<span class="consulta">Sob consulta</span>'}</div>
+          ${p.preco != null
+            ? `<button class="add" type="button" data-add="${esc(p.id)}" aria-label="Adicionar ${esc(p.nome)} ao pedido">${icone('mais')}</button>`
+            : `<button class="add" type="button" data-consultar="${esc(p.id)}" aria-label="Pedir orçamento de ${esc(p.nome)}">${icone('whats')}</button>`}
+        </div>
+      </div>
+    </article>`;
+  }
+  function renderIndice() {
+    const n = (c) => Loja.produtos.filter(p => p.categoria === c).length;
+    $('indice').innerHTML = `<button type="button" data-cat="" aria-pressed="${!filtro.cat}"><span>Tudo</span><b>${Loja.produtos.length || '—'} itens</b></button>` +
+      Loja.categorias.map(c => `<button type="button" data-cat="${c.id}" aria-pressed="${filtro.cat === c.id}"><span>${c.curto}</span><b>${n(c.id) || '—'} ${n(c.id) === 1 ? 'item' : 'itens'}</b></button>`).join('');
+    $('rodapeCats').innerHTML = Loja.categorias.map(c => `<button type="button" data-cat="${c.id}">${c.nome}</button>`).join('');
+  }
+  function renderLoja() {
+    renderIndice();
+    const cat = Loja.categorias.find(c => c.id === filtro.cat);
+    $('tituloLoja').textContent = cat ? cat.nome : 'Loja';
+    $('ativos').innerHTML = filtro.busca ? `<button class="chip-x" type="button" data-limpar aria-label="Limpar busca">“${esc(filtro.busca)}” ${icone('fechar')}</button>` : '';
+    if (Loja.carregando) { $('grade').innerHTML = Array.from({ length: 8 }, () => '<div class="esqueleto" aria-hidden="true"></div>').join(''); $('conta').textContent = 'Carregando…'; return; }
+    const lista = Loja.filtrar(filtro);
+    $('conta').textContent = `${lista.length} ${lista.length === 1 ? 'item' : 'itens'}`;
+    $('grade').innerHTML = lista.length ? lista.map(prancha).join('')
+      : `<div class="vazio"><b>Nada com essa busca.</b>Tente outra palavra ou peça a peça certa pelo WhatsApp.<br><button class="btn" type="button" data-limpar>Limpar busca</button></div>`;
+  }
+  function renderTudo() { renderPlanta(); renderLoja(); }
+
+  document.addEventListener('click', e => {
+    const pt = e.target.closest('[data-ponto]');
+    if (pt) { const p = PONTOS.find(x => x.id === pt.dataset.ponto); p.on = !p.on; renderPlanta(); document.querySelector(`${pt.closest('#listaPontos') ? '#listaPontos' : '#pontos'} [data-ponto="${p.id}"]`)?.focus(); return; }
+    const c = e.target.closest('[data-cat]');
+    if (c) { filtro.cat = c.dataset.cat || null; renderLoja(); if (!c.closest('#indice')) $('loja').scrollIntoView(); return; }
+    if (e.target.closest('[data-limpar]')) { filtro.busca = ''; $('busca').value = ''; renderLoja(); }
+  });
+  $('ctaIndicado').addEventListener('click', () => indicado ? Loja.abrirProduto(indicado.id) : $('carimbo').scrollIntoView({ block: 'center' }));
+  $('btnBusca').addEventListener('click', () => { $('loja').scrollIntoView(); $('busca').focus({ preventScroll: true }); });
+  $('busca').addEventListener('input', e => { filtro.busca = e.target.value.trim(); renderLoja(); });
+  $('ordem').addEventListener('change', e => { filtro.ordem = e.target.value; renderLoja(); });
+
+  Loja.on('catalogo', renderTudo);
+  Loja.on('carrinho', n => { $('contador').textContent = n; });
+  Loja.iniciar();
+  renderTudo();
+  setTimeout(() => $('pontos').classList.remove('primeira'), 2200);
+})();
+</script>
+</body>
+</html>

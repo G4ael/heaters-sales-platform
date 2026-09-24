@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Servigás Aquecedores · Modelo B · Quente e Fria</title>
+<meta name="description" content="Aquecedores a gás com instalação inclusa. Escolha pelo número de chuveiros e feche o pedido no WhatsApp.">
+<meta name="theme-color" content="#EA580C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════ MODELO B — QUENTE / FRIA ═══════════
+   O misturador do chuveiro: bloco laranja (quente) + bloco azul (fria).
+   Blocos com raio 28px, botões em pílula. Unbounded nos títulos, Onest no texto. */
+:root{
+  --laranja:#EA580C; --laranja-escuro:#C2410C; --sobre-laranja:#111111; --sobre-laranja-2:#3B1606;
+  --azul:#0B4FB3; --azul-claro:#E8F0FB;
+  --tinta:#111111; --tinta-2:#55575F; --tinta-3:#6A6C74;
+  --fundo:#FFFFFF; --tile:#F2F2F4; --tile-2:#E8E8EC; --superficie:#FFFFFF;
+  --linha:#E6E6EA; --linha-forte:#D2D2D8;
+  --preto:#111111;
+  --f-titulo:'Unbounded',system-ui,sans-serif;
+  --f-texto:'Onest',system-ui,sans-serif;
+  --r:28px; --r-m:20px; --r-p:999px;
+  --s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:64px;--s7:96px;
+  --larg:1280px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --lj-superficie:var(--superficie);--lj-texto:var(--tinta);--lj-texto-2:var(--tinta-2);--lj-linha:var(--linha);--lj-linha-forte:var(--linha-forte);
+  --lj-acento:var(--preto);--lj-acento-texto:#fff;--lj-acento-escuro:var(--azul);--lj-palco:var(--tile);
+  --lj-raio:var(--r);--lj-raio-btn:var(--r-p);--lj-fonte-titulo:var(--f-titulo);--lj-fonte-preco:var(--f-texto);
+  --ilu-corpo:#FFFFFF;--ilu-linha:#1B1B1F;--ilu-metal:#C9CCD3;--ilu-escuro:#1B1B1F;--ilu-quente:#EA580C;--ilu-frio:#0B4FB3;--ilu-gas:#E0A80D;
+}
+:root[data-theme="dark"]{
+  --tinta:#F4F4F6; --tinta-2:#A9ABB3; --tinta-3:#8A8C94;
+  --fundo:#0E0E10; --tile:#1B1B1F; --tile-2:#26262B; --superficie:#16161A;
+  --linha:#2A2A30; --linha-forte:#3A3A42; --azul-claro:#12213A;
+  --preto:#F4F4F6;
+  --lj-acento-texto:#111;--lj-acento-escuro:#7FB0F5;
+  --ilu-corpo:#ECECEF;--ilu-linha:#0E0E10;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:100px;-webkit-text-size-adjust:100%;scrollbar-color:var(--linha-forte) var(--fundo)}
+body{margin:0;font-family:var(--f-texto);font-size:16px;line-height:1.55;background:var(--fundo);color:var(--tinta);overflow-x:hidden;caret-color:var(--laranja)}
+::selection{background:var(--azul);color:#fff}
+img{max-width:100%;display:block}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;touch-action:manipulation}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--azul);outline-offset:3px;border-radius:12px}
+:root[data-theme="dark"] :focus-visible{outline-color:#7FB0F5}
+.lj-ic{flex:none}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.envelope{max-width:var(--larg);margin:0 auto;padding:0 var(--s2)}
+@media (min-width:760px){.envelope{padding:0 var(--s4)}}
+
+/* ─── cabeçalho ─── */
+.cab{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--fundo) 88%,transparent);backdrop-filter:saturate(1.4) blur(12px)}
+.cab .envelope{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:76px;gap:var(--s2)}
+.cab-nav{display:none;gap:var(--s3)}
+.cab-nav button{background:none;border:0;padding:8px 0;font-size:15px;font-weight:500;color:var(--tinta);position:relative}
+.cab-nav button::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:2px;background:var(--azul);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+.cab-nav button:hover::after,.cab-nav button[aria-current="true"]::after{transform:none}
+@media (min-width:900px){.cab-nav{display:flex}}
+.logo{grid-column:2;display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-marca{width:44px;height:44px;border-radius:14px 14px 14px 4px;background:var(--laranja);display:grid;place-items:center;color:#111}
+.logo-marca .lj-ic{width:24px;height:24px}
+.logo b{font-family:var(--f-titulo);font-weight:600;font-size:19px;letter-spacing:-.02em;line-height:1}
+.logo small{display:block;font-size:11.5px;color:var(--tinta-2);margin-top:3px;line-height:1}
+.pilula{grid-column:3;justify-self:end;display:flex;gap:2px;background:var(--tile);border-radius:var(--r-p);padding:4px}
+.pilula button{position:relative;width:44px;height:44px;border-radius:50%;border:0;background:transparent;display:grid;place-items:center;color:var(--tinta)}
+.pilula button:hover{background:var(--superficie)}
+.pilula .contador{position:absolute;top:4px;right:4px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--azul);color:#fff;font-size:10.5px;font-weight:700;display:grid;place-items:center}
+.pilula .contador[hidden]{display:none}
+.pilula .fav-on{color:var(--laranja)}
+@media (max-width:520px){.logo small{display:none}.cab .envelope{grid-template-columns:auto 1fr;}.logo{grid-column:1}.pilula{grid-column:2}.pilula [data-tema]{display:none}}
+
+/* ─── herói ─── */
+.heroi{background:var(--laranja);color:var(--sobre-laranja);border-radius:var(--r);display:grid;overflow:hidden;position:relative}
+.heroi-texto{padding:var(--s5) var(--s3) var(--s4);display:flex;flex-direction:column;justify-content:center}
+.heroi h1{font-family:var(--f-titulo);font-weight:600;font-size:clamp(34px,4.4vw,60px);line-height:1.04;letter-spacing:-.04em;margin:0 0 var(--s3);text-wrap:balance}
+.heroi p{margin:0 0 var(--s4);font-size:clamp(16px,1.3vw,17px);max-width:40ch;color:var(--sobre-laranja-2)}
+.heroi-cta{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 28px;border-radius:var(--r-p);border:0;font-weight:600;font-size:15.5px;text-decoration:none;transition:transform .25s var(--ease),background .2s,box-shadow .25s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:none}
+.btn-branco{background:#fff;color:#111;box-shadow:0 8px 20px -10px rgba(0,0,0,.35)}
+.btn-preto{background:#111;color:#fff}
+.btn-azul{background:var(--azul);color:#fff}
+.heroi-midia{position:relative;margin:0 var(--s2) var(--s2);align-self:end}
+.heroi-foto{position:relative;aspect-ratio:585/365;border-radius:var(--r-m);overflow:hidden;background:#141416}
+.heroi-foto img{position:absolute;width:246.2%;height:auto;max-width:none;left:-129.9%;top:-12.33%}
+.bolha-preco{position:absolute;right:9%;top:6%;display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;font-size:18px;text-shadow:0 1px 8px rgba(0,0,0,.6);background:none;border:0;padding:0}
+.bolha-preco span:last-child{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);color:#111;display:grid;place-items:center;box-shadow:0 0 0 8px rgba(255,255,255,.22);transition:box-shadow .3s var(--ease)}
+.bolha-preco:hover span:last-child{box-shadow:0 0 0 12px rgba(255,255,255,.28)}
+.bolha-azul{position:absolute;left:var(--s2);bottom:var(--s2);max-width:210px;background:var(--azul);color:#fff;border-radius:20px;padding:16px 18px;font-size:16px;line-height:1.3;font-weight:500;display:grid;gap:12px;text-decoration:none;box-shadow:0 18px 30px -18px rgba(0,0,0,.45)}
+.bolha-azul .seta-c{width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(255,255,255,.8);display:grid;place-items:center;justify-self:end}
+.bolha-azul .lj-ic{width:18px;height:18px}
+@media (min-width:900px){
+  .heroi{grid-template-columns:1fr 1fr;min-height:540px}
+  .heroi-texto{padding:var(--s6) var(--s4) var(--s6) var(--s6)}
+  .heroi-midia{margin:var(--s2) var(--s2) var(--s2) 0;align-self:center}
+  .bolha-azul{left:-72px;bottom:-28px}
+}
+@media (max-width:899px){.bolha-azul{position:relative;left:auto;bottom:auto;margin:-40px 0 0 12px;max-width:240px}}
+
+/* ─── faixa escolha: bloco azul + cartões ─── */
+.secao{padding:var(--s6) 0 0}
+.secao h2{font-family:var(--f-titulo);font-weight:600;font-size:clamp(26px,3vw,38px);line-height:1.08;letter-spacing:-.03em;margin:0;text-wrap:balance}
+.secao-cab{display:flex;align-items:end;justify-content:space-between;gap:var(--s2);margin-bottom:var(--s3);flex-wrap:wrap}
+.escolha{display:grid;gap:var(--s2)}
+.bloco-azul{background:var(--azul);color:#fff;border-radius:var(--r);padding:var(--s4);display:flex;flex-direction:column;gap:var(--s3);min-height:340px;position:relative;overflow:hidden}
+.bloco-azul h2{color:#fff}
+.bloco-azul p{margin:0;color:#D6E3F7;font-size:15px}
+.misturador{margin-top:auto;display:grid;gap:12px}
+.misturador output{font-family:var(--f-titulo);font-size:44px;font-weight:600;line-height:1;letter-spacing:-.03em;display:flex;align-items:baseline;gap:10px}
+.misturador output small{font-family:var(--f-texto);font-size:16px;font-weight:500;letter-spacing:0}
+.misturador input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent;margin:0}
+.misturador input[type=range]::-webkit-slider-runnable-track{height:12px;border-radius:6px;background:linear-gradient(90deg,#7FB0F5,#fff 45%,#FDBA74 70%,var(--laranja))}
+.misturador input[type=range]::-moz-range-track{height:12px;border-radius:6px;background:linear-gradient(90deg,#7FB0F5,#fff 45%,#FDBA74 70%,var(--laranja))}
+.misturador input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;height:34px;border-radius:50%;background:#fff;border:0;margin-top:-11px;box-shadow:0 4px 14px rgba(0,0,0,.35),inset 0 0 0 9px var(--cor-agulha,#0B4FB3);transition:box-shadow .3s}
+.misturador input[type=range]::-moz-range-thumb{width:34px;height:34px;border-radius:50%;background:#fff;border:0;box-shadow:0 4px 14px rgba(0,0,0,.35),inset 0 0 0 9px var(--cor-agulha,#0B4FB3)}
+.misturador input[type=range]:focus-visible{outline:none}
+.misturador input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px #fff,0 0 0 7px #111,inset 0 0 0 9px var(--cor-agulha,#0B4FB3)}
+.escala{display:flex;justify-content:space-between;font-size:13px;color:#D6E3F7}
+.escala button{background:none;border:0;padding:6px 0;color:inherit;font-size:13px}
+.escala button[aria-pressed="true"]{color:#fff;font-weight:700}
+.bloco-azul .seta-circ{position:absolute;right:var(--s3);top:var(--s3);width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(255,255,255,.7);display:grid;place-items:center;color:#fff;background:none}
+.bloco-azul .nota{font-size:12.5px;color:#BFD3F1}
+.recomendados{display:grid;grid-template-columns:repeat(3,minmax(220px,1fr));gap:var(--s2);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
+.recomendados::-webkit-scrollbar{display:none}
+.recomendados>*{scroll-snap-align:start}
+@media (min-width:1000px){.escolha{grid-template-columns:minmax(300px,1fr) 3fr}.recomendados{overflow:visible}}
+
+/* ─── cartão de produto ─── */
+.card{position:relative;display:flex;flex-direction:column;gap:12px;border-radius:var(--r);padding:10px 10px 16px;transition:background .25s,box-shadow .3s var(--ease)}
+.card:hover{background:var(--superficie);box-shadow:0 0 0 1px var(--linha),0 18px 40px -24px rgba(0,0,0,.35)}
+.card-img{position:relative;aspect-ratio:1/1;border-radius:var(--r-m);background:var(--tile);display:grid;place-items:center;padding:16%;overflow:hidden}
+.card-img .lj-ilu,.card-img img{transition:transform .6s var(--ease)}
+.card:hover .card-img .lj-ilu,.card:hover .card-img img{transform:scale(1.05) rotate(-1deg)}
+.fav{position:absolute;left:10px;top:10px;z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:transparent;display:grid;place-items:center;color:var(--azul)}
+.fav .lj-ic{width:26px;height:26px}
+.fav[aria-pressed="true"] .lj-ic{fill:var(--azul)}
+:root[data-theme="dark"] .fav{color:#7FB0F5}
+:root[data-theme="dark"] .fav[aria-pressed="true"] .lj-ic{fill:#7FB0F5}
+.selo{position:absolute;right:12px;top:14px;background:var(--laranja);color:#111;border-radius:var(--r-p);font-size:12.5px;font-weight:700;padding:4px 10px}
+.card-corpo{padding:0 6px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card-nome{margin:0;font-size:15px;font-weight:500;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-nome button{all:unset;cursor:pointer}
+.card-nome button::after{content:"";position:absolute;inset:0;z-index:1;border-radius:var(--r)}
+.card-nome button:focus-visible::after{outline:3px solid var(--azul);outline-offset:2px}
+.card-info{display:flex;align-items:center;gap:6px;font-size:13.5px;color:var(--tinta-2)}
+.card-info .lj-ic{width:16px;height:16px;color:var(--azul)}
+:root[data-theme="dark"] .card-info .lj-ic{color:#7FB0F5}
+.card-rodape{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:6px}
+.card-preco strong{font-size:19px;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.card-preco s{font-size:13px;color:var(--tinta-3);margin-left:6px}
+.card-preco .consulta{font-weight:600;font-size:16px}
+.card-add{position:relative;z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:var(--preto);color:var(--fundo);display:grid;place-items:center;transition:transform .25s var(--ease),background .2s}
+.card-add:hover{transform:scale(1.08);background:var(--laranja);color:#111}
+.card-add .lj-ic{width:19px;height:19px}
+
+/* ─── categorias ─── */
+.cats{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding:4px 0}
+.cats::-webkit-scrollbar{display:none}
+.cat{flex:none;display:flex;align-items:center;gap:12px;padding:6px 22px 6px 6px;border-radius:var(--r-p);border:0;background:var(--tile);font-weight:600;font-size:15px;transition:background .2s,color .2s}
+.cat span:first-child{width:52px;height:52px;border-radius:50%;background:var(--superficie);padding:8px;flex:none}
+.cat:hover{background:var(--tile-2)}
+.cat[aria-pressed="true"]{background:var(--preto);color:var(--fundo)}
+.cat small{font-weight:500;color:inherit;opacity:.6;margin-left:2px}
+
+/* ─── catálogo ─── */
+.barra{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:var(--s3) 0}
+.busca{position:relative;flex:1 1 280px}
+.busca input{width:100%;height:52px;border-radius:var(--r-p);border:0;background:var(--tile);padding:0 20px 0 50px;font-size:15.5px}
+.busca input::placeholder{color:var(--tinta-3)}
+.busca input:focus{outline:none;box-shadow:0 0 0 3px var(--azul)}
+.busca .lj-ic{position:absolute;left:18px;top:16px;color:var(--tinta-2)}
+.barra select{height:52px;border-radius:var(--r-p);border:0;background:var(--tile);padding:0 18px;font-size:14.5px}
+.conta{font-size:14px;color:var(--tinta-2)}
+.chip-x{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:var(--r-p);border:0;background:var(--azul-claro);color:var(--azul);font-weight:600;font-size:14px}
+:root[data-theme="dark"] .chip-x{color:#7FB0F5}
+.chip-x .lj-ic{width:15px;height:15px}
+.grade{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 8px}
+@media (min-width:760px){.grade{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s2)}}
+@media (min-width:1100px){.grade{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:480px){.card{padding:6px 4px 12px}.card-corpo{padding:0 4px}.card-nome{font-size:14px}.card-preco strong{font-size:16px}.card-preco s{display:block;margin:0}}
+.esqueleto{aspect-ratio:3/4;border-radius:var(--r);background:linear-gradient(90deg,var(--tile) 0,var(--tile-2) 50%,var(--tile) 100%);background-size:200% 100%;animation:brilho 1.2s linear infinite}
+@keyframes brilho{to{background-position:-200% 0}}
+.vazio{grid-column:1/-1;background:var(--tile);border-radius:var(--r);padding:var(--s5) var(--s3);text-align:center;color:var(--tinta-2)}
+.vazio b{display:block;color:var(--tinta);font-family:var(--f-titulo);font-weight:500;font-size:20px;margin-bottom:8px}
+.vazio .btn{margin-top:var(--s3)}
+
+/* ─── provas ─── */
+.provas{display:grid;gap:var(--s2);grid-template-columns:1fr}
+.prova{display:flex;gap:var(--s2);align-items:flex-start;padding:var(--s3) 0;border-top:1px solid var(--linha)}
+.prova-ic{width:52px;height:52px;border-radius:50%;background:var(--azul-claro);color:var(--azul);display:grid;place-items:center;flex:none}
+:root[data-theme="dark"] .prova-ic{color:#7FB0F5}
+.prova b{display:block;font-size:17px;font-weight:600;margin-bottom:4px}
+.prova span{color:var(--tinta-2);font-size:14.5px;line-height:1.5}
+@media (min-width:760px){.provas{grid-template-columns:repeat(2,1fr);column-gap:var(--s5)}}
+@media (min-width:1100px){.provas{grid-template-columns:repeat(4,1fr);column-gap:var(--s4)}}
+
+/* ─── rodapé ─── */
+.rodape{margin:var(--s7) var(--s2) var(--s2);background:#111;color:#C8C8CE;border-radius:var(--r);padding:var(--s6) 0 var(--s4)}
+:root[data-theme="dark"] .rodape{background:#1B1B1F}
+.rodape .envelope{display:grid;gap:var(--s4)}
+.rodape-cta{display:grid;gap:var(--s3);padding-bottom:var(--s5);border-bottom:1px solid #2A2A30}
+.rodape-cta h2{font-family:var(--f-titulo);font-weight:600;font-size:clamp(28px,4vw,52px);line-height:1.05;letter-spacing:-.035em;color:#fff;margin:0;max-width:16ch}
+.rodape-cta h2 em{font-style:normal;color:var(--laranja)}
+.rodape-cols{display:grid;gap:var(--s4);grid-template-columns:repeat(2,1fr)}
+.rodape h3{font-size:14px;font-weight:600;color:#fff;margin:0 0 12px}
+.rodape p,.rodape a,.rodape button{font-size:14px;line-height:1.7;margin:0;color:#C8C8CE;text-decoration:none;background:none;border:0;padding:2px 0;display:block;text-align:left}
+.rodape a:hover,.rodape button:hover{color:#fff}
+.rodape-base{font-size:12.5px;color:#85858D}
+@media (min-width:900px){.rodape-cta{grid-template-columns:1fr auto;align-items:end}.rodape-cols{grid-template-columns:1.4fr 1fr 1fr 1fr}}
+
+/* movimento: o bloco laranja “acende” uma vez */
+@media (prefers-reduced-motion:no-preference){
+  .heroi{animation:acende 1.1s var(--ease) both}
+  .heroi h1,.heroi p,.heroi-cta{animation:sobe .9s .15s var(--ease) both}
+  .bolha-azul{animation:sobe .9s .45s var(--ease) both}
+  .heroi-foto img{animation:zoom 1.6s var(--ease) both}
+  @keyframes acende{from{background:#F6B089;clip-path:inset(4% 2% 4% 2% round 28px)}to{clip-path:inset(0 round 28px)}}
+  @keyframes sobe{from{opacity:0;transform:translateY(24px)}}
+  @keyframes zoom{from{scale:1.06}}
+}
+</style>
+</head>
+<body>
+
+<header class="cab">
+  <div class="envelope">
+    <nav class="cab-nav" aria-label="Principal">
+      <button type="button" data-ir="topo" aria-current="true">Início</button>
+      <button type="button" data-ir="catalogo">Loja</button>
+      <button type="button" data-ir="provas">Instalação</button>
+      <button type="button" data-whats>Contato</button>
+    </nav>
+    <a class="logo" href="#topo" id="logo" aria-label="Servigás Aquecedores, início">
+      <span class="logo-marca" data-ic="chama"></span>
+      <span><b>Servigás</b><small>Aquecedores a gás</small></span>
+    </a>
+    <div class="pilula">
+      <button type="button" id="btnFav" aria-label="Ver favoritos" aria-pressed="false"><span data-ic="coracao"></span><span class="contador" id="contaFav" hidden>0</span></button>
+      <button type="button" id="btnBusca" aria-label="Buscar produtos"><span data-ic="busca"></span></button>
+      <button type="button" data-tema></button>
+      <button type="button" data-carrinho aria-label="Abrir pedido"><span data-ic="carrinho"></span><span class="contador" id="contador" hidden>0</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="topo">
+  <div class="envelope">
+    <section class="heroi" aria-labelledby="tituloHeroi">
+      <div class="heroi-texto">
+        <h1 id="tituloHeroi">Banho quente em casa, sem dor de cabeça</h1>
+        <p>Aquecedores a gás Rinnai, Rheem, Komeco e Lorenzetti com instalação inclusa pela equipe da Servigás.</p>
+        <div class="heroi-cta">
+          <a class="btn btn-branco" href="#escolha" data-ir="escolha">Achar o meu aquecedor</a>
+          <a class="btn btn-preto" href="#catalogo" data-ir="catalogo">Ver a loja</a>
+        </div>
+      </div>
+      <div class="heroi-midia">
+        <div class="heroi-foto"><img src="../imagens/banner-aquecedores.webp" alt="Aquecedores a gás Rinnai e Komeco" width="2880" height="840" fetchpriority="high">
+        <button class="bolha-preco" type="button" id="bolhaPreco" hidden></button></div>
+        <a class="bolha-azul" href="#provas" data-ir="provas"><span>Instalação inclusa, feita pela nossa equipe</span><span class="seta-c" data-ic="diagonal"></span></a>
+      </div>
+    </section>
+  </div>
+
+  <section class="secao" id="escolha" aria-labelledby="tituloEscolha">
+    <div class="envelope escolha">
+      <div class="bloco-azul">
+        <h2 id="tituloEscolha">Qual serve na sua casa?</h2>
+        <p>Diga quantos chuveiros ficam ligados ao mesmo tempo.</p>
+        <div class="misturador">
+          <label for="banhos" class="visually-hidden">Chuveiros ligados ao mesmo tempo</label>
+          <output id="saidaBanhos" for="banhos">2 <small>chuveiros</small></output>
+          <input type="range" id="banhos" min="1" max="3" step="1" value="2" aria-valuetext="2 chuveiros">
+          <div class="escala" id="escala"></div>
+          <span class="nota">Estimativa pela vazão. A visita técnica confirma.</span>
+        </div>
+      </div>
+      <div class="recomendados" id="recomendados" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="secao" id="catalogo" aria-labelledby="tituloCat">
+    <div class="envelope">
+      <div class="secao-cab"><h2 id="tituloCat">A loja</h2><span class="conta" id="conta" aria-live="polite"></span></div>
+      <div class="cats" id="cats"></div>
+      <div class="barra">
+        <label class="busca"><span class="visually-hidden">Buscar produtos</span><span data-ic="busca"></span>
+          <input type="search" id="busca" placeholder="Buscar aquecedor, bomba, mangueira…" autocomplete="off"></label>
+        <label><span class="visually-hidden">Ordenar</span>
+          <select id="ordem">
+            <option value="relevancia">Mais relevantes</option>
+            <option value="menor">Menor preço</option>
+            <option value="maior">Maior preço</option>
+            <option value="nome">Nome (A–Z)</option>
+          </select></label>
+        <span id="ativos" style="display:contents"></span>
+      </div>
+      <div class="grade" id="grade"></div>
+    </div>
+  </section>
+
+  <section class="secao" id="provas" aria-labelledby="tituloProvas">
+    <div class="envelope">
+      <div class="secao-cab"><h2 id="tituloProvas">Quem vende é quem instala</h2></div>
+      <div class="provas">
+        <div class="prova"><span class="prova-ic" data-ic="ferramenta"></span><div><b>Instalação inclusa</b><span>Nossa equipe instala o aquecedor ou a bomba que você comprar.</span></div></div>
+        <div class="prova"><span class="prova-ic" data-ic="escudo"></span><div><b>Assistência técnica autorizada</b><span>Garantia de fábrica e manutenção com quem conhece o aparelho.</span></div></div>
+        <div class="prova"><span class="prova-ic" data-ic="prancheta"></span><div><b>Visita técnica e orçamento</b><span>Vamos até a sua casa medir e dimensionar aquecedor e exaustão.</span></div></div>
+        <div class="prova"><span class="prova-ic" data-ic="loja"></span><div><b>Retirada na loja</b><span>Prefere buscar? Combine o horário pelo WhatsApp.</span></div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="envelope">
+    <div class="rodape-cta">
+      <h2>Ficou em dúvida? <em>Fala com a gente.</em></h2>
+      <a class="btn btn-branco" href="#" data-whats><span data-ic="whats"></span> (47) 9 9150-0164</a>
+    </div>
+    <div class="rodape-cols">
+      <div><h3>Servigás Aquecedores</h3><p>Venda, instalação e manutenção de aquecedores a gás. Assistência técnica autorizada.</p></div>
+      <div><h3>Atendimento</h3><p>Seg a sex, 8h às 18h<br>Sábado, 8h às 12h</p></div>
+      <div><h3>Loja</h3><div id="rodapeCats"></div></div>
+      <div><h3>Pagamento</h3><p>Combinado pelo WhatsApp. Pix e cartão no site em breve.</p></div>
+    </div>
+    <div class="rodape-base">© 2026 Servigás Aquecedores</div>
+  </div>
+</footer>
+
+<script src="nucleo.js"></script>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const { esc, brl, icone } = Loja;
+  document.querySelectorAll('[data-ic]').forEach(el => { if (el.classList.length) el.innerHTML = icone(el.dataset.ic); else el.outerHTML = icone(el.dataset.ic); });
+  const reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ir = (id) => $(id).scrollIntoView({ behavior: reduz ? 'auto' : 'smooth' });
+
+  const filtro = { cat: null, sub: null, busca: '', ordem: 'relevancia', favs: false };
+  let favoritos = []; try { favoritos = JSON.parse(localStorage.getItem('servigas-favoritos')) || []; } catch {}
+  const ehFav = (id) => favoritos.includes(String(id));
+  function alternarFav(id) {
+    id = String(id);
+    favoritos = ehFav(id) ? favoritos.filter(f => f !== id) : favoritos.concat(id);
+    try { localStorage.setItem('servigas-favoritos', JSON.stringify(favoritos)); } catch {}
+    Loja.toast(`${icone('coracao')} ${ehFav(id) ? 'Salvo nos favoritos' : 'Removido dos favoritos'}`);
+    pintarFavs(); renderRecomendados(); renderCatalogo();
+  }
+  function pintarFavs() {
+    $('contaFav').textContent = favoritos.length; $('contaFav').hidden = !favoritos.length;
+    $('btnFav').setAttribute('aria-pressed', filtro.favs);
+  }
+
+  function cartao(p) {
+    const d = Loja.desconto(p), nb = Loja.banhos(p), v = Loja.vazao(p);
+    const info = nb ? `${icone('gota')}${nb === 3 ? '3+ banhos' : nb + (nb === 1 ? ' banho' : ' banhos')} · ${v} L/min` : `${icone('gota')}${esc(p.marca)}`;
+    return `<article class="card">
+      <div class="card-img">
+        <button class="fav" type="button" data-fav="${esc(p.id)}" aria-pressed="${ehFav(p.id)}" aria-label="Favoritar ${esc(p.nome)}">${icone('coracao')}</button>
+        ${d ? `<span class="selo">-${d}%</span>` : ''}
+        ${Loja.foto(p)}
+      </div>
+      <div class="card-corpo">
+        <h3 class="card-nome"><button type="button" data-produto="${esc(p.id)}">${esc(p.nome)}</button></h3>
+        <span class="card-info">${info}</span>
+        <div class="card-rodape">
+          <div class="card-preco">${p.preco != null ? `<strong>${brl(p.preco)}</strong>${p.precoAntigo ? `<s>${brl(p.precoAntigo)}</s>` : ''}` : '<span class="consulta">Sob consulta</span>'}</div>
+          ${p.preco != null
+            ? `<button class="card-add" type="button" data-add="${esc(p.id)}" aria-label="Adicionar ${esc(p.nome)} ao pedido">${icone('carrinho')}</button>`
+            : `<button class="card-add" type="button" data-consultar="${esc(p.id)}" aria-label="Pedir orçamento de ${esc(p.nome)}">${icone('whats')}</button>`}
+        </div>
+      </div>
+    </article>`;
+  }
+  const esqueletos = (n) => Array.from({ length: n }, () => '<div class="esqueleto" aria-hidden="true"></div>').join('');
+
+  /* ─── misturador (assinatura) ─── */
+  const ROT = { 1: ['1', 'chuveiro'], 2: ['2', 'chuveiros'], 3: ['3+', 'chuveiros ou banheira'] };
+  const COR = { 1: '#0B4FB3', 2: '#7A6FD0', 3: '#EA580C' };
+  function renderRecomendados() {
+    const n = Number($('banhos').value);
+    $('saidaBanhos').innerHTML = `${ROT[n][0]} <small>${ROT[n][1]}</small>`;
+    $('banhos').setAttribute('aria-valuetext', `${ROT[n][0]} ${ROT[n][1]}`);
+    $('banhos').style.setProperty('--cor-agulha', COR[n]);
+    $('escala').innerHTML = [1, 2, 3].map(i => `<button type="button" data-escala="${i}" aria-pressed="${i === n}">${ROT[i][0]} ${i === 1 ? 'chuveiro' : 'chuveiros'}</button>`).join('');
+    if (Loja.carregando) { $('recomendados').innerHTML = esqueletos(3); return; }
+    const lista = Loja.filtrar({ cat: 'aquecedores', banhos: n, ordem: 'menor' });
+    $('recomendados').innerHTML = lista.length ? lista.slice(0, 3).map(cartao).join('')
+      : `<div class="vazio"><b>Sem modelo cadastrado nessa faixa.</b>Fale com a gente que indicamos o aquecedor certo.<br><button class="btn btn-azul" type="button" data-whats>${icone('whats')} Pedir indicação</button></div>`;
+  }
+
+  /* ─── herói: bolha de preço do destaque ─── */
+  function renderBolha() {
+    const aq = Loja.produtos.filter(p => p.categoria === 'aquecedores' && p.preco != null);
+    const p = aq.find(x => x.destaque) || aq[0];
+    const b = $('bolhaPreco');
+    if (!p) { b.hidden = true; return; }
+    b.hidden = false;
+    b.dataset.produto = p.id;
+    b.setAttribute('aria-label', `${p.nome}, ${brl(p.preco)}. Ver detalhes`);
+    b.innerHTML = `<span>${brl(p.preco).replace(/,00$/, '')}</span><span>${icone('mais')}</span>`;
+  }
+
+  /* ─── catálogo ─── */
+  function renderCats() {
+    const n = (c) => Loja.produtos.filter(p => p.categoria === c).length;
+    $('cats').innerHTML = `<button class="cat" type="button" data-cat="" aria-pressed="${!filtro.cat}"><span>${Loja.ilustracao({ categoria: 'aquecedores', nome: 'Todos', specs: [], marca: '' })}</span>Tudo <small>${Loja.produtos.length || ''}</small></button>` +
+      Loja.categorias.map(c => {
+        const ex = Loja.produtos.find(p => p.categoria === c.id) || { categoria: c.id, nome: c.nome, specs: [], marca: '' };
+        return `<button class="cat" type="button" data-cat="${c.id}" aria-pressed="${filtro.cat === c.id}"><span>${Loja.foto(ex)}</span>${c.curto} <small>${n(c.id) || ''}</small></button>`;
+      }).join('');
+    $('rodapeCats').innerHTML = Loja.categorias.map(c => `<button type="button" data-cat="${c.id}">${c.nome}</button>`).join('');
+  }
+  function renderCatalogo() {
+    const cat = Loja.categorias.find(c => c.id === filtro.cat);
+    $('tituloCat').textContent = filtro.favs ? 'Seus favoritos' : cat ? cat.nome : 'A loja';
+    const at = [];
+    if (filtro.favs) at.push(['favs', 'Favoritos']);
+    if (filtro.busca) at.push(['busca', `“${filtro.busca}”`]);
+    $('ativos').innerHTML = at.map(([k, t]) => `<button class="chip-x" type="button" data-limpar="${k}" aria-label="Remover filtro ${esc(t)}">${esc(t)} ${icone('fechar')}</button>`).join('');
+    if (Loja.carregando) { $('grade').innerHTML = esqueletos(8); $('conta').textContent = 'Carregando…'; return; }
+    let lista = Loja.filtrar(filtro);
+    if (filtro.favs) lista = lista.filter(p => ehFav(p.id));
+    $('conta').textContent = `${lista.length} ${lista.length === 1 ? 'produto' : 'produtos'}`;
+    $('grade').innerHTML = lista.length ? lista.map(cartao).join('')
+      : filtro.favs && !favoritos.length
+        ? `<div class="vazio"><b>Nenhum favorito ainda.</b>Toque no coração de um produto para guardar aqui.<br><button class="btn btn-preto" type="button" data-limpar="favs">Ver a loja</button></div>`
+        : `<div class="vazio"><b>Nada encontrado.</b>Tente outra palavra ou peça ajuda no WhatsApp.<br><button class="btn btn-preto" type="button" data-limpar="tudo">Limpar busca</button></div>`;
+  }
+  function renderTudo() { renderBolha(); renderRecomendados(); renderCats(); renderCatalogo(); pintarFavs(); }
+
+  /* ─── eventos ─── */
+  $('banhos').addEventListener('input', renderRecomendados);
+  document.addEventListener('click', e => {
+    const f = e.target.closest('[data-fav]');
+    if (f) { e.stopPropagation(); alternarFav(f.dataset.fav); return; }
+    const es = e.target.closest('[data-escala]');
+    if (es) { $('banhos').value = es.dataset.escala; renderRecomendados(); return; }
+    const c = e.target.closest('[data-cat]');
+    if (c) { filtro.cat = c.dataset.cat || null; filtro.favs = false; renderCats(); renderCatalogo(); pintarFavs(); if (!c.closest('#cats')) ir('catalogo'); return; }
+    const l = e.target.closest('[data-limpar]');
+    if (l) {
+      const k = l.dataset.limpar;
+      if (k === 'favs' || k === 'tudo') filtro.favs = false;
+      if (k === 'busca' || k === 'tudo') { filtro.busca = ''; $('busca').value = ''; }
+      renderCatalogo(); pintarFavs(); return;
+    }
+    const d = e.target.closest('[data-ir]');
+    if (d) { e.preventDefault(); ir(d.dataset.ir); }
+  });
+  $('btnFav').addEventListener('click', () => { filtro.favs = !filtro.favs; if (filtro.favs) filtro.cat = null; renderCats(); renderCatalogo(); pintarFavs(); ir('catalogo'); });
+  $('btnBusca').addEventListener('click', () => { ir('catalogo'); setTimeout(() => $('busca').focus({ preventScroll: true }), reduz ? 0 : 450); });
+  $('busca').addEventListener('input', e => { filtro.busca = e.target.value.trim(); renderCatalogo(); });
+  $('ordem').addEventListener('change', e => { filtro.ordem = e.target.value; renderCatalogo(); });
+
+  Loja.on('catalogo', renderTudo);
+  Loja.on('carrinho', n => { $('contador').textContent = n; $('contador').hidden = !n; });
+  Loja.iniciar();
+  renderTudo();
+})();
+</script>
+</body>
+</html>
