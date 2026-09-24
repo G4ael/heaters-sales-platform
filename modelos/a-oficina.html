@@ -64,6 +64,7 @@ a{color:inherit}
 .faixa a:hover{text-decoration:underline;text-underline-offset:3px}
 .faixa .lj-ic{width:16px;height:16px}
 .faixa-horario{display:none}
+@media (max-width:480px){.faixa-longo{display:none}}
 @media (min-width:900px){.faixa-horario{display:inline}}
 .faixa-esq{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
@@ -141,7 +142,8 @@ a{color:inherit}
 
 /* ─── seções ─── */
 .secao{padding:var(--s6) 0}
-.secao-cab{display:flex;align-items:end;justify-content:space-between;gap:var(--s2);margin-bottom:var(--s3)}
+.secao-cab{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:8px var(--s2);margin-bottom:var(--s3)}
+.secao-cab .link-seta{white-space:nowrap}
 .secao h2{font-family:var(--f-titulo);font-weight:800;font-size:clamp(28px,3.2vw,40px);line-height:1;letter-spacing:0;text-transform:uppercase;margin:0}
 .link-seta{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:14px;background:none;border:0;padding:8px 0;color:var(--tinta)}
 .link-seta:hover{color:#C2410C}
@@ -181,6 +183,7 @@ a{color:inherit}
 .promo-mini .p{font-family:var(--f-titulo);font-weight:800;font-size:22px;font-variant-numeric:tabular-nums}
 .promo-mini s{font-size:13px;color:var(--tinta-3);margin-left:6px}
 .promo-mini .tag{position:absolute;top:10px;right:10px}
+.promo-mini>span:nth-child(2){padding-right:52px}
 @media (min-width:900px){
   .promo{grid-template-columns:2fr 1fr}
   .promo-principal{grid-template-columns:1fr 1.1fr}
@@ -298,7 +301,7 @@ a{color:inherit}
 
 <div class="faixa">
   <div class="envelope">
-    <span class="faixa-esq">Instalação inclusa · Assistência técnica autorizada<span class="faixa-horario"> · Seg a sex 8h–18h, sáb 8h–12h</span></span>
+    <span class="faixa-esq">Instalação inclusa<span class="faixa-longo"> · Assistência técnica autorizada</span><span class="faixa-horario"> · Seg a sex 8h–18h, sáb 8h–12h</span></span>
     <a href="#" data-whats><span data-ic="whats"></span>(47) 9 9150-0164</a>
   </div>
 </div>
@@ -359,7 +362,7 @@ a{color:inherit}
   <section class="secao" id="secaoPromo" aria-labelledby="tituloPromo" style="padding-top:0" hidden>
     <div class="envelope">
       <div class="secao-cab"><h2 id="tituloPromo">Baixou o preço</h2>
-        <button class="link-seta" type="button" data-so="promocao">Ver todas as promoções <span data-ic="seta"></span></button></div>
+        <button class="link-seta" type="button" data-so="promocao">Ver promoções <span data-ic="seta"></span></button></div>
       <div class="promo" id="promo"></div>
     </div>
   </section>
@@ -442,7 +445,6 @@ a{color:inherit}
         ${Loja.foto(p)}
       </div>
       <div class="card-corpo">
-        <span class="card-marca">${esc(p.marca)}</span>
         <h3 class="card-nome"><button type="button" data-produto="${esc(p.id)}">${esc(p.nome)}</button></h3>
         ${nb ? `<span class="card-banhos">${icone('chuveiro')}${nb === 3 ? '3 ou mais banhos' : nb === 1 ? '1 banho' : '2 banhos'}</span>` : ''}
         <div class="card-rodape">
@@ -494,7 +496,6 @@ a{color:inherit}
       <div class="promo-principal">
         <div class="promo-foto"><span class="selo">-${Loja.desconto(p)}%<small>OFF</small></span>${Loja.foto(p)}</div>
         <div class="promo-info">
-          <span class="card-marca">${esc(p.marca)}</span>
           <h3>${esc(p.nome)}</h3>
           <p>${esc(p.descricao)}</p>
           <div class="promo-precos"><strong>${brl(p.preco)}</strong><s>${brl(p.precoAntigo)}</s></div>

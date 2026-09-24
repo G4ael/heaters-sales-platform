@@ -385,7 +385,7 @@ const Loja = (() => {
   .lj-miniaturas button[aria-current="true"]{border-color:var(--lj-acento,#ea580c);opacity:1}
   .lj-miniaturas img{width:100%;height:100%;object-fit:contain}
   .lj-info{padding:40px 36px 32px;display:flex;flex-direction:column;gap:16px}
-  .lj-marca{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--lj-texto-2,#666)}
+  .lj-marca{font-size:14px;font-weight:500;color:var(--lj-texto-2,#666);margin-top:-8px}
   .lj-modal h2{font-family:var(--lj-fonte-titulo,inherit);font-size:clamp(22px,2.6vw,30px);line-height:1.12;letter-spacing:-.02em;margin:0;text-wrap:balance}
   .lj-banhos{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;color:var(--lj-acento-escuro,var(--lj-acento,#ea580c))}
   .lj-desc{color:var(--lj-texto-2,#555);font-size:15.5px;line-height:1.6;margin:0}
@@ -527,8 +527,8 @@ const Loja = (() => {
             <div class="lj-miniaturas">${fotos.map((f, i) => `<button type="button" data-ir="${i}" aria-label="Ver foto ${i + 1}" aria-current="${i === 0}"><img src="${esc(f)}" alt=""></button>`).join('')}</div>` : ''}
         </div>
         <div class="lj-info">
-          <span class="lj-marca">${esc(p.marca)}</span>
           <h2 id="ljModalTitulo">${esc(p.nome)}</h2>
+          <span class="lj-marca">${esc(p.marca)}${p.categoria ? ` · ${esc((CATEGORIAS.find(c => c.id === p.categoria) || {}).nome || '')}` : ''}</span>
           ${nb ? `<p class="lj-banhos">${ICONES.chuveiro}<span>Indicado para ${textoBanhos(nb)} · ${v} L/min</span></p>` : ''}
           <p class="lj-desc">${esc(p.descricao)}</p>
           ${(p.specs || []).length ? `<ul class="lj-specs">${p.specs.map(linhaSpec).join('')}</ul>` : ''}

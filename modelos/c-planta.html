@@ -92,8 +92,8 @@ a{color:inherit}
 .movel{fill:none;stroke:var(--tinta-2);stroke-width:1.2}
 .comodo{font-stretch:72%;font-size:11px;font-weight:600;letter-spacing:.08em;fill:var(--tinta-3);text-transform:uppercase}
 .cota{font-stretch:72%;font-size:10px;fill:var(--tinta-3)}
-.tubo{fill:none;stroke:var(--linha);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;transition:stroke .35s}
-.tubo.on{stroke:var(--quente);stroke-dasharray:7 7;animation:fluxo 1s linear infinite}
+.tubo{fill:none;stroke:var(--frio);stroke-opacity:.55;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;transition:stroke .35s}
+.tubo.on{stroke:var(--quente);stroke-opacity:1;stroke-dasharray:7 7;animation:fluxo 1s linear infinite}
 @keyframes fluxo{to{stroke-dashoffset:-14}}
 .tubo-frio{fill:none;stroke:var(--frio);stroke-width:2;stroke-dasharray:2 4}
 .tubo-gas{fill:none;stroke:var(--gas);stroke-width:2.5}
@@ -107,6 +107,7 @@ a{color:inherit}
 .ponto-rot{position:absolute;left:50%;top:calc(100% + 4px);translate:-50% 0;white-space:nowrap;font-stretch:72%;font-size:11.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;background:var(--folha);padding:1px 5px;color:var(--tinta-2);pointer-events:none}
 .ponto[aria-pressed="true"] .ponto-rot{color:var(--quente-escuro)}
 @media (max-width:700px){.ponto-rot{display:none}.ponto{width:40px;height:40px}}
+@media (max-width:600px){.planta .comodo,.planta .cota{display:none}}
 
 /* carimbo (bloco de título da prancha) = resultado */
 .carimbo{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--linha-forte)}
@@ -145,16 +146,20 @@ a{color:inherit}
 .secao-cab{display:flex;flex-wrap:wrap;gap:var(--s2);align-items:end;justify-content:space-between;margin-bottom:var(--s4);padding-bottom:var(--s2);border-bottom:1px solid var(--linha-forte)}
 .secao-cab p{margin:0;color:var(--tinta-2);max-width:48ch}
 
-/* processo (sequência real) */
-.processo{display:grid;grid-template-columns:1fr;border-top:1px solid var(--linha-forte);border-left:1px solid var(--linha-forte)}
-.etapa{padding:var(--s3);border-right:1px solid var(--linha-forte);border-bottom:1px solid var(--linha-forte);background:var(--folha);display:grid;gap:10px;align-content:start}
-.etapa-num{font-stretch:72%;font-weight:600;font-size:13px;letter-spacing:.08em;color:var(--quente-escuro)}
-.etapa b{font-stretch:112%;font-weight:700;font-size:20px;line-height:1.15;letter-spacing:-.01em}
-.etapa span{color:var(--tinta-2);font-size:15px}
-.etapa .lj-ic{width:28px;height:28px;color:var(--tinta)}
-@media (min-width:700px){.processo{grid-template-columns:repeat(2,1fr)}}
-@media (min-width:1100px){.processo{grid-template-columns:repeat(4,1fr)}}
-.processo-nota{margin:var(--s2) 0 0;color:var(--tinta-2);font-size:15px;display:flex;gap:10px;align-items:center}
+/* processo: uma sequência real, desenhada ao longo do tubo quente */
+.processo{list-style:none;margin:0;padding:0;display:grid;gap:0;counter-reset:etapa;position:relative}
+.processo::before{content:"";position:absolute;left:17px;top:18px;bottom:18px;width:3px;background:var(--quente)}
+.processo li{counter-increment:etapa;position:relative;padding:0 0 var(--s4) 64px;display:grid;gap:6px}
+.processo li:last-child{padding-bottom:0}
+.processo li::before{content:counter(etapa);position:absolute;left:0;top:0;width:38px;height:38px;border:3px solid var(--quente);background:var(--papel);display:grid;place-items:center;font-stretch:112%;font-weight:800;font-size:16px;border-radius:50%}
+.processo b{font-stretch:112%;font-weight:700;font-size:21px;line-height:1.15;letter-spacing:-.01em;padding-top:5px}
+.processo span{color:var(--tinta-2);font-size:15.5px;max-width:34ch}
+@media (min-width:900px){
+  .processo{grid-template-columns:repeat(4,1fr);gap:var(--s4)}
+  .processo::before{left:19px;right:0;top:17px;bottom:auto;width:auto;height:3px}
+  .processo li{padding:60px 0 0}
+}
+.processo-nota{margin:var(--s4) 0 0;color:var(--tinta-2);font-size:15px;display:flex;gap:10px;align-items:center}
 .processo-nota .lj-ic{color:var(--quente-escuro)}
 
 /* índice de categorias */
@@ -200,13 +205,14 @@ a{color:inherit}
 .ficha div:nth-child(even){padding-left:10px}
 .ficha dt{font-stretch:72%;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-3);font-weight:600}
 .ficha dd{margin:0;font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.prancha-rodape{display:flex;align-items:end;justify-content:space-between;gap:8px;margin-top:auto}
+.prancha-rodape{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:8px;margin-top:auto}
+.prancha-preco{min-width:0}
 .prancha-preco s{display:block;font-size:12.5px;color:var(--tinta-3)}
 .prancha-preco strong{font-stretch:112%;font-weight:800;font-size:22px;letter-spacing:-.02em;line-height:1.1}
 .prancha-preco .consulta{font-weight:700;font-size:16px}
 .add{position:relative;z-index:2;width:44px;height:44px;border:1px solid var(--linha-forte);background:var(--folha);display:grid;place-items:center;flex:none;transition:background .2s,color .2s}
 .add:hover{background:var(--quente);border-color:var(--quente);color:#111}
-@media (max-width:480px){.prancha-corpo{padding:12px}.prancha h3{font-size:14px}.prancha-preco strong{font-size:18px}.ficha dd{font-size:12.5px}}
+@media (max-width:480px){.prancha-corpo{padding:12px}.prancha h3{font-size:14px}.prancha-preco strong{font-size:16px}.ficha dd{font-size:12.5px}}
 .esqueleto{aspect-ratio:3/4;border-right:1px solid var(--linha-forte);border-bottom:1px solid var(--linha-forte);background:linear-gradient(90deg,var(--folha) 0,var(--papel) 50%,var(--folha) 100%);background-size:200% 100%;animation:brilho 1.2s linear infinite}
 @keyframes brilho{to{background-position:-200% 0}}
 .vazio{grid-column:1/-1;padding:var(--s5) var(--s3);border-right:1px solid var(--linha-forte);border-bottom:1px solid var(--linha-forte);background:var(--folha);text-align:center;color:var(--tinta-2)}
@@ -317,12 +323,12 @@ a{color:inherit}
   <section class="secao" id="processo" aria-labelledby="tituloProcesso">
     <div class="envelope">
       <div class="secao-cab"><h2 id="tituloProcesso">Da planta ao banho quente</h2><p>Quem vende é quem instala. É assim que a Servigás trabalha, do orçamento à manutenção.</p></div>
-      <div class="processo">
-        <div class="etapa"><span class="etapa-num">Etapa 1</span><span data-ic="prancheta"></span><b>Visita técnica</b><span>Vamos até a sua casa, medimos o local e conferimos gás e exaustão.</span></div>
-        <div class="etapa"><span class="etapa-num">Etapa 2</span><span data-ic="gota"></span><b>Aquecedor na medida</b><span>Indicamos a vazão certa para os pontos que você usa ao mesmo tempo.</span></div>
-        <div class="etapa"><span class="etapa-num">Etapa 3</span><span data-ic="ferramenta"></span><b>Instalação inclusa</b><span>Nossa equipe instala o aparelho com duto, registro e acabamento.</span></div>
-        <div class="etapa"><span class="etapa-num">Etapa 4</span><span data-ic="escudo"></span><b>Assistência autorizada</b><span>Garantia de fábrica e manutenção com quem conhece o aparelho.</span></div>
-      </div>
+      <ol class="processo">
+        <li><b>Visita técnica</b><span>Vamos até a sua casa, medimos o local e conferimos gás e exaustão.</span></li>
+        <li><b>Aquecedor na medida</b><span>Indicamos a vazão certa para os pontos que você usa ao mesmo tempo.</span></li>
+        <li><b>Instalação inclusa</b><span>Nossa equipe instala o aparelho com duto, registro e acabamento.</span></li>
+        <li><b>Assistência autorizada</b><span>Garantia de fábrica e manutenção com quem conhece o aparelho.</span></li>
+      </ol>
       <p class="processo-nota"><span data-ic="loja"></span>Prefere buscar? Retire na loja: combine o horário pelo WhatsApp.</p>
     </div>
   </section>
@@ -351,7 +357,7 @@ a{color:inherit}
 <footer class="rodape">
   <div class="envelope">
     <dl class="rodape-grade">
-      <div><dt>Projeto e instalação</dt><dd class="marca-grande">Servigás</dd><dd style="margin-top:8px;color:var(--tinta-2)">Venda, instalação e manutenção de aquecedores a gás. Assistência técnica autorizada.</dd></div>
+      <div><dt class="visually-hidden">Loja</dt><dd class="marca-grande">Servigás</dd><dd style="margin-top:8px;color:var(--tinta-2)">Venda, instalação e manutenção de aquecedores a gás. Assistência técnica autorizada.</dd></div>
       <div><dt>Atendimento</dt><dd><a href="#" data-whats>WhatsApp (47) 9 9150-0164</a>Seg a sex, 8h às 18h<br>Sábado, 8h às 12h</dd></div>
       <div><dt>Loja</dt><dd id="rodapeCats"></dd></div>
       <div><dt>Pagamento</dt><dd>Combinado pelo WhatsApp. Pix e cartão no site em breve.</dd></div>
