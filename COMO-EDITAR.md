@@ -11,7 +11,10 @@ login e senha:
   carregar rápido). A 1ª foto é a **capa** — aparece na lista da loja; as
   outras viram o **carrossel** na página do produto, para o cliente ver
   todos os ângulos. Use as setinhas embaixo de cada foto para mudar a ordem.
-- 🏷️ Colocar em **promoção** (preço antigo riscado) e dar selo **Destaque**
+- 🏷️ Colocar em **promoção** (preço antigo riscado) e dar selo **Destaque**.
+  Produto com preço antigo entra sozinho no bloco **"Baixou o preço"**,
+  com o % de desconto calculado. O aquecedor com **Destaque** é o que mostra
+  o preço na pílula branca do topo da página.
 - 👁️ **Ocultar/mostrar** um produto no site sem precisar apagar
 - Preço vazio = aparece "**Sob consulta**" com botão de orçamento
 
@@ -20,6 +23,19 @@ deploy, sem mexer em código.
 
 > Primeira vez? É preciso rodar o script `supabase/loja.sql` (fica na pasta
 > do sistema de gestão) no SQL Editor do painel do Supabase — uma vez só.
+
+### 🚿 Escolha por chuveiros ("Qual serve na sua casa?")
+
+O site descobre quantos banhos cada aquecedor atende pela **vazão** que está
+nas especificações. Para um aquecedor aparecer nessa escolha, escreva nas
+especificações uma linha assim:
+
+```
+Vazão: 21 L/min
+```
+
+Até 16 L/min = 1 chuveiro · de 17 a 22 = 2 chuveiros · 23 ou mais = 3 ou
+mais. É uma estimativa, e o site avisa que a visita técnica confirma.
 
 A lista de produtos que existe dentro do `index.html` é só uma **reserva de
 demonstração**: aparece apenas se o banco estiver fora do ar.
@@ -34,14 +50,23 @@ const WHATSAPP = '5547991500164';
 ```
 
 e ponha o novo número só com dígitos e `55` na frente (55 + DDD + número).
-Troque também o texto que aparece na faixa do topo e no rodapé.
+Troque também o número escrito na faixa cinza do topo e no rodapé.
 
-## 🖼️ Banner da página inicial
+## 🖼️ Foto do topo da página
 
-A foto dos aquecedores fica em `imagens/banner-aquecedores.webp` (telas
-grandes) e `imagens/banner-aquecedores-1440.webp` (celular). Para trocar,
-salve as novas imagens com os mesmos nomes — o texto continua aparecendo
-por cima, na área escura da esquerda.
+Os aquecedores que aparecem sobre o bloco laranja ficam em
+`imagens/aquecedores-recorte.webp`: é um recorte **sem fundo** (transparente)
+feito a partir de `imagens/banner-aquecedores.webp`. Para trocar, salve uma
+nova imagem com fundo transparente (PNG ou WebP, uns 900 px de largura) com
+o mesmo nome.
+
+## 🎨 Cores e visual
+
+O visual escolhido é o **"Quente e fria"**: laranja da marca no topo, azul no
+bloco de escolha por chuveiros, preto nos botões. As cores, fontes e medidas
+ficam no começo do `<style>` do `index.html`, em `:root` (por exemplo
+`--laranja:#EA580C`). As regras do visual estão explicadas no `DESIGN.md`.
+O site não anuncia parcelamento: o pagamento é combinado pelo WhatsApp.
 
 ## 🚀 Publicar mudanças no código (visual, textos fixos...)
 
