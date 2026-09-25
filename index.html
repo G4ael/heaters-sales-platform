@@ -23,6 +23,7 @@
   --fundo:#FFFFFF; --tile:#F2F2F4; --tile-2:#E8E8EC; --superficie:#FFFFFF;
   --linha:#E6E6EA; --linha-forte:#D2D2D8;
   --preto:#111111;
+  --rosa:#E11D74; --laranja-texto:#C2410C; --promo-fundo:#FFF1E6; --promo-fundo-2:#FFE4D1;
   --f-titulo:'Unbounded',system-ui,sans-serif;
   --f-texto:'Onest',system-ui,sans-serif;
   --r:28px; --r-m:20px; --r-p:999px;
@@ -39,6 +40,7 @@
   --fundo:#0E0E10; --tile:#1B1B1F; --tile-2:#26262B; --superficie:#16161A;
   --linha:#2A2A30; --linha-forte:#3A3A42; --azul-claro:#12213A;
   --preto:#F4F4F6;
+  --rosa:#F472B6; --laranja-texto:#FDBA74; --promo-fundo:#261A12; --promo-fundo-2:#33221A;
   --lj-acento-texto:#111;--lj-acento-escuro:#7FB0F5;
   --ilu-corpo:#ECECEF;--ilu-linha:#0E0E10;
 }
@@ -60,10 +62,13 @@ a{color:inherit}
 /* ─── cabeçalho ─── */
 .cab{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--fundo) 88%,transparent);backdrop-filter:saturate(1.4) blur(12px)}
 .cab .envelope{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:76px;gap:var(--s2)}
-.cab-nav{display:none;gap:var(--s3)}
+.cab-nav{display:none;gap:var(--s3);position:relative}
 .cab-nav button{background:none;border:0;padding:8px 0;font-size:15px;font-weight:500;color:var(--tinta);position:relative}
 .cab-nav button::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:2px;background:var(--azul);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
-.cab-nav button:hover::after,.cab-nav button[aria-current="true"]::after{transform:none}
+.cab-nav button:hover::after{transform:none;opacity:.35}
+.cab-nav button[aria-current="true"]{font-weight:600}
+.nav-ind{position:absolute;left:0;bottom:2px;height:2px;width:0;background:var(--azul);border-radius:2px;transition:transform .45s var(--ease),width .45s var(--ease);pointer-events:none}
+:root[data-theme="dark"] .nav-ind{background:#7FB0F5}
 @media (min-width:900px){.cab-nav{display:flex}}
 .logo{grid-column:2;display:flex;align-items:center;gap:10px;text-decoration:none}
 .logo-marca{width:44px;height:44px;border-radius:14px 14px 14px 4px;background:var(--laranja);display:grid;place-items:center;color:#111}
@@ -76,7 +81,7 @@ a{color:inherit}
 .pilula .contador{position:absolute;top:4px;right:4px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--azul);color:#fff;font-size:10.5px;font-weight:700;display:grid;place-items:center}
 .pilula .contador[hidden]{display:none}
 .pilula .fav-on{color:var(--laranja)}
-@media (max-width:520px){.logo small{display:none}.cab .envelope{grid-template-columns:auto 1fr;}.logo{grid-column:1}.pilula{grid-column:2}.pilula [data-tema]{display:none}}
+@media (max-width:520px){.logo small{display:none}.cab .envelope{grid-template-columns:auto 1fr;}.logo{grid-column:1}.pilula{grid-column:2;justify-self:end}}
 
 /* ─── herói ─── */
 .heroi{background:var(--laranja);color:var(--sobre-laranja);border-radius:var(--r);display:grid;position:relative}
@@ -91,22 +96,11 @@ a{color:inherit}
 .btn-preto{background:#111;color:#fff}
 .btn-azul{background:var(--azul);color:#fff}
 .heroi-midia{position:relative;margin:0 var(--s2) var(--s4);align-self:end}
-.heroi-foto{position:relative}
-.heroi-foto img{width:100%;height:auto;filter:drop-shadow(0 28px 24px rgba(59,22,6,.35))}
-.bolha-preco{position:absolute;right:10%;top:-2%;display:flex;align-items:center;gap:8px;background:#fff;color:#111;border:0;border-radius:var(--r-p);padding:6px 6px 6px 16px;font-weight:700;font-size:16px;box-shadow:0 10px 24px -10px rgba(0,0,0,.4);transition:transform .25s var(--ease)}
-.bolha-preco:hover{transform:translateY(-2px)}
-.bolha-preco span:last-child{width:34px;height:34px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center}
-.bolha-preco .lj-ic{width:18px;height:18px}
-.bolha-azul{position:absolute;left:0;bottom:-8px;max-width:210px;background:var(--azul);color:#fff;border-radius:20px;padding:16px 18px;font-size:16px;line-height:1.3;font-weight:500;display:grid;gap:12px;text-decoration:none;box-shadow:0 18px 30px -18px rgba(0,0,0,.45)}
-.bolha-azul .seta-c{width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(255,255,255,.8);display:grid;place-items:center;justify-self:end}
-.bolha-azul .lj-ic{width:18px;height:18px}
 @media (min-width:900px){
   .heroi{grid-template-columns:1fr 1fr;min-height:540px}
   .heroi-texto{padding:var(--s6) var(--s4) var(--s6) var(--s6)}
   .heroi-midia{margin:var(--s6) var(--s4) var(--s5) 0;align-self:center}
-  .bolha-azul{left:-40px;bottom:-24px}
 }
-@media (max-width:899px){.bolha-azul{position:relative;left:auto;bottom:auto;margin:-24px 0 0 8px;max-width:240px}}
 
 /* ─── faixa escolha: bloco azul + cartões ─── */
 .secao{padding:var(--s6) 0 0}
@@ -210,9 +204,7 @@ a{color:inherit}
 @media (prefers-reduced-motion:no-preference){
   .heroi{animation:acende 1.1s var(--ease) both}
   .heroi h1,.heroi p,.heroi-cta{animation:sobe .9s .15s var(--ease) both}
-  .bolha-azul{animation:sobe .9s .45s var(--ease) both}
-  .heroi-foto img{animation:zoom 1.6s var(--ease) both}
-  .bolha-preco{animation:sobe .8s .6s var(--ease) both}
+  .vitrine{animation:zoom 1.2s .2s var(--ease) both}
   @keyframes acende{from{background:#F6B089;clip-path:inset(4% 2% 4% 2% round 28px)}to{clip-path:inset(0 round 28px)}}
   @keyframes sobe{from{opacity:0;transform:translateY(24px)}}
   @keyframes zoom{from{scale:.94;opacity:0}}
@@ -302,6 +294,97 @@ a{color:inherit}
 .zap-flut .lj-ic{width:28px;height:28px}
 .card-add{flex:none}
 .card-preco{min-width:0}
+
+/* ─── herói: vitrine de aquecedores (carrossel, sem preço) ─── */
+.vitrine{position:relative;display:grid;gap:14px}
+.vitrine-trilho{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;border-radius:24px;scroll-behavior:smooth}
+.vitrine-trilho::-webkit-scrollbar{display:none}
+.vitrine-slide{flex:0 0 100%;scroll-snap-align:center;display:grid;grid-template-rows:auto 1fr;border:0;padding:0;margin:0;text-align:left;background:var(--superficie);color:var(--tinta);border-radius:24px;overflow:hidden;cursor:pointer;box-shadow:0 24px 40px -28px rgba(59,22,6,.55)}
+.vitrine-foto{display:grid;place-items:center;aspect-ratio:16/10;background:var(--tile);padding:6% 10%;overflow:hidden}
+.vitrine-foto .lj-ilu,.vitrine-foto img{width:auto;height:100%;max-width:100%;object-fit:contain;transition:transform .8s var(--ease)}
+.vitrine-slide:hover .vitrine-foto .lj-ilu,.vitrine-slide:hover .vitrine-foto img{transform:scale(1.05)}
+.vitrine-txt{padding:18px 22px 20px;display:grid;gap:6px}
+.vitrine-txt b{font-family:var(--f-titulo);font-weight:600;font-size:clamp(17px,1.6vw,20px);line-height:1.2;letter-spacing:-.02em;text-wrap:balance}
+.vitrine-meta{display:flex;align-items:center;gap:6px;font-size:13.5px;color:var(--tinta-2)}
+.vitrine-meta .lj-ic{width:16px;height:16px;color:var(--azul)}
+.vitrine-desc{font-size:14.5px;color:var(--tinta-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.vitrine-ver{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:14.5px;margin-top:4px}
+.vitrine-ver .lj-ic{width:18px;height:18px;transition:transform .3s var(--ease)}
+.vitrine-slide:hover .vitrine-ver .lj-ic{transform:translateX(4px)}
+.vitrine-slide:focus-visible{outline:3px solid #111;outline-offset:3px}
+.vitrine-ctrl{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.vitrine-seta{width:44px;height:44px;border-radius:50%;border:0;background:rgba(17,17,17,.12);color:#111;display:grid;place-items:center;transition:background .2s,transform .2s var(--ease)}
+.vitrine-seta:hover{background:#111;color:#fff}
+.vitrine-seta:active{transform:scale(.92)}
+.vitrine-pontos{display:flex;gap:6px;align-items:center}
+.vitrine-pontos button{width:10px;height:10px;padding:0;border:0;border-radius:999px;background:rgba(17,17,17,.28);transition:width .4s var(--ease),background .3s;position:relative}
+.vitrine-pontos button::before{content:"";position:absolute;inset:-17px -6px}
+.vitrine-pontos button[aria-current="true"]{width:28px;background:#111}
+.vitrine-vazia{aspect-ratio:16/13;border-radius:24px;background:rgba(255,255,255,.35)}
+
+/* ─── bloco azul: esquenta conforme o número de chuveiros ─── */
+@property --calor{syntax:'<number>';inherits:true;initial-value:0}
+.bloco-azul{--calor:0;background:linear-gradient(165deg,#0B4FB3 40%,color-mix(in oklab,#0B4FB3,#EA580C calc(var(--calor) * 38%)) 100%);transition:--calor .8s var(--ease)}
+.misturador output .num{display:inline-block;animation:numero .5s var(--ease)}
+@keyframes numero{from{opacity:0;transform:translateY(14px) scale(.9);filter:blur(4px)}}
+.escala button{transition:background .3s var(--ease),color .3s,transform .3s var(--ease)}
+.escala button[aria-pressed="true"]{transform:scale(1.02)}
+.misturador input[type=range]::-webkit-slider-thumb{transition:box-shadow .4s var(--ease),transform .25s var(--ease)}
+.misturador input[type=range]:active::-webkit-slider-thumb{transform:scale(1.12)}
+.recomendados .card{animation:entra .6s var(--ease) both;animation-delay:calc(var(--i,0) * 80ms)}
+@keyframes entra{from{opacity:0;transform:translateY(22px) scale(.97);filter:blur(6px)}}
+
+/* entrada das seções ao rolar (só com JS e sem redução de movimento) */
+.anima .revela{opacity:0;transform:translateY(32px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.anima .revela.visto{opacity:1;transform:none}
+
+/* ─── promoção com mais destaque ─── */
+.promo-principal{background:var(--promo-fundo)}
+.promo-mini{background:var(--promo-fundo)}
+.promo-mini:hover{background:var(--promo-fundo-2)}
+.promo-selo{font-family:var(--f-titulo);font-size:22px;font-weight:600;padding:8px 16px;transform:rotate(-4deg);box-shadow:0 10px 20px -12px rgba(194,65,12,.7);transition:transform .4s var(--ease)}
+.promo-principal:hover .promo-selo{transform:rotate(0) scale(1.05)}
+.economia{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;background:var(--superficie);color:var(--laranja-texto);border-radius:999px;padding:6px 12px;font-weight:600;font-size:14px}
+.economia .lj-ic{width:16px;height:16px}
+.promo-mini .eco{display:block;font-size:12.5px;font-weight:600;color:var(--laranja-texto);margin-top:2px}
+.secao-sub{margin:0;color:var(--tinta-2);font-size:15px}
+.secao-sub b{color:var(--laranja-texto)}
+
+/* ─── ícones animados ─── */
+.fav{transition:color .2s}
+.fav .lj-ic,#btnFav .lj-ic{transition:transform .3s var(--ease),fill .2s,color .2s}
+.fav:hover,#btnFav:hover,.fav[aria-pressed="true"],#btnFav.tem{color:var(--rosa)}
+.fav:hover .lj-ic,#btnFav:hover .lj-ic{transform:scale(1.14)}
+.fav[aria-pressed="true"] .lj-ic,#btnFav.tem .lj-ic{fill:var(--rosa)}
+:root[data-theme="dark"] .fav:hover,:root[data-theme="dark"] .fav[aria-pressed="true"]{color:var(--rosa)}
+:root[data-theme="dark"] .fav[aria-pressed="true"] .lj-ic{fill:var(--rosa)}
+.pulsa .lj-ic{animation:pulsa .5s var(--ease)}
+@keyframes pulsa{0%{transform:scale(1)}30%{transform:scale(1.4)}60%{transform:scale(.9)}100%{transform:scale(1)}}
+#btnBusca .lj-ic{transition:transform .3s var(--ease)}
+#btnBusca:hover .lj-ic{transform:rotate(-14deg) scale(1.1)}
+.pilula [data-carrinho] .lj-ic{transition:transform .3s var(--ease)}
+.pilula [data-carrinho]:hover .lj-ic{transform:translateX(2px)}
+.pilula [data-carrinho].pula .lj-ic{animation:pula .6s var(--ease)}
+@keyframes pula{25%{transform:translateY(-5px) rotate(-10deg)}55%{transform:translateY(0) rotate(6deg)}80%{transform:rotate(-2deg)}}
+.contador.pop{animation:pop .4s var(--ease)}
+@keyframes pop{40%{transform:scale(1.45)}}
+.tema-ic{position:relative;display:block;width:20px;height:20px;view-transition-name:tema-ic;transition:transform .4s var(--ease)}
+.tema-ic>span{position:absolute;inset:0;display:grid;place-items:center;transition:transform .6s var(--ease),opacity .35s}
+.tema-ic .ic-sol{opacity:0;transform:rotate(-120deg) scale(.4)}
+:root[data-theme="dark"] .tema-ic .ic-lua{opacity:0;transform:rotate(120deg) scale(.4)}
+:root[data-theme="dark"] .tema-ic .ic-sol{opacity:1;transform:none}
+[data-tema]:hover .tema-ic{transform:rotate(18deg)}
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+::view-transition-old(tema-ic){animation:tema-sai .5s var(--ease) both}
+::view-transition-new(tema-ic){animation:tema-entra .6s var(--ease) both}
+@keyframes tema-sai{to{opacity:0;transform:rotate(120deg) scale(.4)}}
+@keyframes tema-entra{from{opacity:0;transform:rotate(-120deg) scale(.4)}}
+.tema-suave,.tema-suave *{transition:background-color .45s,color .45s,border-color .45s,fill .45s !important}
+@media (prefers-reduced-motion:reduce){
+  .vitrine-trilho{scroll-behavior:auto}
+  .recomendados .card,.misturador output .num,.pulsa .lj-ic,.pula .lj-ic,.contador.pop{animation:none}
+  .bloco-azul{transition:none}
+}
 </style>
 </head>
 <body>
@@ -318,9 +401,10 @@ a{color:inherit}
   <div class="envelope">
     <nav class="cab-nav" aria-label="Principal">
       <button type="button" data-ir="topo" aria-current="true">Início</button>
-      <button type="button" data-ir="catalogo">Loja</button>
-      <button type="button" data-ir="promo">Promoções</button>
       <button type="button" data-ir="provas">Instalação</button>
+      <button type="button" data-ir="promo">Promoções</button>
+      <button type="button" data-ir="catalogo">Loja</button>
+      <span class="nav-ind" id="navInd" aria-hidden="true"></span>
     </nav>
     <a class="logo" href="#topo" id="logo" aria-label="Servigás Aquecedores, início">
       <span class="logo-marca" data-ic="chama"></span>
@@ -348,23 +432,28 @@ a{color:inherit}
         </div>
       </div>
       <div class="heroi-midia">
-        <div class="heroi-foto"><img src="imagens/aquecedores-recorte.webp" alt="Aquecedores a gás Rinnai e Komeco" width="900" height="563" fetchpriority="high">
-        <button class="bolha-preco" type="button" id="bolhaPreco" hidden></button></div>
-        <a class="bolha-azul" href="#provas" data-ir="provas"><span>Instalação inclusa, feita pela nossa equipe</span><span class="seta-c" data-ic="diagonal"></span></a>
+        <div class="vitrine" id="vitrine" role="region" aria-roledescription="carrossel" aria-label="Aquecedores">
+          <div class="vitrine-trilho" id="vitrineTrilho" aria-live="off"><div class="vitrine-vazia"></div></div>
+          <div class="vitrine-ctrl">
+            <button class="vitrine-seta" type="button" data-vitrine="-1" aria-label="Aquecedor anterior"><span data-ic="esquerda"></span></button>
+            <div class="vitrine-pontos" id="vitrinePontos"></div>
+            <button class="vitrine-seta" type="button" data-vitrine="1" aria-label="Próximo aquecedor"><span data-ic="direita"></span></button>
+          </div>
+        </div>
       </div>
     </section>
   </div>
 
   <!-- ═══════════ ESCOLHA PELO NÚMERO DE CHUVEIROS ═══════════ -->
   <section class="secao" id="escolha" aria-labelledby="tituloEscolha">
-    <div class="envelope escolha">
-      <div class="bloco-azul">
+    <div class="revela envelope escolha">
+      <div class="bloco-azul" id="blocoAzul">
         <h2 id="tituloEscolha">Qual serve na sua casa?</h2>
         <p>Diga quantos chuveiros ficam ligados ao mesmo tempo.</p>
         <div class="misturador">
           <label for="banhos" class="visually-hidden">Chuveiros ligados ao mesmo tempo</label>
           <output id="saidaBanhos" for="banhos">2 <small>chuveiros</small></output>
-          <input type="range" id="banhos" min="1" max="3" step="1" value="2" aria-valuetext="2 chuveiros">
+          <input type="range" id="banhos" min="1" max="3" step="0.01" value="2" aria-valuetext="2 chuveiros">
           <div class="escala" id="escala"></div>
           <span class="nota">Estimativa pela vazão. A visita técnica confirma.</span>
         </div>
@@ -376,7 +465,7 @@ a{color:inherit}
   <!-- ═══════════ DIFERENCIAIS ═══════════ -->
   <section class="secao" id="provas" aria-labelledby="tituloProvas">
     <div class="envelope">
-      <div class="provas-bloco">
+      <div class="revela provas-bloco">
         <h2 id="tituloProvas">Quem vende é quem instala</h2>
         <div class="provas">
           <div class="prova"><span class="prova-ic" data-ic="ferramenta"></span><div><b>Instalação inclusa</b><span>Nossa equipe instala o aquecedor ou a bomba que você comprar.</span></div></div>
@@ -391,8 +480,8 @@ a{color:inherit}
   <!-- ═══════════ PROMOÇÕES (produtos com preço antigo) ═══════════ -->
   <section class="secao" id="promo" aria-labelledby="tituloPromo" hidden>
     <div class="envelope">
-      <div class="secao-cab"><h2 id="tituloPromo">Baixou o preço</h2></div>
-      <div class="promo" id="promoBox"></div>
+      <div class="secao-cab"><h2 id="tituloPromo">Baixou o preço</h2><p class="secao-sub" id="promoSub"></p></div>
+      <div class="revela promo" id="promoBox"></div>
     </div>
   </section>
 
@@ -928,7 +1017,7 @@ const Loja = (() => {
       if (prod) { e.preventDefault(); abrirProduto(prod.dataset.produto); return; }
       if (e.target.closest('[data-carrinho]')) { e.preventDefault(); abrirCarrinho(); return; }
       if (e.target.closest('[data-whats]')) { e.preventDefault(); whats(); return; }
-      if (e.target.closest('[data-tema]')) { e.preventDefault(); alternarTema(); }
+      if (e.target.closest('[data-tema]')) { e.preventDefault(); alternarTema(e); }
     });
   }
 
@@ -1132,14 +1221,30 @@ const Loja = (() => {
   function aplicarTema(t) {
     document.documentElement.dataset.theme = t;
     document.querySelectorAll('[data-tema]').forEach(b => {
-      b.innerHTML = t === 'dark' ? ICONES.sol : ICONES.lua;
+      if (!b.querySelector('.tema-ic')) b.innerHTML = `<span class="tema-ic"><span class="ic-lua">${ICONES.lua}</span><span class="ic-sol">${ICONES.sol}</span></span>`;
       b.setAttribute('aria-label', t === 'dark' ? 'Usar tema claro' : 'Usar tema escuro');
     });
     emitir('tema', t);
   }
-  function alternarTema() {
+  /* Troca de tema: um círculo se abre a partir do botão (onde o navegador
+     permite); nos outros, as cores só mudam suavemente. */
+  function alternarTema(ev) {
     const novo = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-    gravar(CHAVE_TEMA, novo); aplicarTema(novo);
+    const aplicar = () => { gravar(CHAVE_TEMA, novo); aplicarTema(novo); };
+    const raiz = document.documentElement;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { aplicar(); return; }
+    if (!document.startViewTransition) {
+      raiz.classList.add('tema-suave'); aplicar();
+      setTimeout(() => raiz.classList.remove('tema-suave'), 500); return;
+    }
+    const b = ev && ev.target.closest ? ev.target.closest('[data-tema]') : null;
+    const r = b ? b.getBoundingClientRect() : { left: innerWidth, top: 0, width: 0, height: 0 };
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    const raio = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    const t = document.startViewTransition(aplicar);
+    t.ready.then(() => raiz.animate(
+      { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${raio}px at ${x}px ${y}px)`] },
+      { duration: 700, easing: 'cubic-bezier(.16,1,.3,1)', pseudoElement: '::view-transition-new(root)' }));
   }
 
   function iniciar() {
@@ -1183,9 +1288,12 @@ const Loja = (() => {
     try { localStorage.setItem('servigas-favoritos', JSON.stringify(favoritos)); } catch {}
     Loja.toast(`${icone('coracao')} ${ehFav(id) ? 'Salvo nos favoritos' : 'Removido dos favoritos'}`);
     pintarFavs(); renderRecomendados(); renderCatalogo();
+    document.querySelectorAll(`[data-fav="${CSS.escape(id)}"]`).forEach(b => b.classList.add('pulsa'));
+    const h = $('btnFav'); h.classList.remove('pulsa'); void h.offsetWidth; h.classList.add('pulsa');
   }
   function pintarFavs() {
     $('contaFav').textContent = favoritos.length; $('contaFav').hidden = !favoritos.length;
+    $('btnFav').classList.toggle('tem', favoritos.length > 0);
     $('btnFav').setAttribute('aria-pressed', filtro.favs);
   }
 
@@ -1213,24 +1321,66 @@ const Loja = (() => {
   }
   const esqueletos = (n) => Array.from({ length: n }, () => '<div class="esqueleto" aria-hidden="true"></div>').join('');
 
-  /* ─── herói: pílula de preço do aquecedor em destaque ─── */
-  function renderBolha() {
-    const aq = Loja.produtos.filter(p => p.categoria === 'aquecedores' && p.preco != null);
-    const p = aq.find(x => x.destaque) || aq[0];
-    const b = $('bolhaPreco');
-    if (!p) { b.hidden = true; return; }
-    b.hidden = false;
-    b.dataset.produto = p.id;
-    b.setAttribute('aria-label', `${p.nome}, ${brl(p.preco)}. Ver detalhes`);
-    b.innerHTML = `<span>${brl(p.preco).replace(/,00$/, '')}</span><span>${icone('mais')}</span>`;
+  /* ─── herói: vitrine de aquecedores (sem preço; o clique abre o produto) ─── */
+  let vitrineI = 0, vitrineN = 0, vitrineTimer = null, vitrinePausa = false;
+  function renderVitrine() {
+    const lista = Loja.produtos.filter(p => p.categoria === 'aquecedores')
+      .sort((a, b) => ((b.fotos || []).length ? 1 : 0) - ((a.fotos || []).length ? 1 : 0) || (b.destaque ? 1 : 0) - (a.destaque ? 1 : 0))
+      .slice(0, 6);
+    vitrineN = lista.length;
+    if (!lista.length) return;
+    $('vitrineTrilho').innerHTML = lista.map((p, i) => {
+      const nb = Loja.banhos(p), v = Loja.vazao(p);
+      const meta = [p.marca, nb ? (nb === 3 ? '3+ banhos' : nb + (nb === 1 ? ' banho' : ' banhos')) : '', v ? v + ' L/min' : ''].filter(Boolean).join(' · ');
+      return `<button class="vitrine-slide" type="button" data-produto="${esc(p.id)}" aria-label="${esc(p.nome)}, ${i + 1} de ${lista.length}. Ver produto">
+        <span class="vitrine-foto">${Loja.foto(p, { eager: i === 0 })}</span>
+        <span class="vitrine-txt">
+          <b>${esc(p.nome)}</b>
+          <span class="vitrine-meta">${icone('gota')}${esc(meta)}</span>
+          <span class="vitrine-desc">${esc(p.descricao)}</span>
+          <span class="vitrine-ver">Ver aquecedor ${icone('seta')}</span>
+        </span></button>`;
+    }).join('');
+    $('vitrinePontos').innerHTML = lista.map((p, i) => `<button type="button" data-ponto-vitrine="${i}" aria-label="Ver aquecedor ${i + 1}" aria-current="${i === 0}"></button>`).join('');
+    vitrineI = 0;
+    iniciarVitrine();
   }
+  function irVitrine(i) {
+    if (!vitrineN) return;
+    vitrineI = (i + vitrineN) % vitrineN;
+    const t = $('vitrineTrilho');
+    t.scrollTo({ left: vitrineI * t.clientWidth, behavior: reduz ? 'auto' : 'smooth' });
+    marcarVitrine();
+  }
+  function marcarVitrine() {
+    document.querySelectorAll('[data-ponto-vitrine]').forEach((b, j) => b.setAttribute('aria-current', j === vitrineI));
+  }
+  function iniciarVitrine() {
+    clearInterval(vitrineTimer);
+    if (reduz || vitrineN < 2) return;
+    vitrineTimer = setInterval(() => { if (!vitrinePausa && !document.hidden) irVitrine(vitrineI + 1); }, 5000);
+  }
+  (() => {
+    const v = $('vitrine'), t = $('vitrineTrilho');
+    const pausa = (x) => () => { vitrinePausa = x; };
+    v.addEventListener('mouseenter', pausa(true)); v.addEventListener('mouseleave', pausa(false));
+    v.addEventListener('focusin', pausa(true)); v.addEventListener('focusout', pausa(false));
+    t.addEventListener('touchstart', pausa(true), { passive: true });
+    let fim;
+    t.addEventListener('scroll', () => {
+      clearTimeout(fim);
+      fim = setTimeout(() => { vitrineI = Math.round(t.scrollLeft / t.clientWidth); marcarVitrine(); }, 80);
+    }, { passive: true });
+  })();
 
   /* ─── escolha pelo número de chuveiros ─── */
   const ROT = { 1: ['1', 'chuveiro'], 2: ['2', 'chuveiros'], 3: ['3+', 'chuveiros ou banheira'] };
   const COR = { 1: '#0B4FB3', 2: '#FDBA74', 3: '#EA580C' };
+  let faixaAtual = 2;
   function renderRecomendados() {
-    const n = Number($('banhos').value);
-    $('saidaBanhos').innerHTML = `${ROT[n][0]} <small>${ROT[n][1]}</small>`;
+    const n = faixaAtual;
+    $('saidaBanhos').innerHTML = `<span class="num">${ROT[n][0]}</span> <small>${ROT[n][1]}</small>`;
+    $('blocoAzul').style.setProperty('--calor', (n - 1) / 2);
     $('banhos').setAttribute('aria-valuetext', `${ROT[n][0]} ${ROT[n][1]}`);
     $('banhos').style.setProperty('--cor-agulha', COR[n]);
     $('escala').innerHTML = [1, 2, 3].map(i => {
@@ -1240,7 +1390,7 @@ const Loja = (() => {
     }).join('');
     if (Loja.carregando) { $('recomendados').innerHTML = esqueletos(3); return; }
     const lista = Loja.filtrar({ cat: 'aquecedores', banhos: n, ordem: 'menor' });
-    $('recomendados').innerHTML = lista.length ? lista.slice(0, 3).map(cartao).join('')
+    $('recomendados').innerHTML = lista.length ? lista.slice(0, 3).map((p, i) => cartao(p).replace('<article class="card">', `<article class="card" style="--i:${i}">`)).join('')
       : `<div class="vazio"><b>Sem modelo cadastrado nessa faixa.</b>Fale com a gente que indicamos o aquecedor certo.<br><button class="btn btn-azul" type="button" data-whats>${icone('whats')} Pedir indicação</button></div>`;
   }
 
@@ -1250,6 +1400,8 @@ const Loja = (() => {
     $('promo').hidden = !promos.length;
     if (!promos.length) return;
     const [p, ...resto] = promos;
+    const economia = (q) => (q.precoAntigo || 0) - (q.preco || 0);
+    $('promoSub').innerHTML = `Economize até <b>${brl(Math.max(...promos.map(economia)))}</b> em produtos selecionados.`;
     $('promoBox').innerHTML = `
       <div class="promo-principal">
         <div class="promo-foto"><span class="promo-selo">-${Loja.desconto(p)}%</span>${Loja.foto(p)}</div>
@@ -1257,6 +1409,7 @@ const Loja = (() => {
           <h3>${esc(p.nome)}</h3>
           <p>${esc(p.descricao)}</p>
           <div class="promo-precos"><strong>${brl(p.preco)}</strong><s>${brl(p.precoAntigo)}</s></div>
+          <span class="economia">${icone('check')} Você economiza ${brl(economia(p))}</span>
           <div class="promo-acoes">
             <button class="btn btn-preto" type="button" data-add="${esc(p.id)}">${icone('carrinho')} Adicionar ao pedido</button>
             <button class="btn btn-contorno" type="button" data-produto="${esc(p.id)}">Ver detalhes</button>
@@ -1266,7 +1419,7 @@ const Loja = (() => {
       <div class="promo-lista">${resto.slice(0, 3).map(q => `
         <button class="promo-mini" type="button" data-produto="${esc(q.id)}">
           <span class="mini-foto">${Loja.foto(q)}</span>
-          <span class="mini-txt"><b>${esc(q.nome)}</b><span class="p">${brl(q.preco)}</span><s>${brl(q.precoAntigo)}</s></span>
+          <span class="mini-txt"><b>${esc(q.nome)}</b><span class="p">${brl(q.preco)}</span><s>${brl(q.precoAntigo)}</s><span class="eco">Economize ${brl(economia(q))}</span></span>
           <span class="selo">-${Loja.desconto(q)}%</span>
         </button>`).join('')}</div>`;
   }
@@ -1310,15 +1463,43 @@ const Loja = (() => {
         : `<div class="vazio"><b>Nada encontrado.</b>Tente outra palavra ou peça ajuda no WhatsApp.<br><button class="btn btn-preto" type="button" data-limpar="tudo">Limpar filtros</button></div>`;
   }
 
-  function renderTudo() { renderBolha(); renderRecomendados(); renderPromo(); renderCatalogo(); pintarFavs(); }
+  function renderTudo() { renderVitrine(); renderRecomendados(); renderPromo(); renderCatalogo(); pintarFavs(); }
 
   /* ─── eventos ─── */
-  $('banhos').addEventListener('input', renderRecomendados);
+  /* controle deslizante: arrasta livre, encaixa suave na faixa ao soltar */
+  const faixa = $('banhos');
+  let animFaixa;
+  function encaixar(alvo) {
+    cancelAnimationFrame(animFaixa);
+    const de = Number(faixa.value), t0 = performance.now(), dur = reduz ? 0 : 280;
+    const passo = (t) => {
+      const k = dur ? Math.min(1, (t - t0) / dur) : 1, e = 1 - Math.pow(1 - k, 3);
+      faixa.value = de + (alvo - de) * e;
+      if (k < 1) animFaixa = requestAnimationFrame(passo);
+    };
+    animFaixa = requestAnimationFrame(passo);
+  }
+  function mudarFaixa(n) { if (n !== faixaAtual) { faixaAtual = n; renderRecomendados(); } }
+  faixa.addEventListener('input', () => mudarFaixa(Math.round(Number(faixa.value))));
+  faixa.addEventListener('change', () => encaixar(faixaAtual));
+  faixa.addEventListener('keydown', e => {
+    const mapa = { ArrowLeft: -1, ArrowDown: -1, ArrowRight: 1, ArrowUp: 1 };
+    let n = null;
+    if (e.key in mapa) n = Math.min(3, Math.max(1, faixaAtual + mapa[e.key]));
+    if (e.key === 'Home') n = 1;
+    if (e.key === 'End') n = 3;
+    if (n == null) return;
+    e.preventDefault(); mudarFaixa(n); encaixar(n);
+  });
   document.addEventListener('click', e => {
     const f = e.target.closest('[data-fav]');
     if (f) { e.stopPropagation(); alternarFav(f.dataset.fav); return; }
     const es = e.target.closest('[data-escala]');
-    if (es) { $('banhos').value = es.dataset.escala; renderRecomendados(); return; }
+    if (es) { const n = Number(es.dataset.escala); mudarFaixa(n); encaixar(n); return; }
+    const vt = e.target.closest('[data-vitrine]');
+    if (vt) { irVitrine(vitrineI + Number(vt.dataset.vitrine)); iniciarVitrine(); return; }
+    const pv = e.target.closest('[data-ponto-vitrine]');
+    if (pv) { irVitrine(Number(pv.dataset.pontoVitrine)); iniciarVitrine(); return; }
     const c = e.target.closest('[data-cat]');
     if (c) {
       Object.assign(filtro, { cat: c.dataset.cat || null, sub: null, banhos: null, favs: false });
@@ -1347,7 +1528,43 @@ const Loja = (() => {
   $('ordem').addEventListener('change', e => { filtro.ordem = e.target.value; renderCatalogo(); });
 
   Loja.on('catalogo', renderTudo);
-  Loja.on('carrinho', n => { $('contador').textContent = n; $('contador').hidden = !n; });
+  let qtdAntes = null;
+  Loja.on('carrinho', n => {
+    $('contador').textContent = n; $('contador').hidden = !n;
+    if (qtdAntes !== null && n > qtdAntes) {
+      const b = document.querySelector('.pilula [data-carrinho]'), c = $('contador');
+      [b, c].forEach(el => { el.classList.remove('pula', 'pop'); void el.offsetWidth; });
+      b.classList.add('pula'); c.classList.add('pop');
+    }
+    qtdAntes = n;
+  });
+
+  /* menu do topo: marca a seção que está na tela */
+  const navBtns = [...document.querySelectorAll('.cab-nav [data-ir]')];
+  function marcarNav() {
+    const linha = innerHeight * 0.35;
+    let atual = navBtns[0];
+    for (const b of navBtns) {
+      const sec = $(b.dataset.ir);
+      if (sec && !sec.hidden && b.dataset.ir !== 'topo' && sec.getBoundingClientRect().top <= linha) atual = b;
+    }
+    navBtns.forEach(b => b.setAttribute('aria-current', b === atual));
+    const ind = $('navInd');
+    ind.style.width = atual.offsetWidth + 'px';
+    ind.style.transform = `translateX(${atual.offsetLeft}px)`;
+  }
+  let rafNav;
+  addEventListener('scroll', () => { cancelAnimationFrame(rafNav); rafNav = requestAnimationFrame(marcarNav); }, { passive: true });
+  addEventListener('resize', marcarNav);
+  document.fonts && document.fonts.ready.then(marcarNav);
+  marcarNav();
+
+  /* seções entram suavemente ao aparecer na tela */
+  if (!reduz && 'IntersectionObserver' in window) {
+    document.documentElement.classList.add('anima');
+    const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('visto'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -10% 0px' });
+    document.querySelectorAll('.revela').forEach(el => io.observe(el));
+  }
   Loja.iniciar();
   renderTudo();
 })();
