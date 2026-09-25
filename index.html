@@ -240,8 +240,8 @@ a{color:inherit}
 .prova-ic{width:52px;height:52px;border-radius:50%;background:#26262B;color:var(--laranja);display:grid;place-items:center;flex:none}
 .prova b{display:block;font-size:17px;font-weight:600;margin-bottom:4px;color:#fff}
 .prova span{color:#B4B4BC;font-size:14.5px;line-height:1.5}
-@media (min-width:760px){.provas-bloco{padding:var(--s6)}.provas{grid-template-columns:repeat(2,1fr);column-gap:var(--s5)}}
-@media (min-width:1100px){.provas-bloco{grid-template-columns:minmax(260px,1fr) 3fr;align-items:start}.provas{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:760px){.provas-bloco{padding:var(--s6)}.provas{grid-template-columns:repeat(3,1fr);column-gap:var(--s4)}}
+@media (min-width:1100px){.provas-bloco{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);column-gap:var(--s6);align-items:start}.provas{grid-template-columns:1fr}}
 
 /* ─── baixou o preço ─── */
 .promo{display:grid;gap:var(--s2)}
@@ -385,6 +385,26 @@ a{color:inherit}
   .recomendados .card,.misturador output .num,.pulsa .lj-ic,.pula .lj-ic,.contador.pop{animation:none}
   .bloco-azul{transition:none}
 }
+
+/* ─── fotos de instalações (carrossel no bloco preto) ─── */
+.provas-esq{display:grid;gap:var(--s4);align-content:start;min-width:0}
+.inst{display:grid;gap:12px;min-width:0}
+.inst-trilho{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;border-radius:20px;scroll-behavior:smooth}
+.inst-trilho::-webkit-scrollbar{display:none}
+.inst-slide{flex:0 0 100%;scroll-snap-align:center;margin:0;position:relative;aspect-ratio:4/3;background:#26262B;overflow:hidden}
+.inst-slide img{width:100%;height:100%;object-fit:cover;display:block}
+.inst-slide figcaption{position:absolute;left:12px;bottom:12px;max-width:calc(100% - 24px);background:rgba(17,17,17,.78);color:#fff;padding:8px 14px;border-radius:999px;font-size:13.5px;font-weight:500;line-height:1.3}
+.inst-ctrl{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.inst-ctrl[hidden]{display:none}
+.inst-seta{width:44px;height:44px;border-radius:50%;border:0;background:#26262B;color:#fff;display:grid;place-items:center;transition:background .2s,color .2s,transform .2s var(--ease)}
+.inst-seta:hover{background:#fff;color:#111}
+.inst-seta:active{transform:scale(.92)}
+.inst-pontos{display:flex;gap:6px;align-items:center}
+.inst-pontos button{position:relative;width:10px;height:10px;padding:0;border:0;border-radius:999px;background:rgba(255,255,255,.3);transition:width .4s var(--ease),background .3s}
+.inst-pontos button::before{content:"";position:absolute;inset:-17px -6px}
+.inst-pontos button[aria-current="true"]{width:28px;background:#fff}
+.provas-bloco :focus-visible{outline-color:#fff}
+@media (prefers-reduced-motion:reduce){.inst-trilho{scroll-behavior:auto}}
 </style>
 </head>
 <body>
@@ -466,11 +486,20 @@ a{color:inherit}
   <section class="secao" id="provas" aria-labelledby="tituloProvas">
     <div class="envelope">
       <div class="revela provas-bloco">
-        <h2 id="tituloProvas">Quem vende é quem instala</h2>
+        <div class="provas-esq">
+          <h2 id="tituloProvas">Quem vende é quem instala</h2>
+          <div class="inst" id="inst" role="region" aria-roledescription="carrossel" aria-label="Aquecedores instalados pela Servigás" hidden>
+            <div class="inst-trilho" id="instTrilho"></div>
+            <div class="inst-ctrl" id="instCtrl">
+              <button class="inst-seta" type="button" data-car="-1" aria-label="Foto anterior"><span data-ic="esquerda"></span></button>
+              <div class="inst-pontos" id="instPontos"></div>
+              <button class="inst-seta" type="button" data-car="1" aria-label="Próxima foto"><span data-ic="direita"></span></button>
+            </div>
+          </div>
+        </div>
         <div class="provas">
           <div class="prova"><span class="prova-ic" data-ic="ferramenta"></span><div><b>Instalação inclusa</b><span>Nossa equipe instala o aquecedor ou a bomba que você comprar.</span></div></div>
           <div class="prova"><span class="prova-ic" data-ic="escudo"></span><div><b>Assistência técnica autorizada</b><span>Garantia de fábrica e manutenção com quem conhece o aparelho.</span></div></div>
-          <div class="prova"><span class="prova-ic" data-ic="prancheta"></span><div><b>Visita técnica e orçamento</b><span>Vamos até a sua casa medir e dimensionar aquecedor e exaustão.</span></div></div>
           <div class="prova"><span class="prova-ic" data-ic="loja"></span><div><b>Retirada na loja</b><span>Prefere buscar? Combine o horário pelo WhatsApp.</span></div></div>
         </div>
       </div>
@@ -703,6 +732,7 @@ const Loja = (() => {
   const CHAVE_TEMA = 'servigas-tema';
 
   let produtos = [];
+  let instalacoes = [];   // fotos de aquecedores instalados (aba Loja → Fotos de instalações)
   let carregando = true;
   const ouvintes = {};
   const on = (ev, fn) => { (ouvintes[ev] = ouvintes[ev] || []).push(fn); };
@@ -725,7 +755,8 @@ const Loja = (() => {
         id: p.id, nome: p.nome, marca: p.marca, categoria: p.categoria, sub: p.sub,
         preco: p.preco == null ? null : Number(p.preco),
         precoAntigo: p.preco_antigo == null ? null : Number(p.preco_antigo),
-        destaque: p.destaque, descricao: p.descricao, specs: p.specs || [], fotos: p.fotos || []
+        destaque: p.destaque, descricao: p.descricao, specs: p.specs || [], fotos: p.fotos || [],
+        naEscolha: !!p.na_escolha, promoPrincipal: !!p.promo_principal
       }));
     } catch (e) {
       console.warn('Banco indisponível, mostrando catálogo de demonstração:', e.message);
@@ -734,6 +765,18 @@ const Loja = (() => {
     carregando = false;
     emitir('catalogo', produtos);
     renderCarrinho();
+  }
+  async function carregarInstalacoes() {
+    try {
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/loja_instalacoes?select=foto,legenda&ativo=eq.true&order=ordem.asc,criado_em.asc`, {
+        headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` }
+      });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      instalacoes = (await r.json()).filter(i => i.foto);
+    } catch (e) {
+      instalacoes = [];   // sem fotos: o bloco mostra só o título
+    }
+    emitir('instalacoes', instalacoes);
   }
   const achar = (id) => produtos.find(p => String(p.id) === String(id));
 
@@ -1253,11 +1296,12 @@ const Loja = (() => {
     aplicarTema(t || 'light');
     renderCarrinho();
     carregarCatalogo();
+    carregarInstalacoes();
   }
 
   return {
     iniciar, on,
-    get produtos() { return produtos; }, get carregando() { return carregando; },
+    get produtos() { return produtos; }, get instalacoes() { return instalacoes; }, get carregando() { return carregando; },
     categorias: CATEGORIAS, achar, filtrar, vazao, banhos, textoBanhos, desconto, recomendar,
     abrirProduto, fecharProduto, adicionar, abrirCarrinho, fecharCarrinho, qtdCarrinho,
     whats, linkWhats, consultar, finalizar, toast, alternarTema,
@@ -1373,23 +1417,56 @@ const Loja = (() => {
     }, { passive: true });
   })();
 
+  /* ─── fotos de instalações (bloco preto) ─── */
+  const inst = (() => {
+    const raiz = $('inst'), trilho = $('instTrilho'), pontos = $('instPontos');
+    let i = 0, n = 0, timer, pausa = false, fim;
+    const marcar = () => pontos.querySelectorAll('button').forEach((b, j) => b.setAttribute('aria-current', j === i));
+    const ir = (k) => { if (!n) return; i = (k + n) % n; trilho.scrollTo({ left: i * trilho.clientWidth, behavior: reduz ? 'auto' : 'smooth' }); marcar(); };
+    const tocar = () => { clearInterval(timer); if (!reduz && n > 1) timer = setInterval(() => { if (!pausa && !document.hidden) ir(i + 1); }, 6000); };
+    const pausar = (x) => () => { pausa = x; };
+    raiz.addEventListener('mouseenter', pausar(true)); raiz.addEventListener('mouseleave', pausar(false));
+    raiz.addEventListener('focusin', pausar(true)); raiz.addEventListener('focusout', pausar(false));
+    trilho.addEventListener('touchstart', pausar(true), { passive: true });
+    trilho.addEventListener('scroll', () => { clearTimeout(fim); fim = setTimeout(() => { i = Math.round(trilho.scrollLeft / trilho.clientWidth); marcar(); }, 80); }, { passive: true });
+    raiz.addEventListener('click', e => {
+      const s = e.target.closest('[data-car]'); if (s) { ir(i + Number(s.dataset.car)); tocar(); return; }
+      const d = e.target.closest('[data-car-ponto]'); if (d) { ir(Number(d.dataset.carPonto)); tocar(); }
+    });
+    return {
+      mostrar(fotos) {
+        raiz.hidden = !fotos.length;
+        if (!fotos.length) { clearInterval(timer); return; }
+        trilho.innerHTML = fotos.map((f, k) => `<figure class="inst-slide"><img src="${esc(f.foto)}" alt="${esc(f.legenda || 'Aquecedor instalado pela equipe da Servigás')}" ${k ? 'loading="lazy"' : ''} decoding="async">${f.legenda ? `<figcaption>${esc(f.legenda)}</figcaption>` : ''}</figure>`).join('');
+        pontos.innerHTML = fotos.map((f, k) => `<button type="button" data-car-ponto="${k}" aria-label="Ver foto ${k + 1}" aria-current="${k === 0}"></button>`).join('');
+        $('instCtrl').hidden = fotos.length < 2;
+        n = fotos.length; i = 0; tocar();
+      }
+    };
+  })();
+  Loja.on('instalacoes', fotos => inst.mostrar(fotos));
+
   /* ─── escolha pelo número de chuveiros ─── */
   const ROT = { 1: ['1', 'chuveiro'], 2: ['2', 'chuveiros'], 3: ['3+', 'chuveiros ou banheira'] };
   const COR = { 1: '#0B4FB3', 2: '#FDBA74', 3: '#EA580C' };
   let faixaAtual = 2;
   function renderRecomendados() {
     const n = faixaAtual;
+    // Aquecedores marcados no sistema ("Aparece no Qual serve"). Sem nenhum
+    // marcado, o site escolhe sozinho pela vazão.
+    const curadoria = Loja.produtos.some(p => p.categoria === 'aquecedores' && p.naEscolha);
+    const entra = (p) => !curadoria || p.naEscolha;
     $('saidaBanhos').innerHTML = `<span class="num">${ROT[n][0]}</span> <small>${ROT[n][1]}</small>`;
     $('blocoAzul').style.setProperty('--calor', (n - 1) / 2);
     $('banhos').setAttribute('aria-valuetext', `${ROT[n][0]} ${ROT[n][1]}`);
     $('banhos').style.setProperty('--cor-agulha', COR[n]);
     $('escala').innerHTML = [1, 2, 3].map(i => {
-      const precos = Loja.produtos.filter(p => Loja.banhos(p) === i && p.preco != null).map(p => p.preco);
+      const precos = Loja.produtos.filter(p => Loja.banhos(p) === i && p.preco != null && entra(p)).map(p => p.preco);
       const menor = precos.length ? `a partir de ${brl(Math.min(...precos)).replace(/,00$/, '')}` : (Loja.carregando ? '&nbsp;' : 'sob consulta');
       return `<button type="button" data-escala="${i}" aria-pressed="${i === n}"><b>${ROT[i][0]} ${i === 1 ? 'chuveiro' : 'chuveiros'}</b><small>${menor}</small></button>`;
     }).join('');
     if (Loja.carregando) { $('recomendados').innerHTML = esqueletos(3); return; }
-    const lista = Loja.filtrar({ cat: 'aquecedores', banhos: n, ordem: 'menor' });
+    const lista = Loja.filtrar({ cat: 'aquecedores', banhos: n, ordem: 'menor' }).filter(entra);
     $('recomendados').innerHTML = lista.length ? lista.slice(0, 3).map((p, i) => cartao(p).replace('<article class="card">', `<article class="card" style="--i:${i}">`)).join('')
       : `<div class="vazio"><b>Sem modelo cadastrado nessa faixa.</b>Fale com a gente que indicamos o aquecedor certo.<br><button class="btn btn-azul" type="button" data-whats>${icone('whats')} Pedir indicação</button></div>`;
   }
@@ -1399,7 +1476,9 @@ const Loja = (() => {
     const promos = Loja.produtos.filter(p => Loja.desconto(p) > 0).sort((a, b) => Loja.desconto(b) - Loja.desconto(a));
     $('promo').hidden = !promos.length;
     if (!promos.length) return;
-    const [p, ...resto] = promos;
+    // Principal: o marcado no sistema; se nenhum, o de maior desconto
+    const p = promos.find(x => x.promoPrincipal) || promos[0];
+    const resto = promos.filter(x => x !== p);
     const economia = (q) => (q.precoAntigo || 0) - (q.preco || 0);
     $('promoSub').innerHTML = `Economize até <b>${brl(Math.max(...promos.map(economia)))}</b> em produtos selecionados.`;
     $('promoBox').innerHTML = `

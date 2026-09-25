@@ -18,6 +18,7 @@ A Servigás não é só revenda: é assistência técnica autorizada e a instala
 ## Operating Context
 - O catálogo é gerenciado pela aba "Loja" do sistema interno de gestão e lido direto do Supabase (tabela `loja_produtos`, somente produtos ativos). Até 4 fotos por produto; a primeira é a capa.
 - Produto sem preço aparece como "Sob consulta" com pedido de orçamento.
+- O dono escolhe no sistema quais aquecedores aparecem no "Qual serve na sua casa?" (`na_escolha`), qual produto é o principal do "Baixou o preço" (`promo_principal`) e as fotos de instalações do carrossel (tabela `loja_instalacoes`).
 - Fechamento do pedido: mensagem montada no WhatsApp (47) 9 9150-0164. Pagamento online (Pix/cartão) é próximo passo combinado, ainda não existe.
 - Atendimento: seg. a sex. 8h às 18h, sábado 8h às 12h.
 

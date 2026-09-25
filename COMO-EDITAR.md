@@ -13,8 +13,20 @@ login e senha:
   todos os ângulos. Use as setinhas embaixo de cada foto para mudar a ordem.
 - 🏷️ Colocar em **promoção** (preço antigo riscado) e dar selo **Destaque**.
   Produto com preço antigo entra sozinho no bloco **"Baixou o preço"**,
-  com o % de desconto calculado. O aquecedor com **Destaque** é o que mostra
-  o preço na pílula branca do topo da página.
+  com o % de desconto calculado.
+- ⭐ Escolher o produto grande do **"Baixou o preço"**: no cadastro do
+  produto (com preço antigo preenchido), marque **Principal do "Baixou o
+  preço"**. Só um fica marcado por vez. Sem nenhum marcado, o site usa o de
+  maior desconto.
+- 🚿 Escolher os aquecedores do **"Qual serve na sua casa?"**: no cadastro do
+  aquecedor, marque **Aparece no "Qual serve na sua casa?"**. O site mostra
+  até 3 marcados por faixa (1, 2 ou 3+ chuveiros), do menor preço para o
+  maior. Enquanto nenhum estiver marcado, o site escolhe sozinho pela vazão.
+- 📷 **Fotos de instalações**: na aba Loja, troque para **Fotos de
+  instalações** para subir fotos de aquecedores que a equipe instalou, com
+  legenda opcional, ordem, ocultar e remover. Elas aparecem em carrossel no
+  bloco preto **"Quem vende é quem instala"**. Sem fotos, o bloco mostra só
+  o título. Fotos na horizontal ficam melhores.
 - 👁️ **Ocultar/mostrar** um produto no site sem precisar apagar
 - Preço vazio = aparece "**Sob consulta**" com botão de orçamento
 
@@ -27,8 +39,8 @@ deploy, sem mexer em código.
 ### 🚿 Escolha por chuveiros ("Qual serve na sua casa?")
 
 O site descobre quantos banhos cada aquecedor atende pela **vazão** que está
-nas especificações. Para um aquecedor aparecer nessa escolha, escreva nas
-especificações uma linha assim:
+nas especificações. Para um aquecedor aparecer nessa escolha (marcado ou
+não), escreva nas especificações uma linha assim:
 
 ```
 Vazão: 21 L/min
